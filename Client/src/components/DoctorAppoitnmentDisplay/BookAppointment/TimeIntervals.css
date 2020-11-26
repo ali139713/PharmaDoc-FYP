@@ -1,0 +1,8 @@
+.selected {
+  background-color: red !important;
+  color: white;
+}
+.unselected {
+  background-color: #3f51b5 !important;
+  color: white !important;
+}

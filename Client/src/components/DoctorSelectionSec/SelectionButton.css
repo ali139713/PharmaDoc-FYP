@@ -1,0 +1,9 @@
+.SelectBtnSetting {
+  height: 80px;
+  width: 250px;
+  margin-top: 15px;
+  background-color: #14213d;
+}
+.SelectBtnSetting:hover {
+  background-color: #e6aa00;
+}

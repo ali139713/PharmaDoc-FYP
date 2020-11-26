@@ -1,0 +1,18 @@
+.customCard {
+  border: 1px solid #dee2e6 !important;
+}
+.customCard:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  border: 0 !important;
+}
+.BnSetting {
+  width: 100%;
+  height: max-content;
+  font-weight: bold;
+  font-size: 17px;
+  padding: 1.2em;
+  background-color: #14213d;
+}
+.BnSetting:hover {
+  background-color: #e6aa00;
+}

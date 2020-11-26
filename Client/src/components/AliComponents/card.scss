@@ -1,0 +1,30 @@
+.card {
+  width: 20%;
+  align-items: stretch;
+  padding: 2%;
+  text-align: center;
+  margin-left: 6%;
+  transition: 0.5s all ease-in-out;
+  background: transparent;
+  background: transparent;
+  border: none;
+  a:hover {
+    box-shadow: 2px 2px 5px 0px rgba(240, 240, 240, 0.959);
+  }
+  // box-shadow: 2px 2px 5px 0px rgb(167, 155, 155);
+  .card-img-top {
+    width: 100% ;
+    object-fit: cover !important;
+  }
+}
+
+.card:hover {
+  transform: scale(1.05);
+  //   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+@media screen and (max-width: 750px) {
+  .card {
+    margin-left: 29%;
+  }
+}

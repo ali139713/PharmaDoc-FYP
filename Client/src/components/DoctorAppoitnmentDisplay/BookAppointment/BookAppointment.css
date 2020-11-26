@@ -1,0 +1,10 @@
+.bookAppBtn {
+  background-color: #14213d !important;
+  color: white !important;
+  height: auto;
+  font-size: medium !important;
+  margin: auto !important;
+}
+.bookAppBtn:hover {
+  background-color: #d4b608 !important;
+}

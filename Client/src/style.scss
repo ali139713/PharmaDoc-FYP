@@ -1,0 +1,384 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+#maindiv {
+  // height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  font-family: "Oswald", sans-serif;
+  // overflow: auto;
+}
+
+.separation {
+  background-color: lightgray;
+  width: 100%;
+  height: 1px;
+  margin-top: 1px;
+  margin-bottom: 2%;
+}
+
+.content {
+  display: flex;
+  flex: 0.6;
+  flex-direction: column;
+  text-align: center;
+}
+
+.form-holder {
+  background-color: beige;
+  margin-left: 23%;
+  margin-right: 7%;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  width: 55%;
+  box-shadow: 2px 2px 5px 0px black;
+  text-align: center;
+}
+
+.form-process {
+  display: flex;
+  justify-items: center;
+  flex-direction: row;
+  text-align: center;
+}
+
+.process1 {
+  flex: 0.4;
+  margin-left: 4%;
+}
+
+.process2 {
+  flex: 0.4;
+  margin-left: 4%;
+}
+
+.process3 {
+  flex: 0.4;
+  margin-left: 4%;
+}
+
+.process4 {
+  flex: 0.4;
+  margin-left: 4%;
+}
+
+@media screen and (max-width: 900px) {
+  .form-process {
+    flex-direction: column;
+  }
+  #arrow {
+    display: none;
+  }
+}
+
+i {
+  font-size: 50px;
+}
+
+.labDescription {
+  background-color: lightgrey;
+  margin-left: 12%;
+  margin-right: 7%;
+  margin-bottom: 2%;
+  margin-top: 5%;
+  width: 80%;
+  box-shadow: 2px 2px 5px 0px grey;
+  text-align: left;
+}
+.labdashboard {
+  background-image: url(./Images/background.jpg);
+  background-position: center;
+  opacity: 0.85;
+  background-image: blur(2px);
+}
+
+h1.page-header {
+  margin-top: -5px;
+}
+
+.sidebar {
+  padding-left: 0;
+}
+
+.main-container {
+  background: #fff;
+  padding-top: 15px;
+  margin-top: -20px;
+}
+
+.footer {
+  width: 100%;
+}
+
+////Admin Form Css////
+
+.form-style-8 {
+  font-family: "Open Sans Condensed", arial, sans;
+  width: 35%;
+  padding: 30px;
+  background: #ffffff;
+  margin-left: 32%;
+  margin-top: 5%;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+}
+.form-style-8 label {
+  cursor: pointer;
+}
+.form-style-8 h2 {
+  background: #2cbbbb;
+  text-transform: uppercase;
+  font-family: "Open Sans Condensed", sans-serif;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 100;
+  padding: 7%;
+  margin: -30px -30px 30px -30px;
+}
+.form-style-8 input[type="text"],
+.form-style-8 input[type="number"],
+.form-style-8 textarea,
+.form-style-8 select {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #2cbbbb;
+  background: transparent;
+  margin-bottom: 30px;
+  font: 16px "Oswald", Helvetica, sans-serif;
+  height: 45px;
+  transition: 0.5ms ease-in-out;
+}
+.form-style-8 textarea {
+  resize: none;
+  overflow: hidden;
+}
+.form-style-8 button,
+.f {
+  -moz-box-shadow: inset 0px 1px 0px 0px #45d6d6;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #45d6d6;
+  box-shadow: inset 0px 1px 0px 0px #45d6d6;
+  background-color: #2cbbbb;
+  border: 1px solid #27a0a0;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 90%;
+  width: 90%;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 80px;
+  margin-left: 3%;
+  outline: none;
+}
+.form-style-8 button:hover {
+  background: linear-gradient(to bottom, #34caca 5%, #30c9c9 100%);
+  background-color: #34caca;
+  outline: none;
+}
+
+.form-style-8 button:disabled {
+  background-color: #f14259;
+  border: none !important;
+  cursor: not-allowed;
+}
+.buttonHolder {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  justify-content: space-around;
+  margin-left: 40%;
+}
+.button1 {
+  flex: 0.7;
+}
+.button2 {
+  flex: 0.7;
+}
+
+.symbolHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 5%;
+  margin-left: 10%;
+}
+.symbol1 {
+  flex: 0.2;
+}
+.symbol2 {
+  flex: 0.2;
+}
+.symbol3 {
+  flex: 0.2;
+}
+.placeorder-holder {
+  
+  height: 75vh;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.placeorder-form-container {
+  flex: 1;
+}
+.placeorder-form {
+  margin-left: 10%;
+}
+
+
+.placeorder-form input {
+  height: 38px;
+  border-radius: 0;
+  background: 0;
+  outline: 0;
+  margin:4%;
+  border: none;
+  border-bottom: 0.5px solid rgba(73, 71, 71, 0.151);
+  letter-spacing: 0.11em;
+  &::placeholder {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+  }
+  &:hover,
+  &:focus,
+  &:active:focus {
+    color: #333;
+    outline: none !important;
+
+    border-bottom: 2px solid #333;
+    &::placeholder {
+      color: #333;
+      cursor: pointer;
+
+      -webkit-transform: translateY(-20px);
+      transform: translateY(-7px);
+    }
+  }
+}
+.placeorder-form h2 {
+  font-size: 1.7rem;
+  margin-top: 4%;
+  margin-left: 35%;
+  text-decoration: underline;
+  font-family: "oswald";
+}
+
+.placeorder-orderinfo-container {
+  display: flex;
+  flex: 1.5;
+  flex-direction: column;
+  
+}
+.placeorder-form-buttonholder {
+  margin-top: 3%;
+}
+
+.placeorder-form-button1 {
+  margin-left: 36%;
+}
+
+.placeorder-orderinfo-container h2 {
+  margin-left: 45%;
+  margin-top: 3%;
+  font-size: 1.7rem;
+  text-decoration: underline;
+  font-family: "oswald";
+}
+.placeorder-orderinfo-container h3 {
+  margin-left: 30%;
+  margin-top: 3%;
+  font-size: 1.7rem;
+  font-style: italic;
+  text-decoration: underline;
+  font-family: "oswald";
+}
+.placeorder-orderinfo-container h4 {
+  font-size: 1.3rem;
+  letter-spacing: 0.11em;
+  margin: 4%;
+}
+.placeorder-orderinfo {
+  margin-left: 17%;
+  margin-top: 5%;
+  height: 90vh;
+  overflow-y: scroll;
+
+}
+.placeorder-orderinfo-button{
+  margin-bottom: 9%;
+  margin-left:40%;
+}
+.payment-container{
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+}
+.payment{
+  margin-top: 4%;
+}
+.payment h2{
+  font-style: italic;
+}
+.payment-button-holder{
+  margin-top:10%;
+
+
+  
+}
+.payment-button-holder button{
+ 
+  margin-left: 20%;
+  margin-bottom: 5%;
+  margin-top: 4%;
+  width: 60%;
+  box-shadow: 2px 2px #555;
+}
+.testPayment-container{
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  height: 65vh;
+
+}
+.testPayment{
+  
+  height:50vh;
+  flex:1;
+}
+.chooselab-container{
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+}
+.chooselab{
+  margin-top: 3%;
+}
+.chooselab h2{
+  font-style: italic;
+  margin-left: 23%;
+}
+.chooselab-button-holder{
+margin-top: 10%;
+
+  
+}
+.chooselab-button-holder button{
+ 
+  margin-left: 20%;
+  margin-bottom: 5%;
+  width: max-content;
+  box-shadow: 2px 2px #555;
+}

@@ -1,0 +1,11 @@
+.react-tel-input .form-control {
+  width: max-content !important;
+}
+.selected {
+  background-color: red !important;
+  color: white !important;
+}
+.unselected {
+  background-color: #3f51b5 !important;
+  color: white !important;
+}

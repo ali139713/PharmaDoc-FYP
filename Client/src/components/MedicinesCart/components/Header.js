@@ -1,0 +1,280 @@
+import React, { Component } from "react";
+import CartScrollBar from "./CartScrollBar";
+import EmptyCart from "../empty-states/EmptyCart";
+import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import { findDOMNode } from "react-dom";
+// import brandLogo from "../../../assets/img/brand/gymx.jpeg";
+import {Link } from "react-router-dom";
+
+
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // labtest:this.props.labTests,
+      showError:false,
+      showCart: false,
+      cart: this.props.cartItems,
+      mobileSearch: false,
+    };
+  }
+  handleCart(e) {
+    e.preventDefault();
+    this.setState({
+      showCart: !this.state.showCart,
+    });
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+  handleMobileSearch(e) {
+    e.preventDefault();
+    this.setState({
+      mobileSearch: true,
+    });
+  }
+  handleSearchNav(e) {
+    e.preventDefault();
+    this.setState(
+      {
+        mobileSearch: false,
+      },
+      function () {
+        this.refs.searchBox.value = "";
+        this.props.handleMobileSearch();
+      }
+    );
+  }
+  handleClickOutside(event) {
+    const cartNode = findDOMNode(this.refs.cartPreview);
+    // const buttonNode = findDOMNode(this.refs.cartButton);
+    if (cartNode && cartNode.classList.contains("active")) {
+      if (!cartNode || !cartNode.contains(event.target)) {
+        this.setState({
+          showCart: false,
+        });
+        event.stopPropagation();
+      }
+    }
+  }
+  componentDidMount() {
+    document.addEventListener(
+      "click",
+      this.handleClickOutside.bind(this),
+      true
+    );
+  }
+  componentWillUnmount() {
+    document.removeEventListener(
+      "click",
+      this.handleClickOutside.bind(this),
+      true
+    );
+  }
+  render() {
+    let cartItems;
+    console.log(this.state.cart)
+    cartItems = this.state.cart.map((product) => {
+    
+      return (
+        <li className="cart-item" key={product.name}>
+         {/* <img src = {product.productImage} /> */}
+          <div className="product-info">
+            
+            <p className="product-name">{product.name}</p>
+            <p className="product-price">{product.price}</p>
+            { product.error && 
+      <div className="alert alert-warning">{ product.error}</div>
+            }
+          </div>
+          <div className="product-total">
+            <p className="quantity">
+              {product.quantity} {product.quantity > 1 ? "Items." : "Item."}{" "}
+            </p>
+            <p className="amount">{product.quantity * product.price}</p>
+          </div>
+          <a
+            className="product-remove"
+           
+            onClick={this.props.removeProduct.bind(this, product._id)}
+          >
+            <i style={{fontSize:"90%"}} className="fas fa-window-close"></i>
+          </a>
+       
+        </li>
+      
+      );
+    });
+    let view;
+    if (cartItems.length  <= 0) {
+      view = <EmptyCart />;
+    } else {
+      view = (
+        <CSSTransitionGroup
+          transitionName="fadeIn"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+          component="ul"
+          className="cart-items"
+        >
+          {cartItems}
+          {/* <hr />
+          {this.state.labtest.map((obj) =>{
+              return(
+                <li className="cart-item" key={obj.name}>
+         
+                <div className="product-info">
+                  <p className="product-name">{obj.name}</p>
+                  <p className="product-price">{obj.price}</p>
+                </div>
+              
+                <a
+                  className="product-remove"
+                 
+                  onClick={this.props.removeLabTest.bind(this,obj._id)}
+                >
+                  <i style={{fontSize:"90%"}} className="fas fa-window-close"></i>
+                </a>
+             
+              </li>
+              );
+          })
+          } */}
+
+         
+        </CSSTransitionGroup>
+      );
+    }
+    return (
+      <header>
+        <div className="container">
+          <div className="brand">
+            <img
+              className="logo"
+              // src={brandLogo}
+              alt="Brand Logo"
+              style={{ width: 40, height: 40 }}
+            />
+          </div>
+
+          <div className="search">
+            <a
+              className="mobile-search"
+            
+              onClick={this.handleMobileSearch.bind(this)}
+            >
+              <img
+                src="https://res.cloudinary.com/sivadass/image/upload/v1494756966/icons/search-green.png"
+                alt="search"
+              />
+            </a>
+            <form
+              action="#"
+              method="get"
+              className={
+                this.state.mobileSearch ? "search-form active" : "search-form"
+              }
+            >
+              <a
+                className="back-button"
+               
+                onClick={this.handleSearchNav.bind(this)}
+              >
+                <img
+                  src="https://res.cloudinary.com/sivadass/image/upload/v1494756030/icons/back.png"
+                  alt="back"
+                />
+              </a>
+              <input
+                type="search"
+                ref="searchBox"
+                placeholder="Search for The Products"
+                className="search-keyword"
+                onChange={this.props.handleSearch}
+              />
+              <button
+                className="search-button"
+                type="submit"
+                onClick={this.handleSubmit.bind(this)}
+              />
+            </form>
+          </div>
+
+          <div className="cart">
+            <div className="cart-info">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>No. of items</td>
+                    <td>:</td>
+                    <td>
+                      <strong>{this.props.totalItems}</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sub Total</td>
+                    <td>:</td>
+                    <td>
+                      <strong>{this.props.total}</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <a
+              className="cart-icon"
+            
+              onClick={this.handleCart.bind(this)}
+              ref="cartButton"
+            >
+              <img
+                className={this.props.cartBounce ? "tada" : " "}
+                src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
+                alt="Cart"
+              />
+              {this.props.totalItems ? (
+                <span className="cart-count">{this.props.totalItems}</span>
+              ) : (
+                ""
+              )}
+            </a>
+            <div
+              className={
+                this.state.showCart ? "cart-preview active" : "cart-preview"
+              }
+              ref="cartPreview"
+            >
+              <CartScrollBar>{view}</CartScrollBar>
+              <div className="action-block">
+                <Link to={{
+                  pathname:'/placeorder',
+                  cartProps:{
+                      orderItems:this.state.cart,
+                      totalItems:this.props.totalItems,
+                      totalAmount:this.props.total,
+                  }
+                 }} >
+                     <span class="" tabindex="0" data-toggle="tooltip" title="Please add an item to cart">
+                  <button
+                    
+                    type="button"
+                    disabled={this.state.cart.length > 0 ? false : true}
+
+                    // className={
+                    //   this.state.cart.length > 0 ? "enabled" : "disabled"
+                    // }
+                  >
+                    PROCEED TO CHECKOUT
+                  </button>
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+}
+
+export default Header;
