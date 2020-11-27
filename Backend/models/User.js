@@ -71,6 +71,9 @@ const UserSchema = new mongoose.Schema({
   pmdc: {
     type: Number,
   },
+  status: {
+    type: String,
+  },
 });
 
 UserSchema.pre("save", function (next) {

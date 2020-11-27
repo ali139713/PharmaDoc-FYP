@@ -21,6 +21,7 @@ const signToken = (userID) => {
 // for Signup
 userRouter.post("/register", (req, res) => {
   const { firstName, lastName, email, password, role } = req.body;
+  const status = "notApproved";
   User.findOne({ email }, (err, user) => {
     if (err) {
       res
@@ -32,7 +33,14 @@ userRouter.post("/register", (req, res) => {
         message: { msgBody: "Email Already Regstered", msgError: true },
       });
     } else {
-      const newUser = new User({ firstName, lastName, email, password, role });
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        status,
+      });
       newUser.save((err) => {
         if (err) {
           console.log(err);
