@@ -97,7 +97,7 @@ class UpdateOrder extends Component {
                     </div>
                     <div className="button2">
                         <span class="" tabindex="0" data-toggle="tooltip" title="All fields are required">
-                            <button disabled={this.validate()} onClick={this.fileUploadHandler}>Upload</button>
+                            <button disabled={this.validate()} onClick={this.fileUploadHandler}>Update</button>
                         </span>
                     </div>
 

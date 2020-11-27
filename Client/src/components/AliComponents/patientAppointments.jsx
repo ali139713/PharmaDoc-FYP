@@ -74,12 +74,8 @@ const GridExample = (props) => {
           <AgGridColumn field="doctorName"></AgGridColumn>
           <AgGridColumn field="appointmentDate"></AgGridColumn>
           <AgGridColumn field="appointmentTime"></AgGridColumn>
-          <AgGridColumn field="cellNumber"></AgGridColumn>
-
-          {/* <AgGridColumn field="Status"></AgGridColumn> */}
-          {/* <AgGridColumn field="Type"></AgGridColumn> */}
-          {/* <AgGridColumn field="OrderDate"></AgGridColumn> */}
-          {/* <AgGridColumn field="Total"></AgGridColumn> */}
+          <AgGridColumn field="doctorCellNumber"></AgGridColumn>
+          <AgGridColumn field="ClinicAddress"></AgGridColumn>
         </AgGridReact>
       </div>
     </div>

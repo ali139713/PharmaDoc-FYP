@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewPassword(props) {
   const authContext = useContext(AuthContext);
+  let timerID = useRef(null);
   const acceptedtoken = useParams().token;
   console.log("acceptedtoken", acceptedtoken);
   const [validateInfo, setValidateInfo] = useState({
@@ -51,7 +52,7 @@ export default function NewPassword(props) {
 
   const [message, setMessage] = useState(null);
 
-  let timerID = useRef(null);
+  // let timerID = useRef(null);
 
   const classes = useStyles();
 
@@ -75,6 +76,9 @@ export default function NewPassword(props) {
         .then((data) => {
           const { message } = data;
           setMessage(message);
+          timerID = setTimeout(() => {
+            props.history.push("/sign-in");
+          }, 2000);
         })
         .catch();
     }

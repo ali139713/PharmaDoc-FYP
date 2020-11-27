@@ -53,7 +53,7 @@ class AddPharmacy extends Component {
 
   fileUploadHandler = (event) => {
     event.preventDefault();
-    toast("Added Successfully!", {
+    toast("Uploaded Successfully!", {
       position: toast.POSITION.TOP_CENTER,
 
     });

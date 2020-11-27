@@ -77,10 +77,10 @@ medicineRouter.post(
   upload.single("prescriptionimage"),
   (req, res, next) => {
     console.log(req.file);
-    const imagepath = req.file.path.substr(29);
+    const imagepath = req.file.path.substr(23);
     // const imagepath = req.file.path;
 
-    res.status(201).send(req.file.path.substr(29));
+    res.status(201).send(req.file.path.substr(23));
   }
 );
 

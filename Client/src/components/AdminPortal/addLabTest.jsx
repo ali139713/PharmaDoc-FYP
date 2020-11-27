@@ -55,7 +55,7 @@ class Addlabtest extends Component {
 
   fileUploadHandler = (event) => {
     event.preventDefault();
-    toast("Updated Successfully!", {
+    toast("Uploaded Successfully!", {
       position: toast.POSITION.TOP_CENTER,
 
     });

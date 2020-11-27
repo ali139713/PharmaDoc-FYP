@@ -11,7 +11,7 @@ class MedicineCartMain extends Component {
     this.state = {
       products: [],
       cart: [],
-     
+
       totalItems: 0,
       totalAmount: 0,
       term: "",
@@ -37,18 +37,19 @@ class MedicineCartMain extends Component {
   async getProducts() {
     let url = "http://localhost:5000/medicine/get";
     await axios.get(url).then((response) => {
-      this.setState({
-        products: response.data.medicines,
-      });
+      // this.setState({
+      //   products: response.data.medicines,
+      // });
+      const {
+        match: { params },
+      } = this.props;
+      const pharmacyname = params.name;
+      const products = response.data.medicines;
+      console.log(products);
+      const filtered = products.filter((t) => t.pharmacyName === pharmacyname);
+      console.log(filtered);
+      this.setState({ products: filtered });
     });
-    const { match: { params } } = this.props;
-    const pharmacyname = params.name;
-    const products = this.state.products;
-    console.log(products)
-   const filtered = products.filter((t) => t.pharmacyName === pharmacyname);
-   console.log(filtered)
-    this.setState({products : filtered});
-
   }
 
   componentDidMount() {
@@ -62,7 +63,7 @@ class MedicineCartMain extends Component {
     const cartItem = JSON.parse(localStorage.getItem("cartItem")) || [];
     // const labTestItem = JSON.parse(localStorage.getItem("labTest")) || [];
 
-    this.setState({ cart: cartItem});
+    this.setState({ cart: cartItem });
     this.sumTotalItems(cartItem);
     this.sumTotalAmount(cartItem);
   }
@@ -122,7 +123,7 @@ class MedicineCartMain extends Component {
     let cartItem = this.state.cart;
     console.log(cartItem);
     let index = cartItem.findIndex((x) => x.id === id);
-    cartItem.splice(index-1, 1);
+    cartItem.splice(index - 1, 1);
     localStorage.setItem("cartItem", JSON.stringify(cartItem));
     this.setState({
       cart: cartItem,
@@ -164,7 +165,7 @@ class MedicineCartMain extends Component {
     for (var i = 0; i < cart.length; i++) {
       total += cart[i].price * parseInt(cart[i].quantity);
     }
-    
+
     this.setState({
       totalAmount: total,
     });

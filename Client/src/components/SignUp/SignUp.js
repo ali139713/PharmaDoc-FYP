@@ -199,7 +199,6 @@ export default function SignUp(props) {
               >
                 <MenuItem value={"Patient"}>Patient</MenuItem>
                 <MenuItem value={"Doctor"}>Doctor</MenuItem>
-                <MenuItem value={"Lab Manager"}>Lab Manager</MenuItem>
               </Select>
             </FormControl>
           </Grid>

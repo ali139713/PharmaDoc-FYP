@@ -31,8 +31,10 @@ function App() {
   return (
     <Router>
       <Navbar />
+
       <Switch>
         <Route path="/" exact component={Home} />
+
         <UnPrivateRoute
           path="/labmanagerprofile"
           component={LabManagerProfile}
@@ -41,6 +43,7 @@ function App() {
           path="/pharmacymanager"
           component={PharmacyManagerDashboard}
         />
+
         <Route exact path="/medicines" component={ChoosePharmacy} />
         <Route
           exact
@@ -58,6 +61,11 @@ function App() {
           path="/doctorappointments"
           roles={["Doctor"]}
           component={DoctorPortal}
+        />
+        <PrivateRoute
+          path={"/doctors-cards/book-appointment/:id"}
+          roles={["Patient"]}
+          component={BookAppointment}
         />
         <PrivateRoute
           path={"/placeorder"}
@@ -83,10 +91,11 @@ function App() {
         />
         <PrivateRoute
           exact
-          path="/profile"
+          path="/doctor-profile"
           roles={["Doctor"]}
           component={DoctorProfile}
         />
+
         <PrivateRoute
           path="/userappointments"
           roles={["Patient"]}
@@ -95,11 +104,7 @@ function App() {
         <Route path="/reset/:token" component={NewPassword} />
 
         <PrivateRoute
-          path="/book-appointment"
-          roles={["Patient"]}
-          component={BookAppointment}
-        />
-        <PrivateRoute
+          exact
           path="/profile"
           roles={["Doctor"]}
           component={DoctorPortal}
@@ -107,15 +112,10 @@ function App() {
         <Route path="/medicines" component={MedicineCartMain} />
         <Route exact path="/doctors-category" component={DoctorCategory} />
         <Route exact path="/doctors-cards" component={DoctorProfileCard} />
-        <Route exact path="/doctor-profile" component={ViewDoctorProfile} />
-        {/* <Route path="/book-appointment" component={BookAppointment} /> */}
-
         <Route
           exact
-          path="/doctors-cards/book-appointment/:id"
-          render={(props) => {
-            return <BookAppointment {...props} />;
-          }}
+          path="/doctors-cards/doctor-profile/:id"
+          component={ViewDoctorProfile}
         />
       </Switch>
       <Footer />

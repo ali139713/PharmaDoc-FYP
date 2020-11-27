@@ -3,7 +3,7 @@ import Axios from "axios";
 import Navbar from "../AliComponents/navbar";
 import "../../style.scss";
 import routeLinks from "../AliComponents/routeLinksUser";
-import GridExample from "../AliComponents/grid";
+import GridExample from "../AliComponents/patientAppointments";
 import Tab from "../AliComponents/tabs";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";

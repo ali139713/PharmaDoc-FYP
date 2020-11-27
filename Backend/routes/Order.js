@@ -10,7 +10,7 @@ const nodemailer = require("nodemailer");
 orderRouter.get("/get", (req, res, next) => {
   Order.find()
     .select(
-      "customerID customerName _id customerEmail address city postalCode orderItems totalAmount publishDate orderStatus paymentMethod"
+      "customerID customerName _id customerEmail address city postalCode orderItems totalAmount publishDate orderStatus paymentMethod prescriptionImage"
     )
     .exec()
     .then((docs) => {
@@ -31,6 +31,7 @@ orderRouter.get("/get", (req, res, next) => {
             orderStatus: doc.orderStatus,
             paymentMethod: doc.paymentMethod,
             _id: doc._id,
+            prescriptionImage: doc.prescriptionImage,
           };
         }),
       };
@@ -80,6 +81,7 @@ orderRouter.post("/post", (req, res, next) => {
     publishDate: moment().toJSON(),
     orderStatus: req.body.orderStatus,
     paymentMethod: req.body.paymentMethod,
+    prescriptionImage: req.body.prescriptionImage,
   });
 
   order

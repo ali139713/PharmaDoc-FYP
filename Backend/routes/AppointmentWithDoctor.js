@@ -69,14 +69,13 @@ AppointmentRouter.get("/getAppointments", async (req, res, next) => {
   const { doctorID } = req.query;
 
   let dId = "";
+  let uId = "";
 
   let appointmentData = {};
 
   if (userID) {
     await AppointmentWithDoctor.find({ userID })
-      .select(
-        " _id doctorID userID appointmentDate appointmentTime cellNumber  "
-      )
+      .select(" _id doctorID userID appointmentDate appointmentTime  ")
       .exec()
       .then(async (appointments) => {
         let newAppointments = [];
@@ -86,7 +85,7 @@ AppointmentRouter.get("/getAppointments", async (req, res, next) => {
           let doctorData = {};
 
           await User.findById({ _id: dId })
-            .select("_id firstName lastName ")
+            .select("_id firstName lastName cellNumber address ")
             .exec()
             .then((res) => {
               doctorData = res;
@@ -103,6 +102,8 @@ AppointmentRouter.get("/getAppointments", async (req, res, next) => {
             appointmentTime: appointment.appointmentTime,
             cellNumber: appointment.cellNumber,
             doctorName: doctorData.firstName + " " + doctorData.lastName,
+            doctorCellNumber: doctorData.cellNumber,
+            ClinicAddress: doctorData.address,
           };
 
           newAppointments.push(obj);
@@ -120,35 +121,81 @@ AppointmentRouter.get("/getAppointments", async (req, res, next) => {
         });
       });
   } else {
-    AppointmentWithDoctor.find({ doctorID })
-      .select(
-        " _id doctorID userID appointmentDate appointmentTime cellNumber  "
-      )
+    await AppointmentWithDoctor.find({ doctorID })
+      .select(" _id doctorID userID appointmentDate appointmentTime ")
       .exec()
-      .then((appointments) => {
-        const response = {
-          count: appointments.length,
-          appointment: appointments.map((appointment) => {
-            // console.log(appointment);
-            return {
-              _id: appointment._id,
-              doctorID: appointment.doctorID,
-              userID: appointment.userID,
-              appointmentDate: appointment.appointmentDate,
-              appointmentTime: appointment.appointmentTime,
-              cellNumber: appointment.cellNumber,
-            };
-          }),
+      .then(async (appointments) => {
+        let newAppointments = [];
+
+        for await (appointment of appointments) {
+          uId = appointment.userID;
+          let userData = {};
+
+          await User.findById({ _id: uId })
+            .select("_id firstName lastName cellNumber")
+            .exec()
+            .then((res) => {
+              userData = res;
+            })
+            .catch((error) => {
+              console.log("error: ", error);
+            });
+
+          let obj = {
+            _id: appointment._id,
+            doctorID: appointment.doctorID,
+            userID: appointment.userID,
+            appointmentDate: appointment.appointmentDate,
+            appointmentTime: appointment.appointmentTime,
+            cellNumber: appointment.cellNumber,
+            patientName: userData.firstName + " " + userData.lastName,
+            patientCellNumber: userData.cellNumber,
+          };
+
+          newAppointments.push(obj);
+        }
+
+        appointmentData = {
+          count: newAppointments.length,
+          appointments: newAppointments,
         };
-        res.status(200).json(response);
-        // console.log(response);
+        res.status(200).json(appointmentData);
       })
       .catch((err) => {
-        // console.log(err);
         res.status(500).json({
           error: err,
         });
       });
+
+    // await AppointmentWithDoctor.find({ doctorID })
+    //   .select(
+    //     " _id doctorID userID appointmentDate appointmentTime cellNumber  "
+    //   )
+    //   .exec()
+    //   .then((appointments) => {
+    //     const response = {
+    //       count: appointments.length,
+    //       appointment: appointments.map((appointment) => {
+    //         // console.log(appointment);
+    //         return {
+    //           _id: appointment._id,
+    //           doctorID: appointment.doctorID,
+    //           userID: appointment.userID,
+    //           appointmentDate: appointment.appointmentDate,
+    //           appointmentTime: appointment.appointmentTime,
+    //           cellNumber: appointment.cellNumber,
+    //         };
+    //       }),
+    //     };
+    //     res.status(200).json(response);
+    //     // console.log(response);
+    //   })
+    //   .catch((err) => {
+    //     // console.log(err);
+    //     res.status(500).json({
+    //       error: err,
+    //     });
+    //   });
   }
 });
 

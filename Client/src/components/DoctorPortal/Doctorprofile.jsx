@@ -202,13 +202,13 @@ const Doctorprofile = () => {
                   </div>
                   <div className="row">
                     <div className="form-group col-md-6">
-                      <label htmlFor="inputCity">Address</label>
+                      <label htmlFor="inputCity">Clinic Address</label>
                       <input
                         name="address"
                         type="text"
                         id="inputCity"
                         className="form-control"
-                        placeholder="Address"
+                        placeholder="Clinic Address"
                         value={address}
                         onChange={(e) => {
                           setAddress(e.target.value);

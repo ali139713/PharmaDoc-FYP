@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Avatar from "react-avatar";
 import DoctorTabs from "./DoctorTabs";
-export default function ViewDoctorProfile() {
-  const [name, setName] = useState("Muhammad Asad");
-  const [specialization, setSpecialization] = useState(
-    "Internal Medicine Specialist"
-  );
-  const [Education, setEducation] = useState(
-    "M.B.B.S, F.C.P.S. (Medicine), Certified Diabetologist (UK)"
-  );
+export default function ViewDoctorProfile(props) {
+  const {
+    match: { params },
+  } = props;
+  let [doctorID, setDoctorID] = useState(params.id);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [specialization, setSpecialization] = useState();
+  const [Education, setEducation] = useState();
+
+  const doctorProfileInfo = async () => {
+    await Axios.get("/user/getUser", {
+      params: {
+        _id: doctorID,
+      },
+    }).then((res) => {
+      setFirstName(res.data.users[0].firstName);
+      setLastName(res.data.users[0].lastName);
+      setSpecialization(res.data.users[0].specialization);
+      setEducation(res.data.users[0].certificates);
+    });
+  };
+
+  useEffect(() => {
+    doctorProfileInfo();
+  });
   return (
     <div
       className={
@@ -28,8 +47,11 @@ export default function ViewDoctorProfile() {
           />
         </div>
         <div className="col-sm-5">
-          <h3>{name}</h3>
+          <h3>
+            {firstName} {lastName}
+          </h3>
           <span>{specialization}</span>
+          <br></br>
           <span>{Education}</span>
           <hr></hr>
           <DoctorTabs />

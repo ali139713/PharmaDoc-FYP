@@ -4,15 +4,14 @@ import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
 // import brandLogo from "../../../assets/img/brand/gymx.jpeg";
-import {Link } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // labtest:this.props.labTests,
-      showError:false,
+      showError: false,
       showCart: false,
       cart: this.props.cartItems,
       mobileSearch: false,
@@ -73,19 +72,17 @@ class Header extends Component {
   }
   render() {
     let cartItems;
-    console.log(this.state.cart)
+    console.log(this.state.cart);
     cartItems = this.state.cart.map((product) => {
-    
       return (
         <li className="cart-item" key={product.name}>
-         {/* <img src = {product.productImage} /> */}
+          {/* <img src = {product.productImage} /> */}
           <div className="product-info">
-            
             <p className="product-name">{product.name}</p>
             <p className="product-price">{product.price}</p>
-            { product.error && 
-      <div className="alert alert-warning">{ product.error}</div>
-            }
+            {product.error && (
+              <div className="alert alert-warning">{product.error}</div>
+            )}
           </div>
           <div className="product-total">
             <p className="quantity">
@@ -95,18 +92,15 @@ class Header extends Component {
           </div>
           <a
             className="product-remove"
-           
             onClick={this.props.removeProduct.bind(this, product._id)}
           >
-            <i style={{fontSize:"90%"}} className="fas fa-window-close"></i>
+            <i style={{ fontSize: "90%" }} className="fas fa-window-close"></i>
           </a>
-       
         </li>
-      
       );
     });
     let view;
-    if (cartItems.length  <= 0) {
+    if (cartItems.length <= 0) {
       view = <EmptyCart />;
     } else {
       view = (
@@ -140,8 +134,6 @@ class Header extends Component {
               );
           })
           } */}
-
-         
         </CSSTransitionGroup>
       );
     }
@@ -149,18 +141,19 @@ class Header extends Component {
       <header>
         <div className="container">
           <div className="brand">
-            <img
+            {/* <img
               className="logo"
               // src={brandLogo}
               alt="Brand Logo"
               style={{ width: 40, height: 40 }}
-            />
+            /> */}
+
+            <h4>PharmaDoc</h4>
           </div>
 
           <div className="search">
             <a
               className="mobile-search"
-            
               onClick={this.handleMobileSearch.bind(this)}
             >
               <img
@@ -177,7 +170,6 @@ class Header extends Component {
             >
               <a
                 className="back-button"
-               
                 onClick={this.handleSearchNav.bind(this)}
               >
                 <img
@@ -223,7 +215,6 @@ class Header extends Component {
             </div>
             <a
               className="cart-icon"
-            
               onClick={this.handleCart.bind(this)}
               ref="cartButton"
             >
@@ -246,26 +237,32 @@ class Header extends Component {
             >
               <CartScrollBar>{view}</CartScrollBar>
               <div className="action-block">
-                <Link to={{
-                  pathname:'/placeorder',
-                  cartProps:{
-                      orderItems:this.state.cart,
-                      totalItems:this.props.totalItems,
-                      totalAmount:this.props.total,
-                  }
-                 }} >
-                     <span class="" tabindex="0" data-toggle="tooltip" title="Please add an item to cart">
-                  <button
-                    
-                    type="button"
-                    disabled={this.state.cart.length > 0 ? false : true}
-
-                    // className={
-                    //   this.state.cart.length > 0 ? "enabled" : "disabled"
-                    // }
+                <Link
+                  to={{
+                    pathname: "/placeorder",
+                    cartProps: {
+                      orderItems: this.state.cart,
+                      totalItems: this.props.totalItems,
+                      totalAmount: this.props.total,
+                    },
+                  }}
+                >
+                  <span
+                    class=""
+                    tabindex="0"
+                    data-toggle="tooltip"
+                    title="Please add an item to cart"
                   >
-                    PROCEED TO CHECKOUT
-                  </button>
+                    <button
+                      type="button"
+                      disabled={this.state.cart.length > 0 ? false : true}
+
+                      // className={
+                      //   this.state.cart.length > 0 ? "enabled" : "disabled"
+                      // }
+                    >
+                      PROCEED TO CHECKOUT
+                    </button>
                   </span>
                 </Link>
               </div>

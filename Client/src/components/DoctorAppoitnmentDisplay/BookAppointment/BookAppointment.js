@@ -13,7 +13,7 @@ import Message from "../../Message";
 import Error from "../../../components/Error";
 import Axios from "axios";
 // import SpinnerComponent from "../../../components/Spinner/Spinner";
-export default function ViewDoctorProfile(props) {
+export default function BookAppointment(props) {
   const authContext = useContext(AuthContext);
   let timerID = useRef(null);
   const [firstName, setFirstName] = useState();
@@ -75,8 +75,8 @@ export default function ViewDoctorProfile(props) {
         timerID = setTimeout(() => {
           props.history.push("/userappointments");
         }, 2000);
-        // authContext.setAppointmentDate("");
-        // authContext.setAppointmentTimeCell("");
+        authContext.setAppointmentDate("");
+        authContext.setAppointmentTimeCell("");
       });
     } else {
       setIsLoaded(false);
@@ -100,40 +100,40 @@ export default function ViewDoctorProfile(props) {
       clearTimeout(timerID);
     };
   }, []);
-  if (isLoaded) {
-    return <SpinnerComponent />;
-  } else
-    return (
-      <div style={{ textAlign: "center" }} className={"container mb-5"}>
-        <div className="row border border-dark rounded shadow-sm my-5 p-1">
-          <div className="col-sm-3">
-            <Avatar
-              src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
-              size="160"
-              round={true}
-            />
-          </div>
-          <div className="col-sm-5">
-            <h3>
-              {firstName} {lastName}
-            </h3>
-            <span>{specialization}</span>
-            <br />
-            <span>{Education}</span>
-            <hr></hr>
-            <div>
-              <DoctorTimeSlots doctorID={doctorID} /> <hr></hr>
-              {isLoaded ? <SpinnerComponent /> : null}
-              {message ? <Message message={message} /> : null}
-              {authContext.error.isError ? (
-                <Error message={authContext.error.errorMsg} />
-              ) : null}
-              <Button onClick={placeAppointment} className="m-3 bookAppBtn">
-                Book Appointment
-              </Button>
-            </div>
+  // if (isLoaded) {
+  //   return <SpinnerComponent />;
+  // } else
+  return (
+    <div style={{ textAlign: "center" }} className={"container mb-5"}>
+      <div className="row border border-dark rounded shadow-sm my-5 p-1">
+        <div className="col-sm-3">
+          <Avatar
+            src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+            size="160"
+            round={true}
+          />
+        </div>
+        <div className="col-sm-5">
+          <h3>
+            {firstName} {lastName}
+          </h3>
+          <span>{specialization}</span>
+          <br />
+          <span>{Education}</span>
+          <hr></hr>
+          <div>
+            <DoctorTimeSlots doctorID={doctorID} /> <hr></hr>
+            {isLoaded ? <SpinnerComponent /> : null}
+            {message ? <Message message={message} /> : null}
+            {authContext.error.isError ? (
+              <Error message={authContext.error.errorMsg} />
+            ) : null}
+            <Button onClick={placeAppointment} className="m-3 bookAppBtn">
+              Book Appointment
+            </Button>
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
 }

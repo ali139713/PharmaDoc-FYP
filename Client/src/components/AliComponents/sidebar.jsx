@@ -60,7 +60,7 @@ const Sidebar = () => {
         const response = await Axios.get('http://localhost:5000/labtest/get');
         setlabtestCount(response.data.count);
     };
-    
+
     const getOrders = async () => {
         const response = await Axios.get('http://localhost:5000/order/get');
         setOrderCount(response.data.count);
@@ -79,7 +79,7 @@ const Sidebar = () => {
                 <div className='col-md-2 p-2'>
                     <div className='dashboard-left-block'>
                         <div className='dashboard-pic-circle' style={{ /*backgroundImage: 'url(' + user.profilePic + ')'*/ }}>
-                           
+
 
                         </div>
                         <div className='profile-left-text'>
@@ -121,12 +121,17 @@ const Sidebar = () => {
                                     <h5>Labtests</h5>
                                 </Link>
                             }
-                            
+
                             {/*user.isAdmin && (*/
                                 <Link to='/admin/orders'>
-                                <h5>Orders</h5>
-                            </Link>
-                        }
+                                    <h5>Orders</h5>
+                                </Link>
+                            }
+                            {/*user.isAdmin && (*/
+                                <Link to='/admin/doctors'>
+                                    <h5>Doctors</h5>
+                                </Link>
+                            }
                             <hr style={{ backgroundColor: "white" }} />
 
                             <Link to='/logout/'>
@@ -164,10 +169,10 @@ const Sidebar = () => {
                             </div>
                             <p style={{ color: "transparent" }}> asd</p>
                             <div className="card3">
-                                <h3 style={{marginTop:"10%"}}> Total No of labtests: {labtestcount}</h3>
+                                <h3 style={{ marginTop: "10%" }}> Total No of labtests: {labtestcount}</h3>
                             </div>
                         </div>
-                            <hr/>
+                        <hr />
                         <div className="cardsholder2">
 
                             <div className="card1left">

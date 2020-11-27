@@ -21,7 +21,7 @@ const signToken = (userID) => {
 // for Signup
 userRouter.post("/register", (req, res) => {
   const { firstName, lastName, email, password, role } = req.body;
-  const status = "notApproved";
+  const status = "Not Approved";
   User.findOne({ email }, (err, user) => {
     if (err) {
       res
@@ -181,7 +181,7 @@ userRouter.get(
 userRouter.get("/getDoctors", (req, res, next) => {
   User.find({ role: "Doctor" })
     .select(
-      " _id firstName lastName email specialization certificates cellNumber fee address"
+      " _id firstName lastName email specialization certificates cellNumber fee address status"
     )
     .exec()
     .then((docs) => {
@@ -199,6 +199,7 @@ userRouter.get("/getDoctors", (req, res, next) => {
             cellNumber: doc.cellNumber,
             fee: doc.fee,
             address: doc.address,
+            status: doc.status,
           };
         }),
       };
@@ -267,6 +268,18 @@ userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
       User.findOne({ _id: id }).then(function (data) {
         res.send(data);
       });
+    }
+  });
+});
+
+/// Delete User By id ///
+userRouter.delete("/delete/:id", async (req, res) => {
+  const id = req.params.id;
+  await User.findByIdAndRemove(id, (err, data) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(data);
     }
   });
 });

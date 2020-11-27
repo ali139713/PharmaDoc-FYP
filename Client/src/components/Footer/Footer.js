@@ -78,11 +78,11 @@ const styles = (theme) => ({
 const infos = [
   {
     icon: <PhoneIcon />,
-    description: "+1 555 123456",
+    description: "00923008189126",
   },
   {
     icon: <MailIcon />,
-    description: "support@company.com",
+    description: "PharmaDoc@company.com",
   },
 ];
 
@@ -240,8 +240,9 @@ function Footer(props) {
               About the Company
             </Typography>
             <Typography style={{ color: "white" }} paragraph>
-              Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce
-              euismod convallis velit, eu auctor lacus vehicula sit amet.
+              PharmaDoc is the platform where you can avail all the services
+              related to Doctors, Medicines and Lab. You can place order and can
+              book appointment with Doctor and Lab
             </Typography>
             <Box display="flex">
               {socialIcons.map((socialIcon, index) => (

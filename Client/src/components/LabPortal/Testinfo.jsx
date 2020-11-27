@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import "../../style.scss";
 import Card from "../AliComponents/card";
 // import Model from '../AliComponents/Model';
-
 class TestInfo extends Component {
   state = {
     propsName: "",

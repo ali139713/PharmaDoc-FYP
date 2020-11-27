@@ -3,7 +3,7 @@ import Navbar from "../AliComponents/navbar";
 import "../../style.scss";
 import "../AliComponents/form.scss";
 import routeLinks from "../AliComponents/routeLinks";
-import GridExample from "../AliComponents/grid";
+import DoctorAppointmentsGrid from "../AliComponents/DoctorAppointmentsGrid";
 import Tab from "../AliComponents/tabs";
 import Axios from "axios";
 import "./Doctorappointments.css";
@@ -32,7 +32,9 @@ const Doctorappointments = () => {
       params: {
         doctorID: doctorID,
       },
-    }).then((res) => setDoctorAppointment(res.data.appointment));
+    }).then((res) => {
+      setDoctorAppointment(res.data.appointments);
+    });
     setisLoaded(true);
   };
 
@@ -170,7 +172,7 @@ const Doctorappointments = () => {
 
             <Tab name="Active" secondName="Completed" />
             <div style={{ height: "500px" }}>
-              <GridExample rowData={doctorAppointment} />
+              <DoctorAppointmentsGrid rowData={doctorAppointment} />
             </div>
           </div>
         </div>

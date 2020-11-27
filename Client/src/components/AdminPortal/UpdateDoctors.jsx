@@ -1,15 +1,14 @@
-
 import Axios from "axios";
 import React, { Component } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../style.scss';
 
-class UpdatePharmacy extends Component {
+class UpdateDoctors extends Component {
 
 
     state = {
-        Name: "",
+        Status: "",
     };
 
 
@@ -29,7 +28,7 @@ class UpdatePharmacy extends Component {
     }
     routeHandler = () => {
 
-        this.props.history.push('/admin/pharmacy');
+        this.props.history.push('/admin/doctors');
     }
 
     fileUploadHandler = (event) => {
@@ -40,14 +39,15 @@ class UpdatePharmacy extends Component {
         });
         const obj = {
 
-            name: this.state.Name,
+            status: this.state.Status,
+           
         }
-        Axios.patch('http://localhost:5000/pharmacy/update/' + this.props.match.params.id, obj
+        Axios.patch('/user/update/doctorProfile/' + this.props.match.params.id, obj
         )
 
             .then(res => {
                 console.log(res);
-                this.setState({ Name: "" });
+                this.setState({ status: "" });
 
             })
             .catch(err => {
@@ -57,7 +57,7 @@ class UpdatePharmacy extends Component {
             })
     }
     validate = () => {
-        if (this.state.Name) {
+        if (this.state.Status) {
             return false;
         }
         else {
@@ -70,7 +70,7 @@ class UpdatePharmacy extends Component {
 
         return (
             <div className="form-style-8">
-                <h2>Update pharmacy</h2>
+                <h2>Update Status</h2>
 
                 <form
                     onSubmit={this.fileUploadHandler} >
@@ -79,14 +79,16 @@ class UpdatePharmacy extends Component {
                         <input
 
                             type="text"
-                            id="Name"
-                            placeholder="Enter Name"
-                            name="Name"
-                            value={this.state.Name}
+                            id="Status"
+                            placeholder="Update Status"
+                            name="Status"
+                            value={this.state.Status}
                             onChange={this.handleChange}
                         />
                     </div>
                     <ToastContainer />
+
+
 
                 </form>
                 <div className="buttonHolder">
@@ -107,4 +109,4 @@ class UpdatePharmacy extends Component {
     }
 }
 
-export default UpdatePharmacy;
+export default UpdateDoctors;

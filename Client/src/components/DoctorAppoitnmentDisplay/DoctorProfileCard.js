@@ -15,23 +15,27 @@ const DoctorProfileCard = () => {
     "https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
   );
 
-  const [specilizaton, setSpecilizaton] = useState("ENT");
-  const [education, setEducation] = useState("MBBS,FCPS");
-  const [Fee, setFee] = useState(500);
-  const [location, setLocation] = useState("Lahore");
-  const [phone, setphone] = useState("0300-8189126");
+  // const [specilizaton, setSpecilizaton] = useState("ENT");
+  // const [education, setEducation] = useState("MBBS,FCPS");
+  // const [Fee, setFee] = useState(500);
+  // const [location, setLocation] = useState("Lahore");
+  // const [phone, setphone] = useState("0300-8189126");
   var [doctorInfo, setDoctorInfo] = useState([]);
+  var [approvedDoctors, setApprovedDoctors] = useState([]);
 
   const getDoctors = async () => {
     const response = await Axios.get("/user/getDoctors");
-    setDoctorInfo(response.data.doctors);
+    // setDoctorInfo(response.data.doctors);
+    let filter = [];
+    filter = response.data.doctors.filter((t) => t.status === "Approved");
+    setApprovedDoctors(filter);
   };
-
+  console.log("Approved Doctors", approvedDoctors);
   useEffect(() => {
     getDoctors();
   }, []);
   console.log("doctorInfo", doctorInfo);
-  const DoctorCardDisplay = doctorInfo.map((doctor) => {
+  const DoctorCardDisplay = approvedDoctors.map((doctor) => {
     return (
       <div key={doctor._id} className="container rounded my-5 py-2 customCard">
         <div className="row">
@@ -78,9 +82,9 @@ const DoctorProfileCard = () => {
               </Link>
             </div>
             <div style={{ marginTop: "15px" }}>
-              <NavLink to="/doctor-profile">
+              <Link to={`/doctors-cards/doctor-profile/${doctor._id}`}>
                 <Button className="BnSetting">View Profile</Button>
-              </NavLink>
+              </Link>
             </div>
           </div>
         </div>

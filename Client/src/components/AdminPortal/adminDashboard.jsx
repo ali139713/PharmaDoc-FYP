@@ -7,9 +7,11 @@ import UpdatePharmacy from './updatePharmacy';
 import UpdateLab from './updateLab';
 import UpdateLabTest from './updateLabTest';
 import UpdateOrder from './UpdateOrder';
+import UpdateDoctors from './UpdateDoctors';
 import Getlabs from './getLabs';
 import GetLabTests from './getLabTests';
 import GetOrders from './GetOrders';
+import GetDoctors from './GetDoctors';
 import SideBar from '../AliComponents/sidebar'
 import AddPharmacy from './addPharmacy';
 import AddLab from './addLab';
@@ -52,6 +54,11 @@ const adminDashboard = () => {
             <GetOrders {...props} />
           )
         }} />
+        <Route exact path='/admin/doctors' render={(props) => {
+          return (
+            <GetDoctors {...props} />
+          )
+        }} />
         <Route exact path='/admin/pharmacy/updatePharmacy/:id' render={(props) => {
 
           return (
@@ -74,6 +81,12 @@ const adminDashboard = () => {
 
           return (
             <UpdateOrder {...props} />
+          )
+        }} />
+        <Route exact path='/admin/doctors/updateDoctors/:id' render={(props) => {
+
+          return (
+            <UpdateDoctors {...props} />
           )
         }} />
         <Route exact path='/admin/addPharmacy' render={(props) => {
