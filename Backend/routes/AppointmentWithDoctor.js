@@ -116,6 +116,7 @@ AppointmentRouter.get("/getAppointments", async (req, res, next) => {
         res.status(200).json(appointmentData);
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json({
           error: err,
         });

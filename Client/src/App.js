@@ -15,7 +15,9 @@ import NewPassword from "./components/SetNewPassword/NewPassword";
 import LabDashboard from "./components/LabPortal/Labdashboard";
 import DoctorPortal from "./components/DoctorPortal/Doctorappointments";
 import DoctorProfile from "./components/DoctorPortal/Doctorprofile";
-import UserPortal from "./components/UserPortal/userAppointments";
+import UserAppointments from "./components/UserPortal/userAppointments";
+import UserProfile from "./components/UserPortal/userProfile";
+import UserOrders from "./components/UserPortal/userOrders";
 import AdminDashboard from "./components/AdminPortal/adminDashboard";
 import PharmacyManagerDashboard from "./components/pharmacyManagerPortal/pharmacyManagerDashboard";
 import LabManagerProfile from "./components/LabManagerPortal/LabManagerProfile";
@@ -79,9 +81,14 @@ function App() {
           component={Payment}
         />
         <PrivateRoute
+          path={"/userprofile"}
+          roles={["Patient"]}
+          component={UserProfile}
+        />
+        <PrivateRoute
           path={"/userorders"}
           roles={["Patient"]}
-          component={UserPortal}
+          component={UserOrders}
         />
         <PrivateRoute
           exact
@@ -99,7 +106,7 @@ function App() {
         <PrivateRoute
           path="/userappointments"
           roles={["Patient"]}
-          component={UserPortal}
+          component={UserAppointments}
         />
         <Route path="/reset/:token" component={NewPassword} />
 

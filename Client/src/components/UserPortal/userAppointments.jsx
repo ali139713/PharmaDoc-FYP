@@ -4,6 +4,7 @@ import Navbar from "../AliComponents/navbar";
 import "../../style.scss";
 import routeLinks from "../AliComponents/routeLinksUser";
 import GridExample from "../AliComponents/patientAppointments";
+import SpinnerComponent from "../../components/Spinner/Spinner";
 import Tab from "../AliComponents/tabs";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
@@ -19,7 +20,9 @@ const Userappointments = () => {
       params: {
         userID: userID,
       },
-    }).then((res) => setUserAppointment(res.data.appointments));
+    }).then((res) => {
+      setUserAppointment(res.data.appointments);
+    });
     //   console.log(authContext.isLoaded)
     //   authContext.setIsLoaded(true)
     setisLoaded(true);
@@ -28,14 +31,13 @@ const Userappointments = () => {
   useEffect(() => {
     appointmentofUser();
   }, []);
-  console.log("ID", userID);
+
   console.log(userAppointment);
   // console.log(authContext.isLoaded)
   if (isLoaded === false) {
     return (
-      <div>
-        {" "}
-        <i className="fas fa-spinner"></i>{" "}
+      <div style={{ textAlign: "center", marginTop: "20%" }}>
+        <SpinnerComponent />
       </div>
     );
   } else {
