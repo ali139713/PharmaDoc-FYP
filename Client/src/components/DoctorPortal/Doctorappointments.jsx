@@ -6,6 +6,7 @@ import routeLinks from "../AliComponents/routeLinks";
 import DoctorAppointmentsGrid from "../AliComponents/DoctorAppointmentsGrid";
 import Tab from "../AliComponents/tabs";
 import Axios from "axios";
+import SpinnerComponent from "../../components/Spinner/Spinner";
 import "./Doctorappointments.css";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
@@ -76,9 +77,8 @@ const Doctorappointments = () => {
   console.log("doctorAppointment", doctorAppointment);
   if (isLoaded === false) {
     return (
-      <div>
-        {" "}
-        <i className="fas fa-spinner"></i>{" "}
+      <div style={{ textAlign: "center", marginTop: "20%" }}>
+        <SpinnerComponent />
       </div>
     );
   } else {

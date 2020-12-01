@@ -4,6 +4,8 @@ import "../AliComponents/form.scss";
 import routeLinks from "../AliComponents/routeLinks";
 import Navbar from "../AliComponents/navbar";
 import Axios from "axios";
+import SpinnerComponent from "../../components/Spinner/Spinner";
+import Error from "../../components/Error";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -21,7 +23,9 @@ const Doctorprofile = () => {
   const [certificates, setCertificates] = useState([]);
   const [fee, setFee] = useState();
   const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
+  const [validateInfo, setValidateInfo] = useState({
+    comfirmPassword: "",
+  });
   const [isLoaded, setIsLoaded] = useState(false);
 
   const doctorProfileInfo = async () => {
@@ -41,46 +45,53 @@ const Doctorprofile = () => {
       setCertificates(res.data.users[0].certificates);
       setServices(res.data.users[0].services);
       setFee(res.data.users[0].fee);
-
       setIsLoaded(true);
     });
   };
 
+  console.log("Password : ", password);
+  console.log("ConfirmPassword : ", validateInfo.confirmPassword);
   useEffect(() => {
     doctorProfileInfo();
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const ID = authContext.user._id;
-    Axios.patch("/user/update/doctorProfile/" + ID, {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      cellNumber: cellNumber,
-      specialization: designation,
-      address: address,
-      city: city,
-      PMDC: PMDC,
-      services: services,
-      certificates: certificates,
-      fee: fee,
-    })
-
-      .then((res) => {
-        console.log("res", res);
-      })
-      .catch((err) => {
-        console.log(err);
+    if (password !== validateInfo.confirmPassword) {
+      authContext.setError({
+        isError: true,
+        errorMsg: "Password and Confirm Password do not Match",
       });
+    } else {
+      const ID = authContext.user._id;
+      Axios.patch("/user/update/doctorProfile/" + ID, {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        cellNumber: cellNumber,
+        specialization: designation,
+        address: address,
+        city: city,
+        PMDC: PMDC,
+        services: services,
+        certificates: certificates,
+        fee: fee,
+        password: password,
+      })
+
+        .then((res) => {
+          // console.log("res", res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
-  console.log("userDetails", firstName);
-  console.log("userID", authContext.user._id);
+
   if (isLoaded === false) {
     return (
-      <div>
-        {" "}
-        <i className="fas fa-spinner"></i>{" "}
+      <div style={{ textAlign: "center", marginTop: "20%" }}>
+        <SpinnerComponent />
       </div>
     );
   } else
@@ -97,8 +108,37 @@ const Doctorprofile = () => {
               <hr />
             </div>
             <div className="form-holder">
+              {/* Profile Image  */}
+
               <div className="form">
                 <form Validate onSubmit={onSubmit}>
+                  <div className="row">
+                    <div class="col-md-12">
+                      <img
+                        class="rounded-circle z-depth-2"
+                        alt="120x120"
+                        src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                        data-holder-rendered="true"
+                      />
+                      {/* <Form.File
+                        id="exampleFormControlFile1"
+                        label="Example file input"
+                      /> */}
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="form-group col-md-12">
+                      <h2
+                        style={{
+                          backgroundColor: "#1c2237",
+                          color: "white",
+                          borderRadius: "15px",
+                        }}
+                      >
+                        PERSONAL INFORMATION
+                      </h2>
+                    </div>
+                  </div>
                   <div className="row">
                     <div className="form-group col-md-6">
                       <label htmlFor="inputAddress">First Name</label>
@@ -169,7 +209,20 @@ const Doctorprofile = () => {
                       </span>
                     </div>
                   </div>
-                  {/* password */}
+                  <div className="row">
+                    <div className="form-group col-md-12">
+                      <h2
+                        style={{
+                          backgroundColor: "#1c2237",
+                          color: "white",
+                          borderRadius: "15px",
+                        }}
+                      >
+                        CLINIC INFORMATION
+                      </h2>
+                    </div>
+                  </div>
+
                   <div className="row">
                     <div className="form-group col-md-6 ">
                       <label htmlFor="inputDesignation">Designation</label>
@@ -278,6 +331,7 @@ const Doctorprofile = () => {
                       />
                     </div>
                   </div>
+                  {/* UPDATE PASSWORD */}
                   <div className="row">
                     <div className="form-group col-md-6">
                       <label htmlFor="inputPassword4">Password</label>
@@ -301,12 +355,14 @@ const Doctorprofile = () => {
                         id="inputPassword4"
                         placeholder="Confirm Password"
                         onChange={(e) => {
-                          setConfirmPassword(e.target.value);
+                          setValidateInfo({ confirmPassword: e.target.value });
                         }}
                       />
                     </div>
                   </div>
-
+                  {authContext.error.isError ? (
+                    <Error message={authContext.error.errorMsg} />
+                  ) : null}
                   <div className="form-group col-md-6">
                     {/* <input name="ProfileImage" type="file" className="form-control" id="profileimage" placeholder="Profile picture" name="profileimage" style={{display:""}} onChange={fileSelectedHandler}/> */}
                   </div>

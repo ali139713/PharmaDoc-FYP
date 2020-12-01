@@ -81,7 +81,7 @@ function App() {
           component={Payment}
         />
         <PrivateRoute
-          path={"/userprofile"}
+          path={"/profile"}
           roles={["Patient"]}
           component={UserProfile}
         />

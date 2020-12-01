@@ -139,7 +139,7 @@ userRouter.post("/reset-password", (req, res) => {
     });
   });
 });
-// Set New Password
+// Set New Password (Forgot Password)
 userRouter.post("/new-password", (req, res) => {
   const newPassword = req.body.password;
   const sentToken = req.body.token;
