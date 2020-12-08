@@ -8,7 +8,9 @@ import SpinnerComponent from "../../components/Spinner/Spinner";
 import Error from "../../components/Error";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
-
+import FormFile from "react-bootstrap/FormFile";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 const Doctorprofile = () => {
   const authContext = useContext(AuthContext);
   const [firstName, setFirstName] = useState();
@@ -22,10 +24,7 @@ const Doctorprofile = () => {
   const [services, setServices] = useState([]);
   const [certificates, setCertificates] = useState([]);
   const [fee, setFee] = useState();
-  const [password, setPassword] = useState();
-  const [validateInfo, setValidateInfo] = useState({
-    comfirmPassword: "",
-  });
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   const doctorProfileInfo = async () => {
@@ -49,43 +48,38 @@ const Doctorprofile = () => {
     });
   };
 
-  console.log("Password : ", password);
-  console.log("ConfirmPassword : ", validateInfo.confirmPassword);
   useEffect(() => {
     doctorProfileInfo();
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (password !== validateInfo.confirmPassword) {
-      authContext.setError({
-        isError: true,
-        errorMsg: "Password and Confirm Password do not Match",
-      });
-    } else {
-      const ID = authContext.user._id;
-      Axios.patch("/user/update/doctorProfile/" + ID, {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        cellNumber: cellNumber,
-        specialization: designation,
-        address: address,
-        city: city,
-        PMDC: PMDC,
-        services: services,
-        certificates: certificates,
-        fee: fee,
-        password: password,
-      })
 
-        .then((res) => {
-          // console.log("res", res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    const ID = authContext.user._id;
+    Axios.patch("/user/update/doctorProfile/" + ID, {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      cellNumber: cellNumber,
+      specialization: designation,
+      address: address,
+      city: city,
+      PMDC: PMDC,
+      services: services,
+      certificates: certificates,
+      fee: fee,
+    })
+
+      .then((res) => {
+        // console.log("res", res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const profilePictureUpload = (e) => {
+    e.preventDefault();
   };
 
   if (isLoaded === false) {
@@ -113,17 +107,30 @@ const Doctorprofile = () => {
               <div className="form">
                 <form Validate onSubmit={onSubmit}>
                   <div className="row">
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                       <img
                         class="rounded-circle z-depth-2"
                         alt="120x120"
                         src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
                         data-holder-rendered="true"
                       />
-                      {/* <Form.File
+                    </div>
+                    <div className="col-md-6">
+                      <Form.File
                         id="exampleFormControlFile1"
                         label="Example file input"
-                      /> */}
+                      />
+                    </div>
+                    <div style={{ textAlign: "right" }} className="col-md-6">
+                      {" "}
+                      <Button
+                        style={{ width: "max-content" }}
+                        Variant="primary"
+                        onChange={profilePictureUpload}
+                      >
+                        {" "}
+                        Upload Profile
+                      </Button>
                     </div>
                   </div>
                   <div className="row">
@@ -332,34 +339,7 @@ const Doctorprofile = () => {
                     </div>
                   </div>
                   {/* UPDATE PASSWORD */}
-                  <div className="row">
-                    <div className="form-group col-md-6">
-                      <label htmlFor="inputPassword4">Password</label>
-                      <input
-                        name="Password"
-                        type="password"
-                        className="form-control"
-                        id="inputPassword4"
-                        placeholder="Password"
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                        }}
-                      />
-                    </div>
-                    <div className="form-group col-md-6">
-                      <label htmlFor="inputPassword4">Confirm Password</label>
-                      <input
-                        name="confirmPassword"
-                        type="password"
-                        className="form-control"
-                        id="inputPassword4"
-                        placeholder="Confirm Password"
-                        onChange={(e) => {
-                          setValidateInfo({ confirmPassword: e.target.value });
-                        }}
-                      />
-                    </div>
-                  </div>
+
                   {authContext.error.isError ? (
                     <Error message={authContext.error.errorMsg} />
                   ) : null}

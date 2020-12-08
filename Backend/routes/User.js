@@ -139,6 +139,31 @@ userRouter.post("/reset-password", (req, res) => {
     });
   });
 });
+// Set New Password by their Profile
+userRouter.post("/change-password", (req, res) => {
+  const userID = req.body.userInfo._id;
+  const newPassword = req.body.userInfo.password;
+  User.findOne({ _id: userID }, (err, user) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ message: { msgBody: "Error has occured", msgError: true } });
+    }
+    if (!user) {
+      res.status(400).json({
+        message: { msgBody: "User Cannot exist", msgError: true },
+      });
+    } else {
+      user.password = newPassword;
+      user.save().then((saveduser) => {
+        res.json({
+          msgBody: "Password Update Successfully",
+          msgError: false,
+        });
+      });
+    }
+  });
+});
 // Set New Password (Forgot Password)
 userRouter.post("/new-password", (req, res) => {
   const newPassword = req.body.password;
@@ -261,6 +286,53 @@ userRouter.get("/getUser", (req, res, next) => {
 // Update Doctor Profile
 userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
   const id = req.params.id;
+  // if (req.body.password !== "") {
+  //   console.log("I am not Empty");
+  //   console.log("User Object  : ", req.body);
+  //   bcrypt.hash(req.body.password, 10, async (err, passwordHash) => {
+  //     if (err) return next(err);
+  //     req.body.password = passwordHash;
+  //     const userObject = {
+  //       firstName: req.body.firstName,
+  //       lastName: req.body.lastName,
+  //       cellNumber: req.body.cellNumber,
+  //       specialization: req.body.specialization,
+  //       pmdc: req.body.pmdc,
+  //       address: req.body.address,
+  //       city: req.body.city,
+  //       certificates: req.body.certificates,
+  //       services: req.body.services,
+  //       fee: req.body.fee,
+  //       password: req.body.password,
+  //     };
+  //     console.log("passwordHash", passwordHash);
+  //     // next();
+  //     await User.findByIdAndUpdate({ _id: id }, userObject).then(function (
+  //       data
+  //     ) {
+  //       if (!User) {
+  //         console.log("Invalid Id");
+  //       } else {
+  //         User.findOne({ _id: id }).then(function (data) {
+  //           // res.send(data);
+  //         });
+  //       }
+  //     });
+  //   });
+  // } else {
+  // const userObject = {
+  //   firstName: req.body.firstName,
+  //   lastName: req.body.lastName,
+  //   cellNumber: req.body.cellNumber,
+  //   specialization: req.body.specialization,
+  //   pmdc: req.body.pmdc,
+  //   address: req.body.address,
+  //   city: req.body.city,
+  //   certificates: req.body.certificates,
+  //   services: req.body.services,
+  //   fee: req.body.fee,
+  // };
+  console.log("User Object  : ", req.body);
   await User.findByIdAndUpdate({ _id: id }, req.body).then(function (data) {
     if (!User) {
       console.log("Invalid Id");
@@ -270,6 +342,7 @@ userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
       });
     }
   });
+  // }
 });
 
 /// Delete User By id ///

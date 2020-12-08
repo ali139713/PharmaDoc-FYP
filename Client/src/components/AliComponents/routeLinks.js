@@ -17,4 +17,10 @@ export default [
     label: "My Orders",
     selected: false,
   },
+  {
+    id: "changePassword",
+    path: "/changePassword",
+    label: "Change Password",
+    selected: false,
+  },
 ];

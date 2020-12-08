@@ -15,6 +15,7 @@ import NewPassword from "./components/SetNewPassword/NewPassword";
 import LabDashboard from "./components/LabPortal/Labdashboard";
 import DoctorPortal from "./components/DoctorPortal/Doctorappointments";
 import DoctorProfile from "./components/DoctorPortal/Doctorprofile";
+import DoctorChangePassword from "./components/DoctorPortal/ChangePassword";
 import UserAppointments from "./components/UserPortal/userAppointments";
 import UserProfile from "./components/UserPortal/userProfile";
 import UserOrders from "./components/UserPortal/userOrders";
@@ -101,6 +102,12 @@ function App() {
           path="/doctor-profile"
           roles={["Doctor"]}
           component={DoctorProfile}
+        />
+        <PrivateRoute
+          exact
+          path="/changePassword"
+          roles={["Doctor"]}
+          component={DoctorChangePassword}
         />
 
         <PrivateRoute
