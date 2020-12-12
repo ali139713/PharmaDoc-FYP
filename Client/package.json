@@ -55,6 +55,7 @@
     "react-search-field": "^1.1.0",
     "react-stripe-checkout": "^2.6.3",
     "react-swipeable-views": "^0.13.9",
+    "react-tabs": "^3.1.1",
     "react-time-picker": "^4.0.1",
     "react-timeslot-calendar": "^0.2.0",
     "react-toastify": "^6.1.0",

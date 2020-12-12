@@ -4,27 +4,32 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { Button } from "reactstrap";
 // import jsonData from '../../Backend/orders.json';
 
 const DoctorAppointmentsGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
 
-  // const [rowData, setRowData] = useState(jsonData.data);
   const [rowData, setRowData] = useState(props.rowData);
-  console.log(rowData);
+  console.log("rowData", rowData);
 
-  /*
- 
+  const data = [
+    {
+      patientName: props.patientName,
+    },
+    console.log("PatientName", props.rowData[0].patientName),
+  ];
+  const columnDfs = [{ headerName: "Patient Name", field: "patientName" }];
+  console.log("columnDfs:", columnDfs);
   function onGridReady(params) {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
   }
- 
-  
-    const httpRequest = new XMLHttpRequest();
-    
-/*
+
+  const httpRequest = new XMLHttpRequest();
+
+  /*
     httpRequest.open(
       'GET',
       'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinnersSmall.json'
@@ -69,17 +74,22 @@ const DoctorAppointmentsGrid = (props) => {
           paginationAutoPageSize={true}
           pagination={true}
           //onGridReady={onGridReady}//
-          rowData={rowData}
+          rowData={data}
+          columnDefs={columnDfs}
         >
-          <AgGridColumn field="patientName"></AgGridColumn>
+          {/* <AgGridColumn field="patientName"></AgGridColumn>
           <AgGridColumn field="appointmentDate"></AgGridColumn>
           <AgGridColumn field="appointmentTime"></AgGridColumn>
-          <AgGridColumn field="patientCellNumber"></AgGridColumn>
-
-          {/* <AgGridColumn field="Status"></AgGridColumn> */}
-          {/* <AgGridColumn field="Type"></AgGridColumn> */}
-          {/* <AgGridColumn field="OrderDate"></AgGridColumn> */}
-          {/* <AgGridColumn field="Total"></AgGridColumn> */}
+          <AgGridColumn field="patientCellNumber"></AgGridColumn> */}
+          {/* <AgGridColumn
+            headerName="Action"
+            cellRendererFramework={
+              <div>
+                {" "}
+                <Button>Add </Button>
+              </div>
+            }
+          ></AgGridColumn> */}
         </AgGridReact>
       </div>
     </div>

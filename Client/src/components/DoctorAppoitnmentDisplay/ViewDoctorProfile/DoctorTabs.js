@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box";
 import DoctorRating from "./DoctorRating";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  console.log("props", props);
   return (
     <div
       role="tabpanel"
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DoctorTabs() {
+export default function DoctorTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);

@@ -30,11 +30,11 @@ const DoctorProfileCard = () => {
     filter = response.data.doctors.filter((t) => t.status === "Approved");
     setApprovedDoctors(filter);
   };
-  console.log("Approved Doctors", approvedDoctors);
+  // console.log("Approved Doctors", approvedDoctors);
   useEffect(() => {
     getDoctors();
   }, []);
-  console.log("doctorInfo", doctorInfo);
+  // console.log("doctorInfo", doctorInfo);
   const DoctorCardDisplay = approvedDoctors.map((doctor) => {
     return (
       <div key={doctor._id} className="container rounded my-5 py-2 customCard">
@@ -42,7 +42,8 @@ const DoctorProfileCard = () => {
           <div className="col-sm-4">
             <Avatar
               style={{ margin: "5%" }}
-              src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+              // src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+              src={doctor.profilePicture}
               size="160"
               round={true}
             />

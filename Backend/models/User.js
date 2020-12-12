@@ -74,6 +74,9 @@ const UserSchema = new mongoose.Schema({
   status: {
     type: String,
   },
+  profilePicture: {
+    type: String,
+  },
 });
 
 UserSchema.pre("save", function (next) {

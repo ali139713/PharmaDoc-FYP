@@ -24,6 +24,7 @@ const Doctorprofile = () => {
   const [services, setServices] = useState([]);
   const [certificates, setCertificates] = useState([]);
   const [fee, setFee] = useState();
+  const [profileImage, setProfileImage] = useState();
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -33,6 +34,7 @@ const Doctorprofile = () => {
         _id: authContext.user._id,
       },
     }).then(async (res) => {
+      console.log("res", res);
       setFirstName(res.data.users[0].firstName);
       setLastName(res.data.users[0].lastName);
       setCellNumber(res.data.users[0].cellNumber);
@@ -44,6 +46,7 @@ const Doctorprofile = () => {
       setCertificates(res.data.users[0].certificates);
       setServices(res.data.users[0].services);
       setFee(res.data.users[0].fee);
+      setProfileImage(res.data.users[0].profilePicture);
       setIsLoaded(true);
     });
   };
@@ -51,6 +54,19 @@ const Doctorprofile = () => {
   useEffect(() => {
     doctorProfileInfo();
   }, []);
+
+  // image upload
+  const fileSelectedHandler = async (event) => {
+    const file = event.target.files[0];
+    const fd = new FormData();
+    fd.append("profileImage", file, file.name);
+    const response = await Axios.post(
+      "http://localhost:5000/user/uploadProfileImage",
+      fd
+    );
+
+    setProfileImage(response.data);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -64,14 +80,14 @@ const Doctorprofile = () => {
       specialization: designation,
       address: address,
       city: city,
-      PMDC: PMDC,
+      pmdc: PMDC,
       services: services,
       certificates: certificates,
       fee: fee,
     })
 
       .then((res) => {
-        // console.log("res", res);
+        console.log("res", res);
       })
       .catch((err) => {
         console.log(err);
@@ -80,8 +96,15 @@ const Doctorprofile = () => {
 
   const profilePictureUpload = (e) => {
     e.preventDefault();
+    // const Obj = {
+    //   profilePicture: profileImage,
+    // };
+    const ID = authContext.user._id;
+    Axios.patch("/user/update/doctorProfile/" + ID, {
+      profilePicture: profileImage,
+    });
   };
-
+  console.log("Profile Image", profileImage);
   if (isLoaded === false) {
     return (
       <div style={{ textAlign: "center", marginTop: "20%" }}>
@@ -109,24 +132,34 @@ const Doctorprofile = () => {
                   <div className="row">
                     <div className="col-md-12">
                       <img
-                        class="rounded-circle z-depth-2"
+                        class="rounded-circle"
                         alt="120x120"
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                        src={profileImage}
                         data-holder-rendered="true"
                       />
                     </div>
                     <div className="col-md-6">
-                      <Form.File
+                      {/* <Form.File
                         id="exampleFormControlFile1"
                         label="Example file input"
-                      />
+                      /> */}
+                      <div>
+                        <input
+                          style={{ size: "10%" }}
+                          type="file"
+                          id="profileImage"
+                          placeholder="Profile Image"
+                          name="profileImage"
+                          onChange={fileSelectedHandler}
+                        />
+                      </div>
                     </div>
                     <div style={{ textAlign: "right" }} className="col-md-6">
                       {" "}
                       <Button
                         style={{ width: "max-content" }}
                         Variant="primary"
-                        onChange={profilePictureUpload}
+                        onClick={profilePictureUpload}
                       >
                         {" "}
                         Upload Profile
@@ -338,7 +371,6 @@ const Doctorprofile = () => {
                       />
                     </div>
                   </div>
-                  {/* UPDATE PASSWORD */}
 
                   {authContext.error.isError ? (
                     <Error message={authContext.error.errorMsg} />

@@ -65,6 +65,11 @@ function App() {
           roles={["Doctor"]}
           component={DoctorPortal}
         />
+        <Route
+          exact
+          path="/doctors-cards/doctor-profile/:id"
+          component={ViewDoctorProfile}
+        />
         <PrivateRoute
           path={"/doctors-cards/book-appointment/:id"}
           roles={["Patient"]}
@@ -126,11 +131,6 @@ function App() {
         <Route path="/medicines" component={MedicineCartMain} />
         <Route exact path="/doctors-category" component={DoctorCategory} />
         <Route exact path="/doctors-cards" component={DoctorProfileCard} />
-        <Route
-          exact
-          path="/doctors-cards/doctor-profile/:id"
-          component={ViewDoctorProfile}
-        />
       </Switch>
       <Footer />
     </Router>

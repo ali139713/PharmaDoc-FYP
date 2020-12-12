@@ -7,6 +7,38 @@ const User = require("../models/User");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
+userRouter.use(express.static(__dirname + "../../FYP/Client/public/"));
+
+var Storage = multer.diskStorage({
+  destination: "../../FYP/Client/public/Uploads/",
+
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: Storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
+
 // Sign Token
 const signToken = (userID) => {
   return JWT.sign(
@@ -164,6 +196,19 @@ userRouter.post("/change-password", (req, res) => {
     }
   });
 });
+
+// Update profile picture by their profile
+userRouter.post(
+  "/uploadProfileImage",
+  upload.single("profileImage"),
+  (req, res, next) => {
+    console.log(req.file);
+    const imagepath = req.file.path.substr(23);
+    // const imagepath = req.file.path;
+
+    res.status(201).send(req.file.path.substr(23));
+  }
+);
 // Set New Password (Forgot Password)
 userRouter.post("/new-password", (req, res) => {
   const newPassword = req.body.password;
@@ -206,7 +251,7 @@ userRouter.get(
 userRouter.get("/getDoctors", (req, res, next) => {
   User.find({ role: "Doctor" })
     .select(
-      " _id firstName lastName email specialization certificates cellNumber fee address status"
+      " _id firstName lastName email specialization certificates cellNumber fee address status profilePicture"
     )
     .exec()
     .then((docs) => {
@@ -225,6 +270,7 @@ userRouter.get("/getDoctors", (req, res, next) => {
             fee: doc.fee,
             address: doc.address,
             status: doc.status,
+            profilePicture: doc.profilePicture,
           };
         }),
       };
@@ -244,7 +290,7 @@ userRouter.get("/getUser", (req, res, next) => {
   const userID = req.query;
   User.find({ _id: userID })
     .select(
-      " _id firstName lastName email address cellNumber dateOfBirth startTime endTime apointmentInterval city specialization fee pmdc certificates services"
+      " _id firstName lastName email address cellNumber dateOfBirth startTime endTime apointmentInterval city specialization fee pmdc certificates services profilePicture"
     )
     .exec()
     .then((users) => {
@@ -269,6 +315,7 @@ userRouter.get("/getUser", (req, res, next) => {
             certificates: user.certificates,
             services: user.services,
             apointmentInterval: user.apointmentInterval,
+            profilePicture: user.profilePicture,
           };
         }),
       };
@@ -286,52 +333,7 @@ userRouter.get("/getUser", (req, res, next) => {
 // Update Doctor Profile
 userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
   const id = req.params.id;
-  // if (req.body.password !== "") {
-  //   console.log("I am not Empty");
-  //   console.log("User Object  : ", req.body);
-  //   bcrypt.hash(req.body.password, 10, async (err, passwordHash) => {
-  //     if (err) return next(err);
-  //     req.body.password = passwordHash;
-  //     const userObject = {
-  //       firstName: req.body.firstName,
-  //       lastName: req.body.lastName,
-  //       cellNumber: req.body.cellNumber,
-  //       specialization: req.body.specialization,
-  //       pmdc: req.body.pmdc,
-  //       address: req.body.address,
-  //       city: req.body.city,
-  //       certificates: req.body.certificates,
-  //       services: req.body.services,
-  //       fee: req.body.fee,
-  //       password: req.body.password,
-  //     };
-  //     console.log("passwordHash", passwordHash);
-  //     // next();
-  //     await User.findByIdAndUpdate({ _id: id }, userObject).then(function (
-  //       data
-  //     ) {
-  //       if (!User) {
-  //         console.log("Invalid Id");
-  //       } else {
-  //         User.findOne({ _id: id }).then(function (data) {
-  //           // res.send(data);
-  //         });
-  //       }
-  //     });
-  //   });
-  // } else {
-  // const userObject = {
-  //   firstName: req.body.firstName,
-  //   lastName: req.body.lastName,
-  //   cellNumber: req.body.cellNumber,
-  //   specialization: req.body.specialization,
-  //   pmdc: req.body.pmdc,
-  //   address: req.body.address,
-  //   city: req.body.city,
-  //   certificates: req.body.certificates,
-  //   services: req.body.services,
-  //   fee: req.body.fee,
-  // };
+
   console.log("User Object  : ", req.body);
   await User.findByIdAndUpdate({ _id: id }, req.body).then(function (data) {
     if (!User) {
@@ -342,7 +344,6 @@ userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
       });
     }
   });
-  // }
 });
 
 /// Delete User By id ///

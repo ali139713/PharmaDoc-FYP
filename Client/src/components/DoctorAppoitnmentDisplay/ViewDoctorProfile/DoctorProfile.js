@@ -2,16 +2,20 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Avatar from "react-avatar";
+// import DoctorTabs from "./DoctorTabs";
+import DctorProfileTabs from "./DctorProfileTabs";
 import DoctorTabs from "./DoctorTabs";
 export default function ViewDoctorProfile(props) {
   const {
     match: { params },
   } = props;
+
   let [doctorID, setDoctorID] = useState(params.id);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [specialization, setSpecialization] = useState();
   const [Education, setEducation] = useState();
+  const [profilePicture, setProfilePicture] = useState();
 
   const doctorProfileInfo = async () => {
     await Axios.get("/user/getUser", {
@@ -23,6 +27,7 @@ export default function ViewDoctorProfile(props) {
       setLastName(res.data.users[0].lastName);
       setSpecialization(res.data.users[0].specialization);
       setEducation(res.data.users[0].certificates);
+      setProfilePicture(res.data.users[0].profilePicture);
     });
   };
 
@@ -41,7 +46,8 @@ export default function ViewDoctorProfile(props) {
       <div className="row border border-dark rounded shadow-sm my-5 p-1">
         <div className="col-sm-3">
           <Avatar
-            src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+            // src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+            src={profilePicture}
             size="160"
             round={true}
           />
@@ -54,7 +60,7 @@ export default function ViewDoctorProfile(props) {
           <br></br>
           <span>{Education}</span>
           <hr></hr>
-          <DoctorTabs />
+          <DctorProfileTabs doctorID={doctorID} />
         </div>
       </div>
     </div>

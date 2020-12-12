@@ -1,0 +1,12 @@
+.react-tabs__tab--selected {
+  background-color: #1c2237 !important;
+  color: white !important;
+}
+.react-tabs__tab {
+  background-color: white;
+  color: black;
+}
+.react-tabs__tab:hover {
+  background-color: #ffc107;
+  color: black;
+}
