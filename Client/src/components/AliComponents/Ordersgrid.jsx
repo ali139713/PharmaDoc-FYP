@@ -1,11 +1,11 @@
+import React, { useState } from "react";
+import "./grid.scss";
+import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import "ag-grid-enterprise";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import BtnCellRenderer from "./BtnCellRenderer";
 
-import React, { useState } from 'react';
-import './grid.scss';
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import { GroupCellRenderer } from 'ag-grid-community';
 // import jsonData from '../../Backend/orders.json';
 
 const Ordersgrid = (props) => {
@@ -14,8 +14,7 @@ const Ordersgrid = (props) => {
 
   // const [rowData, setRowData] = useState(jsonData.data);
   const [rowData, setRowData] = useState(props.data);
- 
-  
+
   /*
  
   function onGridReady(params) {
@@ -38,19 +37,37 @@ const Ordersgrid = (props) => {
       }
     };
     */
-  
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <div
         id="myGrid"
         style={{
-          height: '100%',
-          width: '100%',
+          height: "100%",
+          width: "100%",
         }}
         className="ag-theme-alpine"
       >
         <AgGridReact
+          autoGroupColumnDef={{
+            headerName: "Group",
+            minWidth: 170,
+            field: "videocall",
+            valueGetter: function (params) {
+              if (params.node.group) {
+                return params.node.key;
+              } else {
+                return params.data[params.colDef.field];
+              }
+            },
+            cellRenderer: "btnCellRenderer",
+            cellRendererParams: {
+              clicked: function (field) {
+                alert(`${field} was clicked`);
+              },
+            },
+            minWidth: 150,
+          }}
           defaultColDef={{
             editable: true,
             enableRowGroup: true,
@@ -61,26 +78,23 @@ const Ordersgrid = (props) => {
             filter: true,
             flex: 1,
             minWidth: 100,
-            cellRenderer:GroupCellRenderer,
-            showRowGroup:true
+            showRowGroup: true,
           }}
           suppressRowClickSelection={true}
           groupSelectsChildren={true}
           debug={true}
-          rowSelection={'multiple'}
-          rowGroupPanelShow={'always'}
-          pivotPanelShow={'always'}
+          rowSelection={"multiple"}
+          rowGroupPanelShow={"always"}
+          pivotPanelShow={"always"}
           enableRangeSelection={true}
           autoGroupColumnDef={true}
           checkboxSelection={true}
           enableRangeSelection={true}
           paginationAutoPageSize={true}
           pagination={true}
-           //onGridReady={onGridReady}//
+          //onGridReady={onGridReady}//
           rowData={rowData}
         >
-         
-         
           <AgGridColumn field="customerName"></AgGridColumn>
           <AgGridColumn field="address"></AgGridColumn>
           <AgGridColumn field="city"></AgGridColumn>
@@ -89,10 +103,20 @@ const Ordersgrid = (props) => {
           <AgGridColumn field="orderStatus"></AgGridColumn>
           <AgGridColumn field="paymentMethod"></AgGridColumn>
           <AgGridColumn field="totalAmount"></AgGridColumn>
+          {/* <AgGridColumn field ="videocall"></AgGridColumn>  */}
+          <AgGridColumn
+            headerName="VideoCall"
+            field="videocall"
+            minWidth={170}
+            cellRendererFramework={BtnCellRenderer}
+          />
         </AgGridReact>
       </div>
     </div>
   );
+};
+var cellRenderer = function (params) {
+  return <button>Click</button>;
 };
 
 var checkboxSelection = function (params) {

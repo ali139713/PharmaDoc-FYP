@@ -132,10 +132,11 @@ const Doctorprofile = () => {
                   <div className="row">
                     <div className="col-md-12">
                       <img
-                        class="rounded-circle"
+                        class="rounded-circle z-depth-2"
                         alt="120x120"
                         src={profileImage}
                         data-holder-rendered="true"
+                        style={{ width: "13rem", height: "14rem" }}
                       />
                     </div>
                     <div className="col-md-6">

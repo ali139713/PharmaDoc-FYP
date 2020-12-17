@@ -32,6 +32,7 @@ const orderRouter = require("./routes/Order");
 const stripeRouter = require("./routes/Stripe");
 const labtestOrderRouter = require("./routes/LabTestOrder");
 const pharmacyRouter = require("./routes/Pharmacy");
+const PrescriptionRouter = require("./routes/AddPrescription");
 
 app.use("/user", userRouter);
 app.use("/medicine", medicineRouter);
@@ -42,6 +43,8 @@ app.use("/order", orderRouter);
 app.use("/stripe", stripeRouter);
 app.use("/labtestorder", labtestOrderRouter);
 app.use("/pharmacy", pharmacyRouter);
+app.use("/AddPrescription", PrescriptionRouter);
+
 //   port
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

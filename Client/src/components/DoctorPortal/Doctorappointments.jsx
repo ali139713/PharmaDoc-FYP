@@ -73,8 +73,8 @@ const Doctorappointments = () => {
         console.log(err);
       });
   };
-  console.log("ID", doctorID);
-  console.log("doctorAppointment", doctorAppointment);
+  // console.log("ID", doctorID);
+  // console.log("doctorAppointment", doctorAppointment);
   if (isLoaded === false) {
     return (
       <div style={{ textAlign: "center", marginTop: "20%" }}>

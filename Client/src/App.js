@@ -29,7 +29,8 @@ import TestPayment from "./components/LabPortal/Testpayment";
 import ChoosePharmacy from "./components/MedicinesCart/ChoosePharmacy";
 import PrivateRoute from "./hocs/PrivateRoute";
 import UnPrivateRoute from "./hocs/UnPrivateRoute";
-
+import AddPrescription from "./components/DoctorPortal/AddPrescription/AddPrescription";
+import AddPrescriptionNew from "./components/DoctorPortal/AddPrescription/AddPrescriptionNew";
 function App() {
   return (
     <Router>
@@ -61,6 +62,7 @@ function App() {
         <UnPrivateRoute path="/admin" component={AdminDashboard} />
         <UnPrivateRoute path="/sign-up" component={SignUp} />
         <PrivateRoute
+          exact
           path="/doctorappointments"
           roles={["Doctor"]}
           component={DoctorPortal}
@@ -85,6 +87,12 @@ function App() {
           path={"/payment"}
           roles={["Patient"]}
           component={Payment}
+        />
+        <PrivateRoute
+          exact
+          path={"/doctorappointments/addPrescription/:id"}
+          roles={["Doctor"]}
+          component={AddPrescriptionNew}
         />
         <PrivateRoute
           path={"/profile"}
