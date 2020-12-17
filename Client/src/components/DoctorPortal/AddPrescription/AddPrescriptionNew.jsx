@@ -4,6 +4,7 @@ import { AuthContext } from "../../../Context/AuthContext";
 
 const AddPrescriptionNew = (props) => {
   const authContext = useContext(AuthContext);
+  // const [doctorID, setDoctorID] = useState(authContext.doctorID);
   const {
     match: { params },
   } = props;
@@ -22,7 +23,7 @@ const AddPrescriptionNew = (props) => {
   };
   console.log("params in add Prescription", params);
 
-  console.log("props in add Prescription", props);
+  // console.log("props in add Prescription", props);
   const handleRemoveFields = (index) => {
     if (inputFields.length > 1) {
       const values = [...inputFields];
@@ -43,13 +44,14 @@ const AddPrescriptionNew = (props) => {
 
     setInputFields(values);
   };
+  console.log("user ID Params", params);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("inputFields", inputFields);
     const newPrescription = {
-      doctorID: authContext.doctorID,
-      userID: params.id,
+      userID: params.userID,
+      doctorID: params.doctorID,
       prescription: inputFields,
     };
     await Axios.post("/AddPrescription/registerPrescription/:id", {
