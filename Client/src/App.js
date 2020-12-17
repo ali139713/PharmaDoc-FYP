@@ -90,7 +90,7 @@ function App() {
         />
         <PrivateRoute
           exact
-          path={"/doctorappointments/addPrescription/:userID,:doctorID"}
+          path={"/doctorappointments/addPrescription/:userID/:doctorID"}
           roles={["Doctor"]}
           component={AddPrescriptionNew}
         />

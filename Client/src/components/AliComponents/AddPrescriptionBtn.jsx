@@ -11,7 +11,7 @@ export default function AddPrescription(props) {
   console.log("user ID BTN", userID);
   console.log("doctor ID BTN", doctorID);
   return (
-    <Link to={`/doctorappointments/addPrescription/${userID},${doctorID}`}>
+    <Link to={`/doctorappointments/addPrescription/${userID}/${doctorID}`}>
       <button onClick={btnClickedHandler}>Add Prescription</button>
     </Link>
   );
