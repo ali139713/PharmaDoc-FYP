@@ -44,7 +44,6 @@ const AddPrescriptionNew = (props) => {
 
     setInputFields(values);
   };
-  console.log("user ID Params", params);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

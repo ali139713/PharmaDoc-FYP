@@ -68,6 +68,12 @@ const DoctorAppointmentsGrid = (props) => {
             minWidth={170}
             cellRendererFramework={AddPrescriptionBtn}
           />
+          <AgGridColumn
+            headerName="Add Diagnosis"
+            field="adddiagnosis"
+            minWidth={170}
+            cellRendererFramework={AddPrescriptionBtn}
+          />
         </AgGridReact>
       </div>
     </div>

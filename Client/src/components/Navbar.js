@@ -6,6 +6,8 @@ import { Button } from "../Button";
 import "./Navbar.css";
 import { IconContext } from "react-icons/lib";
 import AuthService from "../Services/AuthServices";
+import Dropdown from "react-bootstrap/Dropdown";
+
 // ContextAPI
 import { AuthContext } from "../Context/AuthContext";
 function Navbar() {
@@ -47,8 +49,8 @@ function Navbar() {
     return (
       <>
         {" "}
-        <li className="nav-btn">
-          {button ? (
+        <li style={{ marginTop: "20px" }}>
+          {/* {button ? (
             <Button
               onClick={logoutHandler}
               className="btn-link"
@@ -65,7 +67,43 @@ function Navbar() {
             >
               Logout
             </Button>
-          )}
+          )} */}
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="outline-primary"
+              id="dropdown-basic"
+              // className="site-button"
+            >
+              {/* <img
+                // src={require("../../images/team/noimage.png")}
+                alt=""
+                width="20"
+                height="20"
+                className="rounded-circle p-0 mb-1"
+              />{" "} */}
+              <span>
+                {user.firstName} {user.lastName}
+              </span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className=" rounded ">
+              <Dropdown.Item>
+                <Link to={"./"} className="dez-page">
+                  Proflile
+                </Link>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Link to={"./"} className="dez-page">
+                  Setting
+                </Link>
+              </Dropdown.Item>
+              <div className="dropdown-divider"></div>
+              <Dropdown.Item>
+                <Link to={"./"} className="dez-page" onClick={logoutHandler}>
+                  Logout
+                </Link>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </li>
       </>
     );

@@ -3,7 +3,7 @@ import Axios from "axios";
 import Navbar from "../AliComponents/navbar";
 import "../../style.scss";
 import routeLinks from "../AliComponents/routeLinksUser";
-import GridExample from "../AliComponents/patientAppointments";
+import UserPrescriptionGrid from "../AliComponents/UserPrescriptionGrid";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 import Tab from "../AliComponents/tabs";
 // ContextAPI
@@ -11,30 +11,35 @@ import { AuthContext } from "../../Context/AuthContext";
 
 const Userappointments = () => {
   const authContext = useContext(AuthContext);
-  var [userAppointment, setUserAppointment] = useState(0);
+  var [userPrescription, setUserPrescription] = useState();
   var [userID, setUserID] = useState(authContext.user._id);
   const [isLoaded, setisLoaded] = useState(false);
 
   const appointmentofUser = async () => {
-    await Axios.get("/appointment/getAppointments", {
+    await Axios.get("/AddPrescription/getPrescription", {
       params: {
         userID: userID,
       },
     }).then(async (res) => {
-      await setUserAppointment(res.data.appointments);
+      let array = [];
+
+      console.log("res of prescription", res.data.prescription);
+
+      for await (let variable of res.data.prescription) {
+        for await (let arr of variable.prescription) {
+          array.push(arr);
+        }
+      }
+      setUserPrescription(array);
+      console.log("new Array", array);
     });
-    //   console.log(authContext.isLoaded)
-    //   authContext.setIsLoaded(true)
-    setisLoaded(true);
   };
-  console.log("USER APPOINTMENTS ", userAppointment);
+  console.log("user Prescription Field", userPrescription);
   useEffect(() => {
     appointmentofUser();
   }, []);
 
-  console.log(userAppointment);
-  // console.log(authContext.isLoaded)
-  if (isLoaded === false) {
+  if (isLoaded === true) {
     return (
       <div style={{ textAlign: "center", marginTop: "20%" }}>
         <SpinnerComponent />
@@ -48,7 +53,7 @@ const Userappointments = () => {
         <div className="content">
           <div className="heading">
             <hr />
-            <h2> My Appointments... </h2>
+            <h2> My Prescription... </h2>
             <hr />
           </div>
         </div>
@@ -56,7 +61,7 @@ const Userappointments = () => {
         <Tab name="Active" secondName="Completed" />
 
         <div style={{ height: "500px" }}>
-          <GridExample rowData={userAppointment} />
+          <UserPrescriptionGrid rowData={userPrescription} />
         </div>
       </div>
     );
