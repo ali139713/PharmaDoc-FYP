@@ -33,6 +33,7 @@ const stripeRouter = require("./routes/Stripe");
 const labtestOrderRouter = require("./routes/LabTestOrder");
 const pharmacyRouter = require("./routes/Pharmacy");
 const PrescriptionRouter = require("./routes/AddPrescription");
+const DiagnosisRouter = require("./routes/AddDiagnosis");
 
 app.use("/user", userRouter);
 app.use("/medicine", medicineRouter);
@@ -44,6 +45,7 @@ app.use("/stripe", stripeRouter);
 app.use("/labtestorder", labtestOrderRouter);
 app.use("/pharmacy", pharmacyRouter);
 app.use("/AddPrescription", PrescriptionRouter);
+app.use("/AddDiagnosis", DiagnosisRouter);
 
 //   port
 const port = process.env.PORT || 5000;

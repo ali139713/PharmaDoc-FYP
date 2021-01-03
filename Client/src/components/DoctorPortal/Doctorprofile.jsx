@@ -7,7 +7,7 @@ import Axios from "axios";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 import Error from "../../components/Error";
 // ContextAPI
-import { AuthContext } from "../../Context/AuthContext";
+import AuthContext from "../../Context/AuthContext";
 import FormFile from "react-bootstrap/FormFile";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";

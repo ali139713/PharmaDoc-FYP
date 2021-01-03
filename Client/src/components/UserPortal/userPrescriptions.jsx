@@ -23,18 +23,32 @@ const Userappointments = () => {
     }).then(async (res) => {
       let array = [];
 
-      console.log("res of prescription", res.data.prescription);
+      // console.log("res of prescription", res.data);
 
-      for await (let variable of res.data.prescription) {
+      // for await (let variable of res.data) {
+      //   for await (let arr of variable.prescription) {
+      //     array.push(arr);
+
+      //   }
+      // }
+
+      for await (let variable of res.data) {
         for await (let arr of variable.prescription) {
+          arr.doctorName = variable.doctorName;
+          // console.log("Arr : ", arr);
           array.push(arr);
         }
       }
+
+      // const obj = {
+      //   prescription: array,
+      //   doctorName: res.data[0].doctorName,
+      // };
       setUserPrescription(array);
-      console.log("new Array", array);
+      // console.log("new Array", array);
     });
   };
-  console.log("user Prescription Field", userPrescription);
+  // console.log("user Prescription Field", userPrescription);
   useEffect(() => {
     appointmentofUser();
   }, []);

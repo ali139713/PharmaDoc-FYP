@@ -6,7 +6,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { Button } from "reactstrap";
 import AddPrescriptionBtn from "./AddPrescriptionBtn";
-
+import AddDiagnosisBtn from "./AddDiagnosisBtn";
 // import jsonData from '../../Backend/orders.json';
 
 const DoctorAppointmentsGrid = (props) => {
@@ -72,7 +72,7 @@ const DoctorAppointmentsGrid = (props) => {
             headerName="Add Diagnosis"
             field="adddiagnosis"
             minWidth={170}
-            cellRendererFramework={AddPrescriptionBtn}
+            cellRendererFramework={AddDiagnosisBtn}
           />
         </AgGridReact>
       </div>

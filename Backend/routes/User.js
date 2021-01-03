@@ -171,10 +171,35 @@ userRouter.post("/reset-password", (req, res) => {
     });
   });
 });
-// Set New Password by their Profile
+// Set New Password by Doctor Profile
 userRouter.post("/change-password", (req, res) => {
   const userID = req.body.userInfo._id;
   const newPassword = req.body.userInfo.password;
+  User.findOne({ _id: userID }, (err, user) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ message: { msgBody: "Error has occured", msgError: true } });
+    }
+    if (!user) {
+      res.status(400).json({
+        message: { msgBody: "User Cannot exist", msgError: true },
+      });
+    } else {
+      user.password = newPassword;
+      user.save().then((saveduser) => {
+        res.json({
+          msgBody: "Password Update Successfully",
+          msgError: false,
+        });
+      });
+    }
+  });
+});
+// Set New Password by user Profile
+userRouter.post("/user-change-password", (req, res) => {
+  const userID = req.body.user._id;
+  const newPassword = req.body.user.password;
   User.findOne({ _id: userID }, (err, user) => {
     if (err) {
       res
@@ -332,6 +357,21 @@ userRouter.get("/getUser", (req, res, next) => {
 
 // Update Doctor Profile
 userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
+  const id = req.params.id;
+
+  console.log("User Object  : ", req.body);
+  await User.findByIdAndUpdate({ _id: id }, req.body).then(function (data) {
+    if (!User) {
+      console.log("Invalid Id");
+    } else {
+      User.findOne({ _id: id }).then(function (data) {
+        res.send(data);
+      });
+    }
+  });
+});
+// Update User Profile
+userRouter.patch("/update/userProfile/:id", async (req, res, next) => {
   const id = req.params.id;
 
   console.log("User Object  : ", req.body);

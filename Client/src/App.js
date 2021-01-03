@@ -16,10 +16,12 @@ import LabDashboard from "./components/LabPortal/Labdashboard";
 import DoctorPortal from "./components/DoctorPortal/Doctorappointments";
 import DoctorProfile from "./components/DoctorPortal/Doctorprofile";
 import DoctorChangePassword from "./components/DoctorPortal/ChangePassword";
+import UserChangePassword from "./components/UserPortal/userChangePassword";
 import UserAppointments from "./components/UserPortal/userAppointments";
 import UserProfile from "./components/UserPortal/userProfile";
 import UserOrders from "./components/UserPortal/userOrders";
 import userPrescriptions from "./components/UserPortal/userPrescriptions";
+import userDiagnosis from "./components/UserPortal/userDiagnosis";
 import AdminDashboard from "./components/AdminPortal/adminDashboard";
 import PharmacyManagerDashboard from "./components/pharmacyManagerPortal/pharmacyManagerDashboard";
 import LabManagerProfile from "./components/LabManagerPortal/LabManagerProfile";
@@ -32,6 +34,7 @@ import PrivateRoute from "./hocs/PrivateRoute";
 import UnPrivateRoute from "./hocs/UnPrivateRoute";
 import AddPrescription from "./components/DoctorPortal/AddPrescription/AddPrescription";
 import AddPrescriptionNew from "./components/DoctorPortal/AddPrescription/AddPrescriptionNew";
+import AddDiagosis from "./components/DoctorPortal/AddDiagnosis/AddDiagosis";
 function App() {
   return (
     <Router>
@@ -96,6 +99,12 @@ function App() {
           component={AddPrescriptionNew}
         />
         <PrivateRoute
+          exact
+          path={"/doctorappointments/addDiagosis/:userID/:doctorID"}
+          roles={["Doctor"]}
+          component={AddDiagosis}
+        />
+        <PrivateRoute
           path={"/profile"}
           roles={["Patient"]}
           component={UserProfile}
@@ -109,6 +118,11 @@ function App() {
           path={"/userPrescriptions"}
           roles={["Patient"]}
           component={userPrescriptions}
+        />
+        <PrivateRoute
+          path={"/userDiagnosis"}
+          roles={["Patient"]}
+          component={userDiagnosis}
         />
         <PrivateRoute
           exact
@@ -127,6 +141,12 @@ function App() {
           path="/changePassword"
           roles={["Doctor"]}
           component={DoctorChangePassword}
+        />
+        <PrivateRoute
+          exact
+          path="/userchangePassword"
+          roles={["Patient"]}
+          component={UserChangePassword}
         />
 
         <PrivateRoute
