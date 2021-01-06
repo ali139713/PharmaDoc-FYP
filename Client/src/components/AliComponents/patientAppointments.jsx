@@ -5,7 +5,7 @@ import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // import jsonData from '../../Backend/orders.json';
-
+import CancelAppointmentBtn from "./CancelAppointmentBtn";
 const GridExample = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -76,6 +76,12 @@ const GridExample = (props) => {
           <AgGridColumn field="appointmentTime"></AgGridColumn>
           <AgGridColumn field="doctorCellNumber"></AgGridColumn>
           <AgGridColumn field="ClinicAddress"></AgGridColumn>
+          <AgGridColumn
+            headerName="Cancel Appointment"
+            field="adddiagnosis"
+            minWidth={170}
+            cellRendererFramework={CancelAppointmentBtn}
+          />
         </AgGridReact>
       </div>
     </div>

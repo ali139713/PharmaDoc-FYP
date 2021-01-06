@@ -223,5 +223,21 @@ AppointmentRouter.post("/disabledAppointments", (req, res, next) => {
       console.log("error: ", error);
     });
 });
+AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
+  const appointmentID = req.query._id;
+  const doctorID = req.query.doctorID;
+  const userID = req.query.userID;
 
+  console.log("appointmentID: ", appointmentID);
+  console.log("doctorID: ", doctorID);
+  console.log("userID: ", userID);
+  AppointmentWithDoctor.findByIdAndRemove({ _id: appointmentID })
+    .then((r) => {
+      console.log("res", r);
+      res.status(200).send(r);
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    });
+});
 module.exports = AppointmentRouter;
