@@ -26,6 +26,7 @@ const UserDiagnosis = () => {
       for await (let variable of res.data) {
         for await (let arr of variable.diagnose) {
           arr.doctorName = variable.doctorName;
+          arr.diagnosisID = variable.diagnosisID;
           //   console.log("Arr : ", arr);
           array.push(arr);
         }

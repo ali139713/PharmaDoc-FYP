@@ -71,16 +71,18 @@ DiagnosisRouter.get("/getDiagnosis", async (req, res) => {
   const userID = req.query.userID;
   let doctorName = "";
   AddDiagnosis.find({ userID: userID })
-    .select("diagnosis ,doctorID , doctorName")
+    .select("diagnosis ,doctorID , doctorName _id")
     .exec()
     .then(async (diagnosis) => {
       let response = [];
       for await (let item of diagnosis) {
         const diagnose = item.diagnosis;
         doctorName = item.doctorName;
+        diagnosisID = item._id;
         const obj = {
           diagnose,
           doctorName,
+          diagnosisID,
         };
         response.push(obj);
       }
@@ -93,5 +95,54 @@ DiagnosisRouter.get("/getDiagnosis", async (req, res) => {
         error: err,
       });
     });
+});
+// Delete Diagnosis
+// DiagnosisRouter.delete("/deletePrescription", async (req, res) => {
+//   let filterArray = [];
+//   const diagnosisID = req.query.prescriptionID;
+//   const medID = req.query.medID;
+//   console.log("PrescriptionID  :", prescriptionID);
+//   console.log("medID  :", medID);
+//   const pres = await AddPrescription.find({
+//     _id: prescriptionID,
+//   }).then(async (res) => {
+//     // console.log("res", res[0].prescription);
+//     filterArray = res[0].prescription.filter((p) => p.medID != medID);
+
+//     res[0].prescription = filterArray;
+
+//     if (res[0].prescription.length < 1) {
+//       await AddPrescription.findByIdAndRemove({ _id: prescriptionID });
+//     } else {
+//       await AddPrescription.findOneAndUpdate(
+//         { _id: prescriptionID },
+//         res[0]
+//       ).then(async (res) => console.log("res: ", res));
+//     }
+//     console.log("Filterr Array", filterArray);
+//   });
+// });
+
+DiagnosisRouter.delete("/deleteDiagnosis", async (req, res) => {
+  let filterArray = [];
+  const diagnosisID = req.query.diagnosisID;
+  const diseaseID = req.query.diseaseID;
+  console.log("diagnosisID : ", diagnosisID);
+  console.log("diswaseID : ", diseaseID);
+  const dig = await AddDiagnosis.find({ _id: diagnosisID }).then(
+    async (res) => {
+      console.log("res", res[0].diagnosis);
+      filterArray = res[0].diagnosis.filter((p) => p.diseaseID != diseaseID);
+      res[0].diagnosis = filterArray;
+      if (res[0].diagnosis.length < 1) {
+        await AddDiagnosis.findByIdAndRemove({ _id: diagnosisID });
+      } else {
+        await AddDiagnosis.findOneAndUpdate(
+          { _id: diagnosisID },
+          res[0]
+        ).then(async (res) => console.log("res: ", res));
+      }
+    }
+  );
 });
 module.exports = DiagnosisRouter;

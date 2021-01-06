@@ -5,7 +5,7 @@ const AddDiagosis = (props) => {
   const {
     match: { params },
   } = props;
-  const [diseaseID, setDiseaseID] = useState(0);
+  const [diseaseID, setDiseaseID] = useState(1);
   var [inputFields, setInputFields] = useState([
     { diseaseID: diseaseID, diseaseName: "", diseaseDescription: "" },
   ]);

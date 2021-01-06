@@ -9,14 +9,11 @@ import DeleteDiagnosisBtn from "./DeleteDiagnosisBtn";
 const UserDiagnosisGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
-
   const [rowData, setRowData] = useState();
-  console.log("row data ", props);
-
   useEffect(() => {
     setRowData(props.rowData);
   });
-  console.log("row Dataaaaaa : ", rowData);
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <div

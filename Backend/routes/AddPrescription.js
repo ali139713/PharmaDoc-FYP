@@ -82,11 +82,6 @@ PrescriptionRouter.delete("/deletePrescription", async (req, res) => {
   }).then(async (res) => {
     // console.log("res", res[0].prescription);
     filterArray = res[0].prescription.filter((p) => p.medID != medID);
-    // for await (let variable of res[0].prescription) {
-    //   if (medID == variable.medID) {
-    //     console.log("Variable : ", variable);
-    //   }
-    // }
 
     res[0].prescription = filterArray;
 
