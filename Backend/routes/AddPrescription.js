@@ -44,16 +44,18 @@ PrescriptionRouter.get("/getPrescription", async (req, res) => {
   const userID = req.query.userID;
   let doctorName = "";
   AddPrescription.find({ userID: userID })
-    .select("prescription ,doctorID , doctorName")
+    .select("prescription ,doctorID , doctorName _id")
     .exec()
     .then(async (prescriptions) => {
       let response = [];
       for await (let item of prescriptions) {
         const prescription = item.prescription;
         doctorName = item.doctorName;
+        prescriptionID = item._id;
         const obj = {
           prescription,
           doctorName,
+          prescriptionID,
         };
         response.push(obj);
       }
@@ -66,4 +68,36 @@ PrescriptionRouter.get("/getPrescription", async (req, res) => {
         error: err,
       });
     });
+});
+
+// Delete Prescription
+PrescriptionRouter.delete("/deletePrescription", async (req, res) => {
+  let filterArray = [];
+  const prescriptionID = req.query.prescriptionID;
+  const medID = req.query.medID;
+  console.log("PrescriptionID  :", prescriptionID);
+  console.log("medID  :", medID);
+  const pres = await AddPrescription.find({
+    _id: prescriptionID,
+  }).then(async (res) => {
+    // console.log("res", res[0].prescription);
+    filterArray = res[0].prescription.filter((p) => p.medID != medID);
+    // for await (let variable of res[0].prescription) {
+    //   if (medID == variable.medID) {
+    //     console.log("Variable : ", variable);
+    //   }
+    // }
+
+    res[0].prescription = filterArray;
+
+    if (res[0].prescription.length < 1) {
+      await AddPrescription.findByIdAndRemove({ _id: prescriptionID });
+    } else {
+      await AddPrescription.findOneAndUpdate(
+        { _id: prescriptionID },
+        res[0]
+      ).then(async (res) => console.log("res: ", res));
+    }
+    console.log("Filterr Array", filterArray);
+  });
 });

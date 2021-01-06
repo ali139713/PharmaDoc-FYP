@@ -4,28 +4,33 @@ import { AuthContext } from "../../../Context/AuthContext";
 
 const AddPrescriptionNew = (props) => {
   const authContext = useContext(AuthContext);
+  const [medID, setMedID] = useState(1);
   // const [doctorID, setDoctorID] = useState(authContext.doctorID);
   const {
     match: { params },
   } = props;
   var [inputFields, setInputFields] = useState([
-    { medName: "", medDosage: "", medDescription: "" },
+    { medID: medID, medName: "", medDosage: "", medDescription: "" },
   ]);
 
   const handleAddFields = () => {
+    setMedID(medID + 1);
     const values = [...inputFields];
     values.push({
+      medID: medID + 1,
       medName: "",
       medDosage: "",
       medDescription: "",
     });
     setInputFields(values);
+    console.log("medID ", medID);
   };
   console.log("params in add Prescription", params);
 
   // console.log("props in add Prescription", props);
   const handleRemoveFields = (index) => {
     if (inputFields.length > 1) {
+      setMedID(medID - 1);
       const values = [...inputFields];
       values.splice(index, 1);
       setInputFields(values);
@@ -49,6 +54,7 @@ const AddPrescriptionNew = (props) => {
     e.preventDefault();
     console.log("inputFields", inputFields);
     const newPrescription = {
+      medID: medID,
       userID: params.userID,
       doctorID: params.doctorID,
       prescription: inputFields,

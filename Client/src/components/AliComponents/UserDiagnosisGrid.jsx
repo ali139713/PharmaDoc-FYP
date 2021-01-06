@@ -5,7 +5,7 @@ import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // import jsonData from '../../Backend/orders.json';
-
+import DeleteDiagnosisBtn from "./DeleteDiagnosisBtn";
 const UserDiagnosisGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -54,6 +54,12 @@ const UserDiagnosisGrid = (props) => {
           <AgGridColumn field="doctorName"></AgGridColumn>
           <AgGridColumn field="diseaseName"></AgGridColumn>
           <AgGridColumn field="diseaseDescription"></AgGridColumn>
+          <AgGridColumn
+            headerName="Delete"
+            field="deleteDiagnosis"
+            minWidth={170}
+            cellRendererFramework={DeleteDiagnosisBtn}
+          />
         </AgGridReact>
       </div>
     </div>

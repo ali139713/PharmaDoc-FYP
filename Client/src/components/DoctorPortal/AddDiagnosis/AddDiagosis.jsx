@@ -5,13 +5,16 @@ const AddDiagosis = (props) => {
   const {
     match: { params },
   } = props;
+  const [diseaseID, setDiseaseID] = useState(0);
   var [inputFields, setInputFields] = useState([
-    { diseaseName: "", diseaseDescription: "" },
+    { diseaseID: diseaseID, diseaseName: "", diseaseDescription: "" },
   ]);
 
   const handleAddFields = () => {
+    setDiseaseID(diseaseID + 1);
     const values = [...inputFields];
     values.push({
+      diseaseID: diseaseID + 1,
       diseaseName: "",
       diseaseDescription: "",
     });
@@ -21,6 +24,7 @@ const AddDiagosis = (props) => {
 
   const handleRemoveFields = (index) => {
     if (inputFields.length > 1) {
+      setDiseaseID(diseaseID - 1);
       const values = [...inputFields];
       values.splice(index, 1);
       setInputFields(values);
@@ -42,6 +46,7 @@ const AddDiagosis = (props) => {
     e.preventDefault();
 
     const newDiagnosis = {
+      diseaseID: diseaseID,
       userID: params.userID,
       doctorID: params.doctorID,
       diagnosis: inputFields,

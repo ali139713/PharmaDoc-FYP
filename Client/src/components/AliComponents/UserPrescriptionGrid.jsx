@@ -5,7 +5,7 @@ import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // import jsonData from '../../Backend/orders.json';
-
+import DeletePrescriptionBtn from "./DeletePrescriptionBtn";
 const UserPrescriptionGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -47,13 +47,18 @@ const UserPrescriptionGrid = (props) => {
           enableRangeSelection={true}
           paginationAutoPageSize={true}
           pagination={true}
-          //onGridReady={onGridReady}//
           rowData={rowData}
         >
           <AgGridColumn field="doctorName"></AgGridColumn>
           <AgGridColumn field="medName"></AgGridColumn>
           <AgGridColumn field="medDosage"></AgGridColumn>
           <AgGridColumn field="medDescription"></AgGridColumn>
+          <AgGridColumn
+            headerName="Delete"
+            field="addPrescription"
+            minWidth={170}
+            cellRendererFramework={DeletePrescriptionBtn}
+          />
         </AgGridReact>
       </div>
     </div>

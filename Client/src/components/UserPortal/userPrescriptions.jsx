@@ -35,6 +35,7 @@ const Userappointments = () => {
       for await (let variable of res.data) {
         for await (let arr of variable.prescription) {
           arr.doctorName = variable.doctorName;
+          arr.prescriptionID = variable.prescriptionID;
           // console.log("Arr : ", arr);
           array.push(arr);
         }
@@ -45,7 +46,7 @@ const Userappointments = () => {
       //   doctorName: res.data[0].doctorName,
       // };
       setUserPrescription(array);
-      // console.log("new Array", array);
+      console.log("new Array", array);
     });
   };
   // console.log("user Prescription Field", userPrescription);
