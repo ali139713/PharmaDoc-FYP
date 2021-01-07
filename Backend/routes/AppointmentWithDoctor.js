@@ -227,14 +227,70 @@ AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
   const appointmentID = req.query._id;
   const doctorID = req.query.doctorID;
   const userID = req.query.userID;
-
+  let doctorName = "";
+  let patientName = "";
+  let appointmentLocation = "";
+  let doctorEmailAddress = "";
+  let userEmailAddress = "";
+  let appointmentTime = "";
+  let appointmentDate = "";
   console.log("appointmentID: ", appointmentID);
   console.log("doctorID: ", doctorID);
   console.log("userID: ", userID);
+  const doctor = await User.findById({ _id: doctorID });
+  const appointment = await AppointmentWithDoctor.findById({
+    _id: appointmentID,
+  });
+  const user = await User.findById({ _id: userID });
+  doctorEmailAddress = doctor.email;
+  doctorName = doctor.firstName;
+  patientName = user.firstName;
+  appointmentLocation = doctor.address;
+  userEmailAddress = user.email;
+  appointmentTime = appointment.appointmentTime;
+  appointmentDate = appointment.appointmentDate;
+  console.log("Doctor for email: ", doctorEmailAddress);
+  console.log("DoctorName: ", doctorName);
+  console.log("User for email: ", userEmailAddress);
+  console.log("Clinic Address: ", appointmentLocation);
+  console.log("appointmentTime: ", appointmentTime);
+  console.log("appointmentDate: ", appointmentDate);
+
+  var transpoter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "axianshaikhy@gmail.com",
+      pass: "SP17-BSE-018",
+    },
+  });
+  var mailOptions = {
+    from: "info@PharmaDoc.com",
+    subject: "Cancelled Appointment",
+    html: `
+    <h1>Your Appointment Cancelled</h1>
+    <h4>Your Your Appointment with Doctor Name:  ${doctorName} and Patient Name:${patientName} at ${appointmentLocation} Date is ${appointmentDate} on ${appointmentTime} is cancelled</h4>
+
+    `,
+  };
+  var maillist = [userEmailAddress, doctorEmailAddress];
   AppointmentWithDoctor.findByIdAndRemove({ _id: appointmentID })
-    .then((r) => {
+    .then(async (r) => {
       console.log("res", r);
-      res.status(200).send(r);
+      maillist.forEach(function async(to, i, array) {
+        mailOptions.to = to;
+        transpoter.sendMail(mailOptions, function async(error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            res.status(201).json({
+              message: {
+                msgBody: "Appointment Cancelled Successfully Check Your Email",
+                msgError: false,
+              },
+            });
+          }
+        });
+      });
     })
     .catch((error) => {
       console.log("error: ", error);
