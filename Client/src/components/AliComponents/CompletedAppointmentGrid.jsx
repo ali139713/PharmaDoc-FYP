@@ -6,7 +6,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // import jsonData from '../../Backend/orders.json';
 import CancelAppointmentBtn from "./CancelAppointmentBtn";
-const GridExample = (props) => {
+const CompletedAppointmentGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
 
@@ -95,4 +95,4 @@ var headerCheckboxSelection = function (params) {
   return params.columnApi.getRowGroupColumns().length === 0;
 };
 
-export default GridExample;
+export default CompletedAppointmentGrid;

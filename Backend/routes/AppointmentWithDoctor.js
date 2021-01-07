@@ -167,36 +167,6 @@ AppointmentRouter.get("/getAppointments", async (req, res, next) => {
           error: err,
         });
       });
-
-    // await AppointmentWithDoctor.find({ doctorID })
-    //   .select(
-    //     " _id doctorID userID appointmentDate appointmentTime cellNumber  "
-    //   )
-    //   .exec()
-    //   .then((appointments) => {
-    //     const response = {
-    //       count: appointments.length,
-    //       appointment: appointments.map((appointment) => {
-    //         // console.log(appointment);
-    //         return {
-    //           _id: appointment._id,
-    //           doctorID: appointment.doctorID,
-    //           userID: appointment.userID,
-    //           appointmentDate: appointment.appointmentDate,
-    //           appointmentTime: appointment.appointmentTime,
-    //           cellNumber: appointment.cellNumber,
-    //         };
-    //       }),
-    //     };
-    //     res.status(200).json(response);
-    //     // console.log(response);
-    //   })
-    //   .catch((err) => {
-    //     // console.log(err);
-    //     res.status(500).json({
-    //       error: err,
-    //     });
-    //   });
   }
 });
 
@@ -223,6 +193,8 @@ AppointmentRouter.post("/disabledAppointments", (req, res, next) => {
       console.log("error: ", error);
     });
 });
+
+// Cancel Appointment By User(Patient)
 AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
   const appointmentID = req.query._id;
   const doctorID = req.query.doctorID;
@@ -234,9 +206,6 @@ AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
   let userEmailAddress = "";
   let appointmentTime = "";
   let appointmentDate = "";
-  console.log("appointmentID: ", appointmentID);
-  console.log("doctorID: ", doctorID);
-  console.log("userID: ", userID);
   const doctor = await User.findById({ _id: doctorID });
   const appointment = await AppointmentWithDoctor.findById({
     _id: appointmentID,
@@ -249,12 +218,6 @@ AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
   userEmailAddress = user.email;
   appointmentTime = appointment.appointmentTime;
   appointmentDate = appointment.appointmentDate;
-  console.log("Doctor for email: ", doctorEmailAddress);
-  console.log("DoctorName: ", doctorName);
-  console.log("User for email: ", userEmailAddress);
-  console.log("Clinic Address: ", appointmentLocation);
-  console.log("appointmentTime: ", appointmentTime);
-  console.log("appointmentDate: ", appointmentDate);
 
   var transpoter = nodemailer.createTransport({
     service: "gmail",
