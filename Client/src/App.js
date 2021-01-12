@@ -35,6 +35,7 @@ import UnPrivateRoute from "./hocs/UnPrivateRoute";
 import AddPrescription from "./components/DoctorPortal/AddPrescription/AddPrescription";
 import AddPrescriptionNew from "./components/DoctorPortal/AddPrescription/AddPrescriptionNew";
 import AddDiagosis from "./components/DoctorPortal/AddDiagnosis/AddDiagosis";
+import RateDoctor from "./components/UserPortal/RateDoctor";
 function App() {
   return (
     <Router>
@@ -80,6 +81,11 @@ function App() {
           path={"/doctors-cards/book-appointment/:id"}
           roles={["Patient"]}
           component={BookAppointment}
+        />
+        <PrivateRoute
+          path={"/ratedoctor"}
+          roles={["Patient"]}
+          component={RateDoctor}
         />
         <PrivateRoute
           path={"/placeorder"}

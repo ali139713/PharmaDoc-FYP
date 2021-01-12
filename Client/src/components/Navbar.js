@@ -28,7 +28,10 @@ function Navbar() {
       setButton(true);
     }
   };
+
   useEffect(() => {
+    const x = 0;
+
     showButton();
   }, []);
   window.addEventListener("resize", showButton);
@@ -45,6 +48,7 @@ function Navbar() {
         console.log(err);
       });
   };
+
   const authenticatedNavbar = () => {
     return (
       <>
@@ -86,14 +90,25 @@ function Navbar() {
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu className=" rounded ">
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userorders"} className="dez-page">
+                    My Order
+                  </Link>
+                </Dropdown.Item>
+              ) : (
+                ""
+              )}
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userappointments"}>My Appointment</Link>
+                </Dropdown.Item>
+              ) : (
+                ""
+              )}
               <Dropdown.Item>
-                <Link to={"./"} className="dez-page">
+                <Link to={"/profile"} className="dez-page">
                   Proflile
-                </Link>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <Link to={"./"} className="dez-page">
-                  Setting
                 </Link>
               </Dropdown.Item>
               <div className="dropdown-divider"></div>

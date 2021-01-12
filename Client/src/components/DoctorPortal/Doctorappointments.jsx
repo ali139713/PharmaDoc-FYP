@@ -3,11 +3,13 @@ import Navbar from "../AliComponents/navbar";
 import "../../style.scss";
 import "../AliComponents/form.scss";
 import routeLinks from "../AliComponents/routeLinks";
-import DoctorAppointmentsGrid from "../AliComponents/DoctorAppointmentsGrid";
-import Tab from "../AliComponents/tabs";
+import ActiveDoctorAppointmentsGrid from "../AliComponents/ActiveDoctorAppointmentsGrid";
+import CompletedDoctorAppointmentGrid from "../AliComponents/CompletedDoctorAppointmentGrid";
 import Axios from "axios";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 import "./Doctorappointments.css";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -16,7 +18,8 @@ const Doctorappointments = () => {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [apointmentInterval, setAppointmentInterval] = useState();
-  var [doctorAppointment, setDoctorAppointment] = useState([]);
+  var [activeDoctorAppointment, setActiveDoctorAppointment] = useState(0);
+  var [completedDoctorAppointment, setCompletedDoctorAppointment] = useState(0);
   var [doctorID, setDoctorID] = useState(authContext.user._id);
   const [isLoaded, setisLoaded] = useState(false);
 
@@ -29,12 +32,26 @@ const Doctorappointments = () => {
   };
 
   const appointmentofDoctor = async () => {
+    let activeAppointment = [];
+    let completedAppointment = [];
     await Axios.get("/appointment/getAppointments", {
       params: {
         doctorID: doctorID,
       },
-    }).then((res) => {
-      setDoctorAppointment(res.data.appointments);
+    }).then(async (res) => {
+      // setDoctorAppointment(res.data.appointments);
+      for await (let variable of res.data.appointments) {
+        console.log("variable : ", variable.appointmentDate);
+        if (new Date(variable.appointmentDate) - new Date() > 0) {
+          activeAppointment.push(variable);
+        } else {
+          completedAppointment.push(variable);
+        }
+      }
+      console.log("Active Doctor Appointments : ", activeAppointment);
+      console.log("Comp Doctor Appointments : ", completedAppointment);
+      setActiveDoctorAppointment(activeAppointment);
+      setCompletedDoctorAppointment(completedAppointment);
     });
     setisLoaded(true);
   };
@@ -169,12 +186,30 @@ const Doctorappointments = () => {
               </div>
               <hr></hr>
             </div>
-
-            <Tab name="Active" secondName="Completed" />
-            <div style={{ height: "500px" }}>
-              <DoctorAppointmentsGrid rowData={doctorAppointment} />
-            </div>
           </div>
+        </div>
+
+        <div>
+          <Tabs>
+            <TabList>
+              <Tab>Active</Tab>
+              <Tab>Completed</Tab>
+            </TabList>
+            <TabPanel>
+              <div style={{ height: "500px" }}>
+                <ActiveDoctorAppointmentsGrid
+                  rowData={activeDoctorAppointment}
+                />
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div style={{ height: "500px" }}>
+                <CompletedDoctorAppointmentGrid
+                  rowData={completedDoctorAppointment}
+                />
+              </div>
+            </TabPanel>
+          </Tabs>
         </div>
       </div>
     );

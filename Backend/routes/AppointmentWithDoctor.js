@@ -13,7 +13,7 @@ AppointmentRouter.post("/registerAppointment/:id", async (req, res) => {
     appointmentTime,
     cellNumber,
   } = req.body.appointment;
-  console.log("req.body.appointment", req.body.appointment);
+  // console.log("req.body.appointment", req.body.appointment);
   const newAppointment = new AppointmentWithDoctor({
     doctorID,
     userID,
@@ -176,8 +176,8 @@ AppointmentRouter.post("/disabledAppointments", (req, res, next) => {
   // const searchDate = req.body.appointmentDate;
   const doctorID = req.body.doctorID;
   const searchDate = req.body.appointmentDate;
-  console.log("query", req.body.doctorID);
-  console.log("Date", searchDate);
+  // console.log("query", req.body.doctorID);
+  // console.log("Date", searchDate);
 
   AppointmentWithDoctor.find({
     doctorID: doctorID,
@@ -186,7 +186,7 @@ AppointmentRouter.post("/disabledAppointments", (req, res, next) => {
     .select("appointmentTime appointmentDate")
     .exec()
     .then((r) => {
-      console.log("res", r);
+      // console.log("res", r);
       res.status(200).send(r);
     })
     .catch((error) => {
@@ -238,7 +238,7 @@ AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
   var maillist = [userEmailAddress, doctorEmailAddress];
   AppointmentWithDoctor.findByIdAndRemove({ _id: appointmentID })
     .then(async (r) => {
-      console.log("res", r);
+      // console.log("res", r);
       maillist.forEach(function async(to, i, array) {
         mailOptions.to = to;
         transpoter.sendMail(mailOptions, function async(error, info) {
@@ -257,6 +257,61 @@ AppointmentRouter.delete("/cancelAppintment", async (req, res) => {
     })
     .catch((error) => {
       console.log("error: ", error);
+    });
+});
+// post Rating By Patient for Doctor
+AppointmentRouter.patch("/registerRateDoctor", async (req, res, next) => {
+  const rating = req.body.ratingObject.rating;
+  const appointmentID = req.body.ratingObject.appointmentID;
+  await AppointmentWithDoctor.findByIdAndUpdate(
+    { _id: appointmentID },
+    req.body.ratingObject
+  ).then(function (data) {
+    if (!AppointmentWithDoctor) {
+      console.log("Invalid Id");
+    } else {
+      AppointmentWithDoctor.findOne({ _id: appointmentID }).then(function (
+        data
+      ) {
+        res.send(data);
+      });
+    }
+  });
+});
+
+// get Rating of Doctor
+AppointmentRouter.get("/getdoctorrating", async (req, res, next) => {
+  const doctorID = req.query._id;
+  await AppointmentWithDoctor.find({ doctorID })
+    .select(" _id  rating")
+    .exec()
+    .then(async (appointments) => {
+      let newAppointments = [];
+
+      for await (appointment of appointments) {
+        uId = appointment.userID;
+        let userData = {};
+
+        let obj = {
+          _id: appointment._id,
+          rating: appointment.rating,
+          doctorID: appointment.doctorID,
+          userID: appointment.userID,
+        };
+
+        newAppointments.push(obj);
+      }
+
+      appointmentData = {
+        count: newAppointments.length,
+        appointments: newAppointments,
+      };
+      res.status(200).json(appointmentData);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
     });
 });
 module.exports = AppointmentRouter;

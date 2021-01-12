@@ -27,6 +27,7 @@ export default function BookAppointment(props) {
   let [userID, setUserID] = useState();
   const [specialization, setSpecialization] = useState();
   const [Education, setEducation] = useState();
+  const [profileImage, setProfileImage] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const doctorProfileInfo = async () => {
@@ -40,6 +41,7 @@ export default function BookAppointment(props) {
       setLastName(res.data.users[0].lastName);
       setSpecialization(res.data.users[0].specialization);
       setEducation(res.data.users[0].certificates);
+      setProfileImage(res.data.users[0].profilePicture);
     });
   };
   const placeAppointment = async () => {
@@ -108,7 +110,8 @@ export default function BookAppointment(props) {
       <div className="row border border-dark rounded shadow-sm my-5 p-1">
         <div className="col-sm-3">
           <Avatar
-            src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+            // src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
+            src={profileImage}
             size="160"
             round={true}
           />

@@ -24,12 +24,18 @@ export default function DctorProfileTabs(props) {
       res.data.users.forEach((element) => {
         registerdServices.push(element.services);
       });
+
+      res.data.users.forEach((element) => {
+        registerdCertificates.push(element.certificates);
+      });
     });
 
     setServices(registerdServices);
+    setCertificates(registerdCertificates);
   };
 
   console.log("Services", services);
+  console.log("certificates", certificates);
 
   useEffect(() => {
     doctorProfileInfo();
@@ -44,7 +50,7 @@ export default function DctorProfileTabs(props) {
 
       <TabPanel>
         <div>
-          <DoctorRating />
+          <DoctorRating doctorID={doctorID} />
         </div>
       </TabPanel>
       <TabPanel>

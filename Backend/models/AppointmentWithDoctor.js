@@ -6,6 +6,7 @@ const AppointmentWithDoctor = mongoose.Schema({
   appointmentDate: { type: Date, required: true },
   appointmentTime: { type: String, required: true },
   cellNumber: { type: String, required: true },
+  rating: { type: Number },
 });
 
 module.exports = mongoose.model("AppointmentWithDoctor", AppointmentWithDoctor);

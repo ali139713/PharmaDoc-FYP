@@ -9,7 +9,7 @@ import AddPrescriptionBtn from "./AddPrescriptionBtn";
 import AddDiagnosisBtn from "./AddDiagnosisBtn";
 // import jsonData from '../../Backend/orders.json';
 
-const DoctorAppointmentsGrid = (props) => {
+const CompletedDoctorAppointmentGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
 
@@ -62,18 +62,6 @@ const DoctorAppointmentsGrid = (props) => {
           <AgGridColumn field="appointmentDate"></AgGridColumn>
           <AgGridColumn field="appointmentTime"></AgGridColumn>
           <AgGridColumn field="patientCellNumber"></AgGridColumn>
-          <AgGridColumn
-            headerName="Add Prescription"
-            field="addPrescription"
-            minWidth={170}
-            cellRendererFramework={AddPrescriptionBtn}
-          />
-          <AgGridColumn
-            headerName="Add Diagnosis"
-            field="adddiagnosis"
-            minWidth={170}
-            cellRendererFramework={AddDiagnosisBtn}
-          />
         </AgGridReact>
       </div>
     </div>
@@ -87,4 +75,4 @@ var headerCheckboxSelection = function (params) {
   return params.columnApi.getRowGroupColumns().length === 0;
 };
 
-export default DoctorAppointmentsGrid;
+export default CompletedDoctorAppointmentGrid;
