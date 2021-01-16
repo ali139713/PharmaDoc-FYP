@@ -34,6 +34,7 @@ export default function DoctorRating(props) {
 
         setTotalRating(totalRating);
         setCountPersons(countPersons);
+        await calfinalRating();
       })
       .catch((err) => {
         console.log("err: ", err);
@@ -47,17 +48,11 @@ export default function DoctorRating(props) {
   console.log("final : ", finalRating);
   useEffect(() => {
     getDoctorRate();
-    calfinalRating();
   }, []);
   // console.log("props to get Rate Doctor", doctorID);
   return (
     <div className={classes.root}>
-      <Rating
-        name="half-rating-read"
-        // defaultValue={2}
-        value={finalRating}
-        readOnly
-      />{" "}
+      <Rating name="half-rating-read" value={finalRating} readOnly />{" "}
       {countPersons > 1 ? `${countPersons} reviews` : `${countPersons} review`}{" "}
     </div>
   );

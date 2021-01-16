@@ -7,11 +7,11 @@ import Axios from "axios";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 import Error from "../../components/Error";
 // ContextAPI
-import AuthContext from "../../Context/AuthContext";
+import { AuthContext } from "../../Context/AuthContext";
 import FormFile from "react-bootstrap/FormFile";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-const Doctorprofile = () => {
+const Doctorprofile = (props) => {
   const authContext = useContext(AuthContext);
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
@@ -34,7 +34,7 @@ const Doctorprofile = () => {
         _id: authContext.user._id,
       },
     }).then(async (res) => {
-      console.log("res", res);
+      // console.log("res", res);
       setFirstName(res.data.users[0].firstName);
       setLastName(res.data.users[0].lastName);
       setCellNumber(res.data.users[0].cellNumber);
@@ -104,7 +104,7 @@ const Doctorprofile = () => {
       profilePicture: profileImage,
     });
   };
-  console.log("Profile Image", profileImage);
+  // console.log("Profile Image", profileImage);
   if (isLoaded === false) {
     return (
       <div style={{ textAlign: "center", marginTop: "20%" }}>
@@ -265,7 +265,7 @@ const Doctorprofile = () => {
                   </div>
 
                   <div className="row">
-                    <div className="form-group col-md-6 ">
+                    {/* <div className="form-group col-md-6 ">
                       <label htmlFor="inputDesignation">Designation</label>
                       <input
                         name="Designation"
@@ -278,6 +278,23 @@ const Doctorprofile = () => {
                           setDesignation(e.target.value);
                         }}
                       />
+                    </div> */}
+                    <div className=" col-md-6">
+                      <label>Example select</label>
+                      <select
+                        size="3"
+                        class="form-control "
+                        onChange={(e) => {
+                          setDesignation(e.target.value);
+                        }}
+                      >
+                        <option></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
                     </div>
                     <div className="form-group col-md-6">
                       <label htmlFor="inputZip">PMDC</label>

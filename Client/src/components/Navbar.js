@@ -106,11 +106,20 @@ function Navbar() {
               ) : (
                 ""
               )}
-              <Dropdown.Item>
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userappointments"}>My Profile</Link>
+                </Dropdown.Item>
+              ) : (
+                <Dropdown.Item>
+                  <Link to={"/doctor-profile"}>My Profile</Link>
+                </Dropdown.Item>
+              )}
+              {/* <Dropdown.Item>
                 <Link to={"/profile"} className="dez-page">
                   Proflile
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <div className="dropdown-divider"></div>
               <Dropdown.Item>
                 <Link to={"./"} className="dez-page" onClick={logoutHandler}>

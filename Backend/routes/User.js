@@ -52,8 +52,18 @@ const signToken = (userID) => {
 };
 // for Signup
 userRouter.post("/register", (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  let {
+    firstName,
+    lastName,
+    email,
+    password,
+    role,
+    pharmacyName,
+    labName,
+  } = req.body;
+
   const status = "Not Approved";
+  console.log("NEW USER : ", req.body.pharmacyName);
   User.findOne({ email }, (err, user) => {
     if (err) {
       res
@@ -72,6 +82,8 @@ userRouter.post("/register", (req, res) => {
         password,
         role,
         status,
+        pharmacyName,
+        labName,
       });
       newUser.save((err) => {
         if (err) {

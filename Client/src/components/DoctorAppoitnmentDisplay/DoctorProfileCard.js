@@ -8,18 +8,13 @@ import "./DoctorProfileCard.css";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
 
-const DoctorProfileCard = () => {
+const DoctorProfileCard = (props) => {
   const authContext = useContext(AuthContext);
 
   const [img, setImg] = useState(
     "https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
   );
 
-  // const [specilizaton, setSpecilizaton] = useState("ENT");
-  // const [education, setEducation] = useState("MBBS,FCPS");
-  // const [Fee, setFee] = useState(500);
-  // const [location, setLocation] = useState("Lahore");
-  // const [phone, setphone] = useState("0300-8189126");
   var [doctorInfo, setDoctorInfo] = useState([]);
   var [approvedDoctors, setApprovedDoctors] = useState([]);
 
@@ -27,14 +22,28 @@ const DoctorProfileCard = () => {
     const response = await Axios.get("/user/getDoctors");
     // setDoctorInfo(response.data.doctors);
     let filter = [];
+    let specializedDoctors = [];
+
     filter = response.data.doctors.filter((t) => t.status === "Approved");
-    setApprovedDoctors(filter);
+    // set doctor Specialization
+    specializedDoctors = filter.filter(
+      (t) =>
+        t.specialization ===
+        props.match.params.name.replace("Specialist", " Specialist")
+    );
+
+    setApprovedDoctors(specializedDoctors);
   };
   // console.log("Approved Doctors", approvedDoctors);
   useEffect(() => {
     getDoctors();
   }, []);
   // console.log("doctorInfo", doctorInfo);
+  console.log(
+    "propssssssssssssss: ",
+    props.match.params.name.replace("Specialist", " Specialist")
+  );
+  // console.log("props of Doctor Card: ", props);
   const DoctorCardDisplay = approvedDoctors.map((doctor) => {
     return (
       <div key={doctor._id} className="container rounded my-5 py-2 customCard">
@@ -42,7 +51,6 @@ const DoctorProfileCard = () => {
           <div className="col-sm-4">
             <Avatar
               style={{ margin: "5%" }}
-              // src="https://raw.githubusercontent.com/GedalyaKrycer/unit-19-react-homework-employee-directory/master/my-app/src/img/richard-stevens-img.png"
               src={doctor.profilePicture}
               size="160"
               round={true}

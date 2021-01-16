@@ -14,11 +14,11 @@ import BookAppointment from "./components/DoctorAppoitnmentDisplay/BookAppointme
 import NewPassword from "./components/SetNewPassword/NewPassword";
 import LabDashboard from "./components/LabPortal/Labdashboard";
 import DoctorPortal from "./components/DoctorPortal/Doctorappointments";
-import DoctorProfile from "./components/DoctorPortal/Doctorprofile";
+import DoctorProfile from "./components/DoctorPortal/DoctorprofileSec";
 import DoctorChangePassword from "./components/DoctorPortal/ChangePassword";
 import UserChangePassword from "./components/UserPortal/userChangePassword";
 import UserAppointments from "./components/UserPortal/userAppointments";
-import UserProfile from "./components/UserPortal/userProfile";
+import UserProfile from "./components/UserPortal/UserProfileSec";
 import UserOrders from "./components/UserPortal/userOrders";
 import userPrescriptions from "./components/UserPortal/userPrescriptions";
 import userDiagnosis from "./components/UserPortal/userDiagnosis";
@@ -170,7 +170,12 @@ function App() {
         />
         <Route path="/medicines" component={MedicineCartMain} />
         <Route exact path="/doctors-category" component={DoctorCategory} />
-        <Route exact path="/doctors-cards" component={DoctorProfileCard} />
+        <Route
+          exact
+          path="/doctors-category/doctors-cards/:name"
+          component={DoctorProfileCard}
+        />
+        {/* <Route exact path="/doctors-cards" component={DoctorProfileCard} /> */}
       </Switch>
       <Footer />
     </Router>

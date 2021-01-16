@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["Patient", "Doctor", "Lab Manager"],
+    enum: ["Patient", "Doctor", "Lab Manager", "Pharmacy Manager"],
     required: true,
   },
   resetToken: String,
@@ -76,6 +76,12 @@ const UserSchema = new mongoose.Schema({
   },
 
   profilePicture: {
+    type: String,
+  },
+  pharmacyName: {
+    type: String,
+  },
+  labName: {
     type: String,
   },
 });

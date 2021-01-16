@@ -16,7 +16,6 @@ export default ({ children }) => {
   const [doctorID, setDoctorID] = useState(null);
   const [appointmentDate, setAppointmentDate] = useState(null);
   const [appointmentTimeCell, setAppointmentTimeCell] = useState(null);
-
   useEffect(() => {
     AuthService.isAuthenticated().then((data) => {
       setUser(data.user);

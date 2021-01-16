@@ -55,6 +55,8 @@ export default function SignUp(props) {
     email: "",
     password: "",
     role: "",
+    pharmacyName: "",
+    labName: "",
   });
   const [message, setMessage] = useState(null);
   let timerID = useRef(null);
@@ -98,7 +100,15 @@ export default function SignUp(props) {
   });
 
   const resetForm = () => {
-    setUser({ firstName: "", lastName: "", email: "", password: "", role: "" });
+    setUser({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      role: "",
+      pharmacyName: "",
+      labName: "",
+    });
   };
 
   return (
@@ -199,10 +209,43 @@ export default function SignUp(props) {
               >
                 <MenuItem value={"Patient"}>Patient</MenuItem>
                 <MenuItem value={"Doctor"}>Doctor</MenuItem>
+                <MenuItem value={"Pharmacy Manager"}>Pharmacy Manager</MenuItem>
+                <MenuItem value={"Lab Manager"}>Lab Manager</MenuItem>
               </Select>
             </FormControl>
           </Grid>
-
+          {user.role === "Pharmacy Manager" ? (
+            <TextField
+              className="mt-3"
+              variant="outlined"
+              required
+              fullWidth
+              id="pharmacyName"
+              type="text"
+              label="Pharmacy Name"
+              name="pharmacyName"
+              autoComplete="pharmacyName"
+              onChange={onChange}
+            />
+          ) : (
+            ""
+          )}
+          {user.role === "Lab Manager" ? (
+            <TextField
+              className="mt-3"
+              variant="outlined"
+              required
+              fullWidth
+              id="labName"
+              type="text"
+              label="Lab Name"
+              name="labName"
+              autoComplete="labName"
+              onChange={onChange}
+            />
+          ) : (
+            ""
+          )}
           <Button
             type="submit"
             fullWidth

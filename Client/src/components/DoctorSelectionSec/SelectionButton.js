@@ -5,7 +5,9 @@ import { Button, Row, Col, Container } from "reactstrap";
 class SelectionButton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      specializationName: "",
+    };
   }
 
   render() {
@@ -22,12 +24,23 @@ class SelectionButton extends React.Component {
 
           <Row>
             <Col sm="4" className="text-center">
-              <NavLink to="/doctors-cards" className="Events">
+              <NavLink
+                to={`/doctors-category/doctors-cards/${this.props.name.replace(
+                  /\s/g,
+                  ""
+                )}`}
+                className="Events"
+              >
                 <Button
                   className="SelectBtnSetting"
                   color="success"
                   outline
                   type="button"
+                  onClick={(e) => {
+                    this.setState({
+                      specializationName: e.currentTarget.textContent,
+                    });
+                  }}
                 >
                   <strong style={{ color: " white" }}>{this.props.name}</strong>
                 </Button>
