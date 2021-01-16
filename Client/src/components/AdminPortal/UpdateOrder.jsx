@@ -40,7 +40,7 @@ class UpdateOrder extends Component {
         const obj = {
 
             orderStatus: this.state.OrderStatus,
-           
+
         }
         Axios.patch('http://localhost:5000/order/update/' + this.props.match.params.id, obj
         )
@@ -76,15 +76,21 @@ class UpdateOrder extends Component {
                     onSubmit={this.fileUploadHandler} >
                     <div >
 
-                        <input
-
-                            type="text"
+                        <span> Update Order Status </span>
+                        <select
+                            className="scrollable-menu"
                             id="OrderStatus"
-                            placeholder="Update Order Status"
                             name="OrderStatus"
+                            placeholder="Choose a Status"
                             value={this.state.OrderStatus}
                             onChange={this.handleChange}
-                        />
+                        >
+                            <option value="" disabled>Please Choose a status...</option>
+                            <option value="Active">Active</option>
+                            <option value="Pending">Pending</option>
+
+                        </select>
+
                     </div>
                     <ToastContainer />
 

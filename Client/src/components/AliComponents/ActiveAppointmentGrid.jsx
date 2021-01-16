@@ -6,6 +6,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // import jsonData from '../../Backend/orders.json';
 import CancelAppointmentBtn from "./CancelAppointmentBtn";
+import BtnCellRenderer from "./BtnCellRenderer";
 const ActiveAppointmentGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -81,6 +82,12 @@ const ActiveAppointmentGrid = (props) => {
             field="adddiagnosis"
             minWidth={170}
             cellRendererFramework={CancelAppointmentBtn}
+          />
+          <AgGridColumn
+            headerName="Video Call"
+            field="adddiagnosis"
+            minWidth={170}
+            cellRendererFramework={BtnCellRenderer}
           />
         </AgGridReact>
       </div>

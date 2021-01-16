@@ -9,7 +9,8 @@ import Axios from "axios";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 import "./Doctorappointments.css";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-
+import io from "socket.io-client";
+import { Link } from "react-router-dom";
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -21,7 +22,10 @@ const Doctorappointments = () => {
   var [activeDoctorAppointment, setActiveDoctorAppointment] = useState(0);
   var [completedDoctorAppointment, setCompletedDoctorAppointment] = useState(0);
   var [doctorID, setDoctorID] = useState(authContext.user._id);
+  const [call, setCall] = useState(false);
+  const [link, setLink] = useState("");
   const [isLoaded, setisLoaded] = useState(false);
+  const socketClient = io.connect("http://localhost:5000");
 
   const validate = () => {
     if (this.state.startTime && this.state.endTime && this.state.intervalSlot) {
@@ -70,9 +74,29 @@ const Doctorappointments = () => {
   };
 
   useEffect(() => {
+    const audio = new Audio("../../Images/ringtone.mp3");
+    socketClient.on("videolink", (link) => {
+      console.log("Doctors side", link.videolink);
+      console.log(authContext.user._id);
+      setLink(link.videolink);
+      const id = link.doctorID;
+      const dID = authContext.user._id;
+
+      if (dID === id) {
+        setCall(true);
+
+        // audio.load();
+        // audio.muted = true;
+        audio.play();
+      }
+    });
     appointmentofDoctor();
     appointmentTimeSet();
   }, []);
+
+  const cancelCall = () => {
+    setCall(false);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -101,6 +125,30 @@ const Doctorappointments = () => {
   } else {
     return (
       <div>
+        <div
+          className={
+            call
+              ? "videocallContainer"
+              : "videocallContainer videocallContainerHide"
+          }
+        >
+          <h5 style={{ color: "white", marginTop: "3%" }}>
+            Asad is calling you...
+          </h5>
+          <div className="videocallButtons">
+            <button
+              style={{ width: "23%", marginLeft: "3%" }}
+              onClick={cancelCall}
+            >
+              Cancel
+            </button>
+            <Link to={link}>
+              {" "}
+              <button style={{ width: "23%", marginLeft: "3%" }}>Accept</button>
+            </Link>
+          </div>
+        </div>
+
         <div id="maindiv" className="container-fluid">
           <Navbar links={routeLinks} />
           <div className="separation"></div>

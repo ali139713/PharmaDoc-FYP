@@ -12,6 +12,7 @@ class Updatelabtest extends Component {
         Price: "",
         Lab: "",
         Description: "",
+        labs:[],
     };
 
 
@@ -32,6 +33,18 @@ class Updatelabtest extends Component {
     routeHandler = () => {
 
         this.props.history.push('/admin/labtests');
+    }
+    componentDidMount = async () =>{
+
+        try {
+            const response = await Axios.get('http://localhost:5000/lab/get');
+            this.setState({ labs: response.data.labs });
+            console.log(response.data.labs)
+
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     fileUploadHandler = (event) => {
@@ -106,16 +119,19 @@ class Updatelabtest extends Component {
 
                     </div>
                     <div>
-                        <input
-
-                            type="text"
+                  
+                        <select style= {{color:"gray"}}
+                            className="scrollable-menu"
                             id="Lab"
-                            placeholder="Enter Lab"
                             name="Lab"
                             value={this.state.Lab}
                             onChange={this.handleChange}
-                        />
-
+                        >
+                            <option value="" disabled>Please Choose a lab...</option>
+                            { this.state.labs.map((obj)=>(
+                            <option value={obj.name}>{obj.name}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <input

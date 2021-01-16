@@ -36,6 +36,9 @@ import AddPrescription from "./components/DoctorPortal/AddPrescription/AddPrescr
 import AddPrescriptionNew from "./components/DoctorPortal/AddPrescription/AddPrescriptionNew";
 import AddDiagosis from "./components/DoctorPortal/AddDiagnosis/AddDiagosis";
 import RateDoctor from "./components/UserPortal/RateDoctor";
+import Room from "./components/AliComponents/Room";
+import CreateRoom from "./components/AliComponents/CreateRoom";
+
 function App() {
   return (
     <Router>
@@ -98,6 +101,7 @@ function App() {
           roles={["Patient"]}
           component={Payment}
         />
+
         <PrivateRoute
           exact
           path={"/doctorappointments/addPrescription/:userID/:doctorID"}
@@ -129,6 +133,18 @@ function App() {
           path={"/userDiagnosis"}
           roles={["Patient"]}
           component={userDiagnosis}
+        />
+        <PrivateRoute
+          exact
+          path={"/room"}
+          roles={["Patient", "Doctor"]}
+          component={CreateRoom}
+        />
+        <PrivateRoute
+          exact
+          path={"/room/:roomID"}
+          roles={["Patient", "Doctor"]}
+          component={Room}
         />
         <PrivateRoute
           exact

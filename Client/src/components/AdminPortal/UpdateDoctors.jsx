@@ -75,16 +75,21 @@ class UpdateDoctors extends Component {
                 <form
                     onSubmit={this.fileUploadHandler} >
                     <div >
-
-                        <input
-
-                            type="text"
+                    <span> Update Status </span>
+                        <select
+                            className="scrollable-menu"
                             id="Status"
-                            placeholder="Update Status"
                             name="Status"
                             value={this.state.Status}
                             onChange={this.handleChange}
-                        />
+                        >
+                            <option value="" disabled>Please Choose a status...</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Not Approved">Not Approved</option>
+
+                        </select>
+
+
                     </div>
                     <ToastContainer />
 

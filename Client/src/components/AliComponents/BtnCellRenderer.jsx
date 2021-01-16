@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-class BtnCellRenderer extends Component {
-  constructor(props) {
-    super(props);
-    this.btnClickedHandler = this.btnClickedHandler.bind(this);
-  }
-  btnClickedHandler() {
-    alert("hello");
-    console.log("props", this.props);
-  }
-  render() {
-    return <button onClick={this.btnClickedHandler}>Video Call</button>;
-  }
+import React from "react";
+import { Link } from "react-router-dom";
+
+export default function BtnCellRenderer(props) {
+  const btnClickedHandler = () => {
+    console.log("props", props.data.doctorID);
+    localStorage.setItem('doctorID',props.data.doctorID);
+  };
+
+  return (
+    <Link to="/room">
+      {" "}
+      <button onClick={btnClickedHandler}>Video Call</button>{" "}
+    </Link>
+  );
 }
-export default BtnCellRenderer;
