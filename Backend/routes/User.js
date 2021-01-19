@@ -108,12 +108,12 @@ userRouter.post(
   passport.authenticate("local", { session: false }),
   (req, res) => {
     if (req.isAuthenticated()) {
-      const { _id, email, role } = req.user;
+      const { _id, email, role, status } = req.user;
       const token = signToken(_id);
       res.cookie("access_token", token, { httpOnly: true, sameSite: true });
       res.status(200).json({
         isAuthenticated: true,
-        user: { email, role },
+        user: { email, role, status },
         message: { msgBody: "valid Email and Password", msgError: false },
       });
     } else {
@@ -322,6 +322,37 @@ userRouter.get("/getDoctors", (req, res, next) => {
     });
 });
 
+// Get Pharmacy Managers
+userRouter.get("/getPharmacyManagers", (req, res, next) => {
+  User.find({ role: "Pharmacy Manager" })
+    .select(" _id firstName lastName email   pharmacyName status")
+    .exec()
+    .then((docs) => {
+      const response = {
+        count: docs.length,
+        managers: docs.map((doc) => {
+          // console.log(doc);
+          return {
+            _id: doc._id,
+            firstName: doc.firstName,
+            lastName: doc.lastName,
+            email: doc.email,
+            pharmacyName: doc.pharmacyName,
+            status: doc.status,
+          };
+        }),
+      };
+      res.status(200).json(response);
+      // console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
+
 // Get User By ID
 userRouter.get("/getUser", (req, res, next) => {
   const userID = req.query;
@@ -382,6 +413,25 @@ userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
     }
   });
 });
+// Update Pharmacy Manager
+userRouter.patch(
+  "/update/pharmacyManagerProfile/:id",
+  async (req, res, next) => {
+    const id = req.params.id;
+
+    console.log("User Object  : ", req.body);
+    await User.findByIdAndUpdate({ _id: id }, req.body).then(function (data) {
+      if (!User) {
+        console.log("Invalid Id");
+      } else {
+        User.findOne({ _id: id }).then(function (data) {
+          res.send(data);
+        });
+      }
+    });
+  }
+);
+
 // Update User Profile
 userRouter.patch("/update/userProfile/:id", async (req, res, next) => {
   const id = req.params.id;
@@ -408,5 +458,24 @@ userRouter.delete("/delete/:id", async (req, res) => {
       res.send(data);
     }
   });
+});
+
+// get PharmacyName by PharmacistID
+userRouter.get("/getPharmacy", async (req, res) => {
+  const pharmacistID = req.query.pharmacistID;
+  await User.findById({ _id: pharmacistID })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => res.send(err));
+});
+// get LabName by LabManagerID
+userRouter.get("/getLab", async (req, res) => {
+  const labManagerID = req.query.labManagerID;
+  await User.findById({ _id: labManagerID })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => res.send(err));
 });
 module.exports = userRouter;

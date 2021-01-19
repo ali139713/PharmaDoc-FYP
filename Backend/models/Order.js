@@ -14,6 +14,7 @@ const orderSchema = mongoose.Schema({
   orderStatus: { type: String, required: true },
   paymentMethod: { type: String, required: true },
   prescriptionImage: { type: String },
+  pharmacyName: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

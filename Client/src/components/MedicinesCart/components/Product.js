@@ -10,13 +10,14 @@ class Product extends Component {
       isAdded: false,
     };
   }
-  addToCart(productImage, name, price, id, quantity, prescription) {
+  addToCart(productImage, name, price, id, quantity, prescription,pharmacyName) {
     this.setState(
       {
         selectedProduct: {
           productImage: productImage,
           name: name,
           price: price,
+          pharmacyName:pharmacyName,
           prescription: prescription,
           id: id,
           quantity: quantity,
@@ -59,6 +60,7 @@ class Product extends Component {
     let productImage = this.props.productImage;
     let name = this.props.name;
     let price = this.props.price;
+    let pharmacyName = this.props.pharmacyName;
     let prescription = this.props.prescription;
     let id = this.props.id;
     let quantity = this.props.productQuantity;
@@ -81,7 +83,8 @@ class Product extends Component {
         </div>
         <h4 className="product-name">{this.props.name}</h4>
         <h4 className="product-name">{this.props.prescription}</h4>
-        {this.props.quantity === 0 &&<h4 className="product-name">Not available.</h4>}
+        {this.props.quantity === 0 ? <h4 className="product-name">Not available.</h4>
+        : <h4 className="product-name">{this.props.quantity}</h4>}
         <p className="product-price">{this.props.price}</p>
         <Counter
           productQuantity={quantity}
@@ -99,7 +102,8 @@ class Product extends Component {
               price,
               id,
               quantity,
-              prescription
+              prescription,
+              pharmacyName
             )}
           >
             {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}

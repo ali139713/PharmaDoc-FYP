@@ -6,18 +6,39 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../style.scss";
 
 class AddMedicine extends Component {
-  state = {
-    Name: "",
-    Price: "",
-    Availability: "",
-    Quantity: "",
-    Prescription: "",
-    PharmacyName: "",
-    productImage: "",
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      Name: "",
+      Price: "",
+      Availability: "",
+      Quantity: "",
+      Prescription: "",
+      PharmacyName: "",
+      productImage: "",
+      pharmacistID: "",
+    };
+  }
+  getPharmacy = async () => {
+    const {
+      match: { params },
+    } = this.props;
+    await this.setState({
+      pharmacistID: params.pharmacistID,
+    });
+    const ID = params.pharmacistID;
+    console.log("ID:", ID);
+    await Axios.get("/User/getPharmacy", { params }).then((res) => {
+      this.setState({
+        PharmacyName: res.data.pharmacyName,
+      });
+    });
   };
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.getPharmacy();
   }
 
   handleChange = (event) => {
@@ -90,6 +111,8 @@ class AddMedicine extends Component {
   };
 
   render() {
+    console.log("pharmacyName: ", this.state.PharmacyName);
+
     return (
       <div className="form-style-8">
         <h2>Add Medicine</h2>
@@ -156,6 +179,7 @@ class AddMedicine extends Component {
           <div>
             <label>PharmacyName</label>
             <input
+              disabled={true}
               type="text"
               id="PharmacyName"
               placeholder="Enter PharmacyName"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
+import Spinner from '../Spinner/Spinner';
 
 
 class Placeorder extends Component {
@@ -113,7 +114,8 @@ handleFilter = (props) =>{
         if(this.state.isLoaded === false){
           
             
-            return <div>Loading...</div>
+            return  <div style = {{textAlign:"center", marginTop:"20%"}}> <Spinner /></div>
+
            
         }
      

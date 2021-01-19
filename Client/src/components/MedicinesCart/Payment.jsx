@@ -3,6 +3,7 @@ import AuthService from "../../Services/AuthServices";
 // import StripeCheckout from 'react-stripe-checkout';
 import Model from "../AliComponents/Model";
 import Axios from "axios";
+import Spinner from '../Spinner/Spinner';
 
 class Payment extends Component {
   state = {
@@ -17,6 +18,7 @@ class Payment extends Component {
     orderItems2: [],
     totalAmount: null,
     prescriptionImage: "",
+    pharmacyName:"",
     orderNo: null,
     allProducts: [],
     isLoaded: false,
@@ -41,6 +43,7 @@ class Payment extends Component {
         orderItems: orderItems,
         totalAmount: totalAmount,
         prescriptionImage: info.prescriptionImage,
+        pharmacyName:orderItems[0].pharmacyName
       });
     });
     try {
@@ -123,6 +126,7 @@ class Payment extends Component {
           orderStatus: "Pending",
           paymentMethod: buttonName,
           prescriptionImage: this.state.prescriptionImage,
+          pharmacyName: this.state.pharmacyName
         };
         try {
           await Axios.post("http://localhost:5000/order/post", obj);
@@ -148,6 +152,7 @@ class Payment extends Component {
           orderStatus: "Active",
           paymentMethod: buttonName,
           prescriptionImage: this.state.prescriptionImage,
+          pharmacyName: this.state.pharmacyName
         };
         try {
           await Axios.post("http://localhost:5000/order/post", obj);
@@ -184,10 +189,8 @@ class Payment extends Component {
     const d = this.state.paymentMethod;
     if (!this.state.isLoaded)
       return (
-        <div style={{ textAlign: "center", marginTop: "10%" }}>
-          <h3>Loading...</h3>
-          <i className="fas fa-spinner"></i>
-        </div>
+        <div style = {{textAlign:"center", marginTop:"20%"}}> <Spinner /></div>
+
       );
     else
       return (

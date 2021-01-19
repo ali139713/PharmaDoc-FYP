@@ -4,9 +4,8 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { GroupCellRenderer } from "ag-grid-community";
 // import jsonData from '../../Backend/orders.json';
-
+import AddReport from "./AddReport";
 const TestOrdersGrid = (props) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
@@ -36,7 +35,7 @@ const TestOrdersGrid = (props) => {
       }
     };
     */
-
+  const DoctorName = "";
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <div
@@ -58,8 +57,6 @@ const TestOrdersGrid = (props) => {
             filter: true,
             flex: 1,
             minWidth: 100,
-            cellRenderer: GroupCellRenderer,
-            showRowGroup: true,
           }}
           suppressRowClickSelection={true}
           groupSelectsChildren={true}
@@ -67,9 +64,6 @@ const TestOrdersGrid = (props) => {
           rowSelection={"multiple"}
           rowGroupPanelShow={"always"}
           pivotPanelShow={"always"}
-          enableRangeSelection={true}
-          autoGroupColumnDef={true}
-          checkboxSelection={true}
           enableRangeSelection={true}
           paginationAutoPageSize={true}
           pagination={true}
@@ -81,6 +75,12 @@ const TestOrdersGrid = (props) => {
           <AgGridColumn field="price"></AgGridColumn>
           <AgGridColumn field="lab"></AgGridColumn>
           <AgGridColumn field="description"></AgGridColumn>
+          <AgGridColumn
+            headerName="Add Report"
+            field="addReport"
+            minWidth={170}
+            cellRendererFramework={AddReport}
+          />
         </AgGridReact>
       </div>
     </div>

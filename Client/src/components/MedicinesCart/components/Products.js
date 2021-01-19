@@ -27,6 +27,7 @@ class Products extends Component {
             price={product.price}
             name={product.name}
             productImage={product.productImage}
+            pharmacyName={product.pharmacyName}
             prescription={product.prescription}
             id={product._id}
             addToCart={this.props.addToCart}

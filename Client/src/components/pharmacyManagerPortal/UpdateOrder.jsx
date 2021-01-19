@@ -4,10 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../style.scss";
 
-class UpdatePharmacy extends Component {
+class UpdateOrder extends Component {
   state = {
-    Name: "",
-    status: "",
+    OrderStatus: "",
   };
 
   handleChange = (event) => {
@@ -18,7 +17,7 @@ class UpdatePharmacy extends Component {
     });
   };
   routeHandler = () => {
-    this.props.history.push("/admin/pharmacy");
+    this.props.history.push("/pharmacymanager");
   };
 
   fileUploadHandler = (event) => {
@@ -27,24 +26,23 @@ class UpdatePharmacy extends Component {
       position: toast.POSITION.TOP_CENTER,
     });
     const obj = {
-      name: this.state.Name,
-      status: this.state.status,
+      orderStatus: this.state.OrderStatus,
     };
     Axios.patch(
-      "http://localhost:5000/pharmacy/update/" + this.props.match.params.id,
+      "http://localhost:5000/order/update/" + this.props.match.params.id,
       obj
     )
 
       .then((res) => {
         console.log(res);
-        this.setState({ Name: "" });
+        this.setState({ OrderStatus: "" });
       })
       .catch((err) => {
         console.log(err);
       });
   };
   validate = () => {
-    if (this.state.Name && this.state.status) {
+    if (this.state.OrderStatus) {
       return false;
     } else {
       return true;
@@ -54,32 +52,24 @@ class UpdatePharmacy extends Component {
   render() {
     return (
       <div className="form-style-8">
-        <h2>Update pharmacy</h2>
+        <h2>Update Order Status</h2>
 
         <form onSubmit={this.fileUploadHandler}>
           <div>
-            <input
-              type="text"
-              id="Name"
-              placeholder="Enter Name"
-              name="Name"
-              value={this.state.Name}
-              onChange={this.handleChange}
-            />
-
+            <span> Update Order Status </span>
             <select
               className="scrollable-menu"
-              id="status"
-              name="status"
+              id="OrderStatus"
+              name="OrderStatus"
               placeholder="Choose a Status"
-              value={this.state.status}
+              value={this.state.OrderStatus}
               onChange={this.handleChange}
             >
               <option value="" disabled>
                 Please Choose a status...
               </option>
-              <option value="Approved">Approved</option>
-              <option value="Not Approved">Not Approved</option>
+              <option value="Active">Active</option>
+              <option value="Pending">Pending</option>
             </select>
           </div>
           <ToastContainer />
@@ -109,4 +99,4 @@ class UpdatePharmacy extends Component {
   }
 }
 
-export default UpdatePharmacy;
+export default UpdateOrder;

@@ -1,124 +1,124 @@
 import Axios from "axios";
 import React, { Component } from "react";
-import { withRouter } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../../style.scss';
-
-
-
-
-
-
+import { withRouter } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../../style.scss";
 
 class UpdateMedicine extends Component {
-
-
   state = {
     Name: "",
     Price: "",
     Availability: "",
     Quantity: "",
-    Prescription:"",
-    PharmacyName:"",
+    Prescription: "",
+    PharmacyName: "",
     Image: "",
-
-
   };
 
+  getPharmacy = async () => {
+    const {
+      match: { params },
+    } = this.props;
+    await this.setState({
+      pharmacistID: params.pharmacistID,
+    });
+    const ID = params.pharmacistID;
+    console.log("ID:", ID);
+    await Axios.get("/User/getPharmacy", { params }).then((res) => {
+      this.setState({
+        PharmacyName: res.data.pharmacyName,
+      });
+    });
+  };
 
+  async componentDidMount() {
+    await this.getPharmacy();
+  }
 
   handleChange = (event) => {
-
-
     console.log(event.target.name);
     console.log(event.target.value);
     this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
 
-      [event.target.name]: event.target.value
-
-    },
-
-
-    )
-  }
-
-
-  fileSelectedHandler = event => {
+  fileSelectedHandler = (event) => {
     this.setState({
-
-
-      Image: event.target.files[0]
-
-
-
-    })
-  }
+      Image: event.target.files[0],
+    });
+  };
 
   validate = () => {
-    if (this.state.Name && this.state.Price && this.state.Availability && this.state.Quantity && this.state.Image && this.state.Prescription && this.state.PharmacyName) {
+    if (
+      this.state.Name &&
+      this.state.Price &&
+      this.state.Availability &&
+      this.state.Quantity &&
+      this.state.Image &&
+      this.state.Prescription &&
+      this.state.PharmacyName
+    ) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
-  }
+  };
 
-  routeHandler = event => {
-    this.props.history.push('/pharmacymanager/medicines');
-  }
-
-
+  routeHandler = (event) => {
+    this.props.history.push("/pharmacymanager/medicines");
+  };
 
   fileUploadHandler = (event) => {
     event.preventDefault();
     toast("Updated Successfully!", {
       position: toast.POSITION.TOP_CENTER,
-
     });
     const fd = new FormData();
-    fd.append('productImage', this.state.Image, this.state.Image.name);
-    fd.append('name', this.state.Name)
-    fd.append('price', this.state.Price)
-    fd.append('availability', this.state.Availability)
-    fd.append('quantity', this.state.Quantity)
-    fd.append('prescription', this.state.Prescription)
-    fd.append('pharmacyName', this.state.PharmacyName)
+    fd.append("productImage", this.state.Image, this.state.Image.name);
+    fd.append("name", this.state.Name);
+    fd.append("price", this.state.Price);
+    fd.append("availability", this.state.Availability);
+    fd.append("quantity", this.state.Quantity);
+    fd.append("prescription", this.state.Prescription);
+    fd.append("pharmacyName", this.state.PharmacyName);
 
-    const { match: { params } } = this.props;
+    const {
+      match: { params },
+    } = this.props;
 
     // console.log(params)
 
+    Axios.patch(
+      "http://localhost:5000/medicine/update/" + this.props.match.params.id,
+      fd
+    )
 
-
-    Axios.patch('http://localhost:5000/medicine/update/' + this.props.match.params.id, fd)
-
-      .then(res => {
+      .then((res) => {
         console.log(res);
-        this.setState({ Name: "", Image: "", Price: "", Availability: "", Quantity: "" , Prescription:"", pharmacyName:""});
-
+        this.setState({
+          Name: "",
+          Image: "",
+          Price: "",
+          Availability: "",
+          Quantity: "",
+          Prescription: "",
+          pharmacyName: "",
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-
-      })
-  }
+      });
+  };
   render() {
-
-
     return (
       <div className="form-style-8">
-
-
         <h2>Update Medicine</h2>
 
-
-        <form
-          onSubmit={this.fileUploadHandler} >
-          <div >
-
+        <form onSubmit={this.fileUploadHandler}>
+          <div>
             <input
-
               type="text"
               id="Name"
               placeholder="Enter Name"
@@ -131,7 +131,6 @@ class UpdateMedicine extends Component {
           <ToastContainer />
 
           <div>
-
             <input
               type="number"
               id="Price"
@@ -142,8 +141,7 @@ class UpdateMedicine extends Component {
               required
             />
           </div>
-          <div >
-
+          <div>
             <input
               type="text"
               id="Availability"
@@ -151,12 +149,10 @@ class UpdateMedicine extends Component {
               name="Availability"
               value={this.state.Availability}
               required
-
               onChange={this.handleChange}
             />
           </div>
           <div>
-
             <input
               type="number"
               id="Quantity"
@@ -167,12 +163,9 @@ class UpdateMedicine extends Component {
               required
             />
           </div>
-          <div >
-            <label >
-              Prescription
-            </label>
+          <div>
+            <label>Prescription</label>
             <input
-
               type="text"
               id="Prescription"
               placeholder="Enter Prescription"
@@ -182,12 +175,10 @@ class UpdateMedicine extends Component {
             />
           </div>
 
-          <div >
-            <label >
-              PharmacyName
-            </label>
+          <div>
+            <label>PharmacyName</label>
             <input
-
+              disabled={true}
               type="text"
               id="PharmacyName"
               placeholder="Enter PharmacyName"
@@ -198,37 +189,38 @@ class UpdateMedicine extends Component {
           </div>
 
           <div>
-
             <label>
-
-
-              <input style={{ size: "10%" }}
+              <input
+                style={{ size: "10%" }}
                 type="file"
                 id="Image"
                 placeholder=""
                 name="Image"
                 required
-
                 onChange={this.fileSelectedHandler}
               />
             </label>
-
-
           </div>
-
-
         </form>
         <div className="buttonHolder">
           <div className="button1">
             <button onClick={this.routeHandler}>Back</button>
           </div>
           <div className="button2">
-            <span class="" tabindex="0" data-toggle="tooltip" title="All fields are required">
-              <button disabled={this.validate()} onClick={this.fileUploadHandler}>Upload</button>
+            <span
+              class=""
+              tabindex="0"
+              data-toggle="tooltip"
+              title="All fields are required"
+            >
+              <button
+                disabled={this.validate()}
+                onClick={this.fileUploadHandler}
+              >
+                Upload
+              </button>
             </span>
-
           </div>
-
         </div>
       </div>
     );

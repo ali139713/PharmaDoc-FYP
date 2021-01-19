@@ -126,7 +126,7 @@ h1.page-header {
   cursor: pointer;
 }
 .form-style-8 h2 {
-  background: #2cbbbb;
+  background: #1c2237;
   text-transform: uppercase;
   font-family: "Open Sans Condensed", sans-serif;
   color: #ffffff;
@@ -160,11 +160,11 @@ h1.page-header {
 }
 .form-style-8 button,
 .f {
-  -moz-box-shadow: inset 0px 1px 0px 0px #45d6d6;
-  -webkit-box-shadow: inset 0px 1px 0px 0px #45d6d6;
-  box-shadow: inset 0px 1px 0px 0px #45d6d6;
-  background-color: #2cbbbb;
-  border: 1px solid #27a0a0;
+  -moz-box-shadow: inset 0px 1px 0px 0px #1c2237;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #1c2237;
+  box-shadow: inset 0px 1px 0px 0px #1c2237;
+  background-color: #1c2237;
+  border: 1px solid #1c2237;
   display: inline-block;
   cursor: pointer;
   color: #ffffff;
@@ -178,13 +178,15 @@ h1.page-header {
   outline: none;
 }
 .form-style-8 button:hover {
-  background: linear-gradient(to bottom, #34caca 5%, #30c9c9 100%);
-  background-color: #34caca;
+  background: linear-gradient(to bottom,#ffcc29 5%,#ffcc29 100%);
+  background-color: #ffcc29;
+  color: black;
   outline: none;
 }
 
 .form-style-8 button:disabled {
-  background-color: #f14259;
+  background-color: #cdd0cb;
+  color: black;
   border: none !important;
   cursor: not-allowed;
 }

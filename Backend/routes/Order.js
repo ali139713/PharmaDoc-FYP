@@ -10,7 +10,7 @@ const nodemailer = require("nodemailer");
 orderRouter.get("/get", (req, res, next) => {
   Order.find()
     .select(
-      "customerID customerName _id customerEmail address city postalCode orderItems totalAmount publishDate orderStatus paymentMethod prescriptionImage"
+      "customerID customerName _id customerEmail address city postalCode orderItems totalAmount publishDate orderStatus paymentMethod prescriptionImage pharmacyName"
     )
     .exec()
     .then((docs) => {
@@ -32,6 +32,7 @@ orderRouter.get("/get", (req, res, next) => {
             paymentMethod: doc.paymentMethod,
             _id: doc._id,
             prescriptionImage: doc.prescriptionImage,
+            pharmacyName: doc.pharmacyName,
           };
         }),
       };
@@ -82,6 +83,7 @@ orderRouter.post("/post", (req, res, next) => {
     orderStatus: req.body.orderStatus,
     paymentMethod: req.body.paymentMethod,
     prescriptionImage: req.body.prescriptionImage,
+    pharmacyName: req.body.pharmacyName,
   });
 
   order
@@ -158,7 +160,7 @@ orderRouter.get("/getfiltered", async (req, res, next) => {
 
   Order.find(userID)
     .select(
-      "customerID customerName _id customerEmail address city postalCode orderItems totalAmount publishDate orderStatus paymentMethod"
+      "customerID customerName _id customerEmail address city postalCode orderItems totalAmount publishDate orderStatus paymentMethod pharmacyName"
     )
     .exec()
     .then((orders) => {
@@ -179,6 +181,7 @@ orderRouter.get("/getfiltered", async (req, res, next) => {
             publishDate: moment().toJSON(),
             orderStatus: order.orderStatus,
             paymentMethod: order.paymentMethod,
+            pharmacyName: order.pharmacyName,
           };
         }),
       };

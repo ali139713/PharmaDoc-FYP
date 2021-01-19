@@ -4,10 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../style.scss";
 
-class UpdatePharmacy extends Component {
+class UpdatePharmacyManagers extends Component {
   state = {
-    Name: "",
-    status: "",
+    firstName: "",
+    lastName: "",
+    pharmacyName: "",
+    Status: "",
   };
 
   handleChange = (event) => {
@@ -18,7 +20,7 @@ class UpdatePharmacy extends Component {
     });
   };
   routeHandler = () => {
-    this.props.history.push("/admin/pharmacy");
+    this.props.history.push("/admin/pharmacyManagers");
   };
 
   fileUploadHandler = (event) => {
@@ -27,24 +29,33 @@ class UpdatePharmacy extends Component {
       position: toast.POSITION.TOP_CENTER,
     });
     const obj = {
-      name: this.state.Name,
-      status: this.state.status,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      Status: this.state.status,
     };
     Axios.patch(
-      "http://localhost:5000/pharmacy/update/" + this.props.match.params.id,
+      "/user/update/pharmacyManagerProfile/" + this.props.match.params.id,
       obj
     )
 
       .then((res) => {
         console.log(res);
-        this.setState({ Name: "" });
+        this.setState({
+          firstName: "",
+          lastName: "",
+          Status: "",
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
   validate = () => {
-    if (this.state.Name && this.state.status) {
+    if (
+      this.state.Status &&
+      this.state.firstName !== "" &&
+      this.state.lastName !== ""
+    ) {
       return false;
     } else {
       return true;
@@ -54,25 +65,31 @@ class UpdatePharmacy extends Component {
   render() {
     return (
       <div className="form-style-8">
-        <h2>Update pharmacy</h2>
+        <h2>Update Pharmacy Manager</h2>
 
         <form onSubmit={this.fileUploadHandler}>
           <div>
             <input
               type="text"
-              id="Name"
-              placeholder="Enter Name"
-              name="Name"
+              id="firstName"
+              placeholder="First Name"
+              name="firstName"
               value={this.state.Name}
               onChange={this.handleChange}
             />
-
+            <input
+              type="text"
+              id="lastName"
+              placeholder="Last Name"
+              name="lastName"
+              value={this.state.Name}
+              onChange={this.handleChange}
+            />
             <select
               className="scrollable-menu"
-              id="status"
-              name="status"
-              placeholder="Choose a Status"
-              value={this.state.status}
+              id="Status"
+              name="Status"
+              value={this.state.Status}
               onChange={this.handleChange}
             >
               <option value="" disabled>
@@ -109,4 +126,4 @@ class UpdatePharmacy extends Component {
   }
 }
 
-export default UpdatePharmacy;
+export default UpdatePharmacyManagers;

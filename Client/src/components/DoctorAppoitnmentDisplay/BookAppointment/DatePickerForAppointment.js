@@ -33,6 +33,7 @@ function DatePickerForAppointment(props) {
             onChange={onChange}
             filterDate={isWeekday}
             value={startDate}
+            minDate={new Date()}
           />
         </div>
       </div>

@@ -18,6 +18,7 @@ function Navbar() {
 
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
+
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
@@ -53,6 +54,42 @@ function Navbar() {
     return (
       <>
         {" "}
+        <li className="nav-item ">
+          <Link
+            to="/"
+            className="nav-links"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/medicines"
+            className="nav-links "
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Medicines
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/accreditedlabs"
+            className="nav-links "
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Labs
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/doctors-category"
+            className="nav-links "
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Doctors
+          </Link>
+        </li>
         <li style={{ marginTop: "20px" }}>
           {/* {button ? (
             <Button
@@ -132,10 +169,131 @@ function Navbar() {
       </>
     );
   };
+  const adminNavbar = () => {
+    return (
+      <>
+        <>
+          {" "}
+          <li style={{ marginTop: "20px" }}>
+            {/* {button ? (
+            <Button
+              onClick={logoutHandler}
+              className="btn-link"
+              buttonStyle="btn2--outline"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              className="btn-link"
+              onClick={logoutHandler}
+              buttonStyle="btn2--outline"
+              buttonSize="btn2--mobile"
+            >
+              Logout
+            </Button>
+          )} */}
+            <Dropdown>
+              <Dropdown.Toggle
+                variant="outline-primary"
+                id="dropdown-basic"
+                // className="site-button"
+              >
+                {/* <img
+                // src={require("../../images/team/noimage.png")}
+                alt=""
+                width="20"
+                height="20"
+                className="rounded-circle p-0 mb-1"
+              />{" "} */}
+                <span>
+                  {user.firstName} {user.lastName}
+                </span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu className=" rounded ">
+                {/* {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userorders"} className="dez-page">
+                    My Order
+                  </Link>
+                </Dropdown.Item>
+              ) : (
+                ""
+              )}
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userappointments"}>My Appointment</Link>
+                </Dropdown.Item>
+              ) : (
+                ""
+              )}
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userappointments"}>My Profile</Link>
+                </Dropdown.Item>
+              ) : (
+                <Dropdown.Item>
+                  <Link to={"/doctor-profile"}>My Profile</Link>
+                </Dropdown.Item> */}
+                {/* )}  */}
+                {/* <Dropdown.Item>
+                <Link to={"/profile"} className="dez-page">
+                  Proflile
+                </Link>
+              </Dropdown.Item> */}
+                <div className="dropdown-divider"></div>
+                <Dropdown.Item>
+                  <Link to={"./"} className="dez-page" onClick={logoutHandler}>
+                    Logout
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </li>
+        </>
+      </>
+    );
+  };
 
   const unAuthenticatedNavbar = () => {
     return (
       <>
+        <li className="nav-item ">
+          <Link
+            to="/"
+            className="nav-links"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/medicines"
+            className="nav-links "
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Medicines
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/accreditedlabs"
+            className="nav-links "
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Labs
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/doctors-category"
+            className="nav-links "
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Doctors
+          </Link>
+        </li>
         <li className="nav-btn">
           {button ? (
             <Link to="/sign-in" className="btn-link">
@@ -186,45 +344,21 @@ function Navbar() {
                     {click ? <FaTimes /> : <FaBars />}
                   </div>
                   <ul className={click ? "nav-menu active" : "nav-menu"}>
-                    <li className="nav-item ">
-                      <Link
-                        to="/"
-                        className="nav-links"
-                        style={{ color: "white", textDecoration: "none" }}
-                      >
-                        Home
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        to="/medicines"
-                        className="nav-links "
-                        style={{ color: "white", textDecoration: "none" }}
-                      >
-                        Medicines
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        to="/accreditedlabs"
-                        className="nav-links "
-                        style={{ color: "white", textDecoration: "none" }}
-                      >
-                        Labs
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        to="/doctors-category"
-                        className="nav-links "
-                        style={{ color: "white", textDecoration: "none" }}
-                      >
-                        Doctors
-                      </Link>
-                    </li>
-                    {isAuthenticated
+                    {user.role !== "Patient" &&
+                      user.role !== "Doctor" &&
+                      user.role !== "Admin" &&
+                      user.role !== "Pharmacy Manager" &&
+                      user.role !== "Lab Manager" &&
+                      unAuthenticatedNavbar()}
+
+                    {/* ? authenticatedNavbar() : unAuthenticatedNavbar()} */}
+                    {user.role === "Admin" && adminNavbar()}
+
+                    {user.role === "Patient" || user.role === "Doctor"
                       ? authenticatedNavbar()
-                      : unAuthenticatedNavbar()}
+                      : ""}
+                    {user.role === "Pharmacy Manager" && adminNavbar()}
+                    {user.role === "Lab Manager" && adminNavbar()}
                   </ul>
                 </div>
               </div>

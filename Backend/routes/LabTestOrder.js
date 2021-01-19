@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 
 labtestOrderRouter.get("/get", (req, res, next) => {
   LabTestOrder.find()
-    .select("name price lab _id description userEmail")
+    .select("name price lab _id description userEmail userID")
     .exec()
     .then((docs) => {
       const response = {
@@ -22,6 +22,7 @@ labtestOrderRouter.get("/get", (req, res, next) => {
             lab: doc.lab,
             description: doc.description,
             _id: doc._id,
+            userID: doc.userID,
           };
         }),
       };

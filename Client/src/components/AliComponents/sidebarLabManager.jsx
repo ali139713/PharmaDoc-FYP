@@ -11,7 +11,7 @@ const barstate = {
   labels: ["January", "February", "March", "April", "May"],
   datasets: [
     {
-      label: "Sales",
+      label: "Orders",
       backgroundColor: "rgba(75,192,192,1)",
       borderColor: "rgba(0,0,0,1)",
       borderWidth: 2,
@@ -24,7 +24,7 @@ const linestate = {
   labels: ["January", "February", "March", "April", "May"],
   datasets: [
     {
-      label: "Sales graph",
+      label: "Orders graph",
       fill: false,
       lineTension: 0.5,
       backgroundColor: "rgba(75,192,192,1)",
@@ -35,22 +35,22 @@ const linestate = {
   ],
 };
 
-const SidebarPharmacy = () => {
+const SidebarLabManager = () => {
   const authContext = useContext(AuthContext);
-  const [medcount, setmedCount] = useState(0);
-  const [pharmacistID, setPharmacistID] = useState(authContext.user._id);
+  const [labManagerID, setLabManagerID] = useState(authContext.user._id);
+  const [ordercount, setorderCount] = useState(0);
 
-  const getMedicines = async () => {
-    const response = await Axios.get("http://localhost:5000/medicine/get");
-    const filtered = response.data.medicines.filter(
-      (t) => t.pharmacyName === "Green Pharmacy"
+  const getLabtestOrders = async () => {
+    const response = await Axios.get("http://localhost:5000/labtestorder/get");
+    const filtered = response.data.labtestorders.filter(
+      (t) => t.lab === "Shaukat khanum"
     );
-    setmedCount(filtered.length);
+    setorderCount(filtered.length);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getMedicines();
+    getLabtestOrders();
   }, []); // component did mount
 
   return (
@@ -67,7 +67,7 @@ const SidebarPharmacy = () => {
               }
             ></div>
             <div className="profile-left-text">
-              <h2>{/*user.name*/}Add products</h2>
+              <h2>{/*user.name*/}Upload results</h2>
               {/*user.isAdmin && <h6>Admin</h6>*/}
               <hr style={{ backgroundColor: "white" }} />
             </div>
@@ -75,8 +75,8 @@ const SidebarPharmacy = () => {
             <br />
 
             <div className="dashboard-left-menu">
-              <Link to={`/pharmacymanager/addMedicine/${pharmacistID}`}>
-                <h5>Add Medicine</h5>
+              <Link to={`/labManager/addLabTest/${labManagerID}`}>
+                <h5>Add Lab Test</h5>
               </Link>
 
               <div className="profile-left-text">
@@ -84,16 +84,10 @@ const SidebarPharmacy = () => {
                 {}
                 <hr style={{ backgroundColor: "white" }} />
               </div>
+
               {
-                /*user.isAdmin && (*/
-                <Link to={`/pharmacymanager/medicines/${pharmacistID}`}>
-                  <h5>Medicines</h5>
-                </Link>
-              }
-              {
-                /*user.isAdmin && (*/
-                <Link to={`/pharmacymanager/orders/${pharmacistID}`}>
-                  <h5>Orders</h5>
+                <Link to={`/labtestorders/${labManagerID}`}>
+                  <h5>LabTestOrders</h5>
                 </Link>
               }
 
@@ -116,15 +110,15 @@ const SidebarPharmacy = () => {
               }}
             >
               {" "}
-              Welcome to Pharmacy Manager portal...
+              Welcome to Lab Manager portal...
             </h2>
             <div className="graphholder ">
               <div className="chart">
                 <div className="chart1">
-                  <BarChart state={barstate} />
+                  <BarChart state={barstate} text="orders" />
                 </div>
                 <div className="chart2">
-                  <LineChart state={linestate} />
+                  <LineChart state={linestate} text="orders" />
                 </div>
               </div>
             </div>
@@ -133,18 +127,21 @@ const SidebarPharmacy = () => {
             <div className="cardsholder2">
               <div className="card1left">
                 {/* <i className="zmdi zmdi-account" style={{ fontSize: "5rem" }}></i> */}
-                <i className="fas fa-user" style={{ fontSize: "5rem" }}></i>
+                <i
+                  className="fas fa-credit-card"
+                  style={{ fontSize: "5rem" }}
+                ></i>
               </div>
               <div className="card1right">
                 <h3 style={{ marginLeft: "3%" }}>
                   {" "}
-                  Total No of Medicines: {medcount}
+                  Total No of labtest orders: {ordercount}
                 </h3>
               </div>
             </div>
             <hr />
             <br />
-            <PieChart />
+            <PieChart text="orders" />
           </div>
         </div>
       </div>
@@ -152,4 +149,4 @@ const SidebarPharmacy = () => {
   );
 };
 
-export default SidebarPharmacy;
+export default SidebarLabManager;

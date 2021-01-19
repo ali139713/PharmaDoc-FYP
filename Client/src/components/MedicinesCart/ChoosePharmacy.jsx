@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import Spinner from "../Spinner/Spinner";
 
 class ChoosePharmacy extends Component {
   state = {
@@ -9,16 +10,26 @@ class ChoosePharmacy extends Component {
   };
 
   async componentDidMount() {
+    let filtered = [];
     try {
       const response = await Axios.get("http://localhost:5000/pharmacy/get");
-      this.setState({ pharmacies: response.data.pharmacies, isLoaded: true });
+      // this.setState({ pharmacies: response.data.pharmacies, isLoaded: true });
+      filtered = response.data.pharmacies.filter(
+        (t) => t.status === "Approved"
+      );
+      this.setState({ pharmacies: filtered, isLoaded: true });
     } catch (error) {
       console.log(error);
     }
   }
   render() {
     if (this.state.isLoaded === false) {
-      return <div> Loading...</div>;
+      return (
+        <div style={{ textAlign: "center", marginTop: "20%" }}>
+          {" "}
+          <Spinner />
+        </div>
+      );
     } else {
       console.log(this.state.pharmacies);
       return (

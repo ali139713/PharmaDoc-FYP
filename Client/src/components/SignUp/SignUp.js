@@ -15,7 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-
+import Axios from "axios";
 import "./Signup.css";
 // AuthServices
 import AuthService from "../../Services/AuthServices";
@@ -79,9 +79,32 @@ export default function SignUp(props) {
       console.log(authContext.error);
     } else {
       AuthService.register(user)
-        .then((data) => {
+        .then(async (data) => {
           const { message } = data;
           setMessage(message);
+          const obj = {
+            name: user.pharmacyName,
+            status: "Not Approved",
+          };
+          await Axios.post("/pharmacy/post", obj)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          const obj2 = {
+            name: user.labName,
+            status: "Not Approved",
+          };
+          // post Lab
+          await Axios.post("/lab/postLab", obj2)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           // resetForm();
           if (!message.msgError) {
             timerID = setTimeout(() => {

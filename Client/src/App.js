@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Footer from "./components/Footer/Footer";
 import LoginDialog from "./components/LoginDialog";
+import AdminLogin from "./components/AdminPortal/AdminLogin";
 import SignUp from "./components/SignUp/SignUp";
 import MedicineCartMain from "./components/MedicinesCart/MedicineCartMain";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -13,6 +14,7 @@ import ViewDoctorProfile from "./components/DoctorAppoitnmentDisplay/ViewDoctorP
 import BookAppointment from "./components/DoctorAppoitnmentDisplay/BookAppointment/BookAppointment";
 import NewPassword from "./components/SetNewPassword/NewPassword";
 import LabDashboard from "./components/LabPortal/Labdashboard";
+import LabTestOrder from "./components/LabManagerPortal/LabTestOrders";
 import DoctorPortal from "./components/DoctorPortal/Doctorappointments";
 import DoctorProfile from "./components/DoctorPortal/DoctorprofileSec";
 import DoctorChangePassword from "./components/DoctorPortal/ChangePassword";
@@ -23,8 +25,14 @@ import UserOrders from "./components/UserPortal/userOrders";
 import userPrescriptions from "./components/UserPortal/userPrescriptions";
 import userDiagnosis from "./components/UserPortal/userDiagnosis";
 import AdminDashboard from "./components/AdminPortal/adminDashboard";
+import Pharmacies from "./components/AdminPortal/getPharmacy";
+import Labs from "./components/AdminPortal/getLabs";
+import Doctors from "./components/AdminPortal/GetDoctors";
+import PharmacyManagers from "./components/AdminPortal/GetPharmacyManager";
+import LabManagers from "./components/AdminPortal/GetLabManager";
+
 import PharmacyManagerDashboard from "./components/pharmacyManagerPortal/pharmacyManagerDashboard";
-import LabManagerProfile from "./components/LabManagerPortal/LabManagerProfile";
+import LabManagerDashboard from "./components/LabManagerPortal/LabManagerDashboard";
 import LabTestOrders from "./components/LabManagerPortal/LabTestOrders";
 import PlaceOrder from "./components/MedicinesCart/Placeorder";
 import Payment from "./components/MedicinesCart/Payment";
@@ -47,13 +55,30 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
 
-        <UnPrivateRoute
+        {/* <UnPrivateRoute
           path="/labmanagerprofile"
           component={LabManagerProfile}
-        />
-        <UnPrivateRoute
+        /> */}
+        {/* <UnPrivateRoute
           path="/pharmacymanager"
           component={PharmacyManagerDashboard}
+        /> */}
+
+        <PrivateRoute
+          path={"/pharmacymanager"}
+          roles={["Pharmacy Manager"]}
+          component={PharmacyManagerDashboard}
+        />
+        <PrivateRoute
+          path={"/labmanager"}
+          roles={["Lab Manager"]}
+          component={LabManagerDashboard}
+        />
+        <PrivateRoute
+          exact
+          path={"/labtestorders/:labManagerID"}
+          roles={["Lab Manager"]}
+          component={LabTestOrder}
         />
 
         <Route exact path="/medicines" component={ChoosePharmacy} />
@@ -67,8 +92,45 @@ function App() {
         <Route path="/accreditedlabs" component={LabDashboard} />
         <UnPrivateRoute path="/labtestorders" component={LabTestOrders} />
         <UnPrivateRoute path="/sign-in" component={LoginDialog} />
-        <UnPrivateRoute path="/admin" component={AdminDashboard} />
+        <UnPrivateRoute path="/adminLogin" component={AdminLogin} />
+        {/* <UnPrivateRoute path="/admin" component={AdminDashboard} /> */}
         <UnPrivateRoute path="/sign-up" component={SignUp} />
+        <PrivateRoute
+          exact
+          path="/admin"
+          roles={["Admin"]}
+          component={AdminDashboard}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/pharmacy"
+          roles={["Admin"]}
+          component={Pharmacies}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/labs"
+          roles={["Admin"]}
+          component={Labs}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/doctors"
+          roles={["Admin"]}
+          component={Doctors}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/pharmacyManagers"
+          roles={["Admin"]}
+          component={PharmacyManagers}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/labManagers"
+          roles={["Admin"]}
+          component={LabManagers}
+        />
         <PrivateRoute
           exact
           path="/doctorappointments"

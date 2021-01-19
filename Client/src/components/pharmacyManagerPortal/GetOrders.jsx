@@ -6,33 +6,39 @@ const imageStyle = {
   width: "70px",
 };
 
-const Medicine = (props) => (
+const Order = (props) => (
   <tr>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {props.med.name}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.customerName}
     </td>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {props.med.price}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.customerEmail}
     </td>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {props.med.availability}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.address}
     </td>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {props.med.quantity}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.city}
     </td>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {props.med.prescription}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {" "}
+      <img style={imageStyle} src={props.ord.prescriptionImage} />
     </td>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {props.med.pharmacyName}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.totalAmount}
     </td>
-    <td className={props.med.todo_completed ? "completed" : ""}>
-      {<img style={imageStyle} src={props.med.productImage} />}
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.publishDate}
     </td>
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.orderStatus}
+    </td>
+    <td className={props.ord.todo_completed ? "completed" : ""}>
+      {props.ord.paymentMethod}
+    </td>
+
     <td>
-      <Link
-        to={`/pharmacymanager/medicines/updateMedicine/${props.med._id}/${props.pharmacistID}`}
-      >
+      <Link to={`/pharmacymanager/orders/updateOrders/${props.ord._id}`}>
         {" "}
         <i className="fas fa-edit" style={{ fontSize: "1.5rem" }}></i>
       </Link>
@@ -41,18 +47,17 @@ const Medicine = (props) => (
       <i
         className="fas fa-trash"
         style={{ fontSize: "1.5rem" }}
-        onClick={() => props.handleDelete(props.med)}
+        onClick={() => props.handleDelete(props.ord)}
       ></i>
     </td>
   </tr>
 );
 
-class GetMedicines extends Component {
+class GetOrders extends Component {
   state = {
-    medicines: [],
+    Orders: [],
     pharmacyName: "",
   };
-
   getPharmacy = async () => {
     const {
       match: { params },
@@ -70,29 +75,30 @@ class GetMedicines extends Component {
   };
 
   handleDelete = async (obj) => {
-    const meds = this.state.medicines;
+    const orders = this.state.Orders;
     console.log(obj._id);
 
     try {
-      const refined = meds.filter((t) => obj._id !== t._id);
-      this.setState({ medicines: refined });
+      const refined = orders.filter((t) => obj._id !== t._id);
+      this.setState({ Orders: refined });
       const response = await Axios.delete(
-        "http://localhost:5000/medicine/delete/" + obj._id
+        "http://localhost:5000/order/delete/" + obj._id
       );
     } catch (error) {
       console.log(error);
-      this.setState({ medicines: meds });
+      this.setState({ Orders: orders });
     }
   };
 
   async componentDidMount() {
+    let filteredOrders = [];
     await this.getPharmacy();
     try {
-      const response = await Axios.get("http://localhost:5000/medicine/get");
-      const filtered = response.data.medicines.filter(
+      const response = await Axios.get("http://localhost:5000/order/get");
+      filteredOrders = response.data.orders.filter(
         (t) => t.pharmacyName === this.state.pharmacyName
       );
-      this.setState({ medicines: filtered });
+      this.setState({ Orders: filteredOrders });
     } catch (error) {
       console.log(error);
     }
@@ -102,15 +108,9 @@ class GetMedicines extends Component {
   };
 
   render() {
-    console.log(
-      "pharmacy Name in Get MEd : ",
-      this.props.match.params.pharmacistID
-    );
     return (
       <div className="table-responsive">
-        <h3 style={{ marginTop: "30px", marginLeft: "30px" }}>
-          Medicines List
-        </h3>
+        <h3 style={{ marginTop: "30px", marginLeft: "30px" }}>Orders List</h3>
         <button
           className="btn btn-dark"
           style={{ marginLeft: "85%" }}
@@ -122,25 +122,26 @@ class GetMedicines extends Component {
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead className="thead-dark">
             <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Availability</th>
-              <th>Quantity</th>
+              <th>CustomerName</th>
+              <th>CustomerEmail</th>
+              <th>Address</th>
+              <th>City</th>
               <th>Prescription</th>
-              <th>Pharmacy Name</th>
-              <th>Image</th>
+              <th>TotalAmount</th>
+              <th>PublishDate</th>
+              <th>OrderStatus</th>
+              <th>PaymentMethod</th>
               <th>Action</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody style={{ overflowY: "auto" }}>
-            {this.state.medicines.map((currentmed, i) => (
-              <Medicine
+            {this.state.Orders.map((currentord, i) => (
+              <Order
                 history={this.props.history}
-                med={currentmed}
+                ord={currentord}
                 key={i}
                 handleDelete={this.handleDelete}
-                pharmacistID={this.props.match.params.pharmacistID}
               />
             ))}
           </tbody>
@@ -150,4 +151,4 @@ class GetMedicines extends Component {
   }
 }
 
-export default GetMedicines;
+export default GetOrders;

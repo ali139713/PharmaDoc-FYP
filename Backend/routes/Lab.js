@@ -38,7 +38,7 @@ const upload = multer({
 ///////// Get Lab ///////////
 labRouter.get("/get", (req, res, next) => {
   Lab.find()
-    .select("name _id labImage")
+    .select("name _id labImage status")
     .exec()
     .then((docs) => {
       const response = {
@@ -49,6 +49,7 @@ labRouter.get("/get", (req, res, next) => {
             name: doc.name,
             labImage: doc.labImage,
             _id: doc._id,
+            status: doc.status,
           };
         }),
       };
@@ -78,6 +79,7 @@ labRouter.post("/post", upload.single("labImage"), async (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     labImage: imagepath,
+    status: req.body.status,
   });
   console.log(lab);
   lab
@@ -96,7 +98,28 @@ labRouter.post("/post", upload.single("labImage"), async (req, res, next) => {
       });
     });
 });
-
+// Pst Lab Only without Image
+labRouter.post("/postLab", async (req, res) => {
+  const lab = await new Lab({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.name,
+    status: req.body.status,
+  });
+  lab
+    .save()
+    .then((result) => {
+      console.log(result);
+      res.status(201).json({
+        message: "Created lab successfully",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
 /// Update with image(Lab) ///
 labRouter.patch("/update/:id", upload.single("labImage"), async (req, res) => {
   const id = req.params.id;

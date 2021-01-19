@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 pharmacyRouter.get("/get", (req, res, next) => {
   Pharmacy.find()
-    .select("name _id ")
+    .select("name _id status")
     .exec()
     .then((docs) => {
       const response = {
@@ -17,6 +17,7 @@ pharmacyRouter.get("/get", (req, res, next) => {
           return {
             name: doc.name,
             _id: doc._id,
+            status: doc.status,
           };
         }),
       };
@@ -37,6 +38,7 @@ pharmacyRouter.post("/post", (req, res, next) => {
   const pharmacy = new Pharmacy({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
+    status: req.body.status,
   });
 
   pharmacy

@@ -1,20 +1,27 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { Manager } from "socket.io-client";
 
-const iStyles = {
-  fontSize: "90%",
-};
-
-const Pharmacy = (props) => (
+const Managers = (props) => (
   <tr>
-    <td className={props.pharmacy.todo_completed ? "completed" : ""}>
-      {props.pharmacy.name}
+    <td className={props.doc.todo_completed ? "completed" : ""}>
+      {props.doc.firstName}
     </td>
-    <td>{props.pharmacy.status}</td>
+    <td className={props.doc.todo_completed ? "completed" : ""}>
+      {props.doc.lastName}
+    </td>
+    <td className={props.doc.todo_completed ? "completed" : ""}>
+      {props.doc.email}
+    </td>
+    <td className={props.doc.todo_completed ? "completed" : ""}>
+      {props.doc.status}
+    </td>
+
     <td>
-      {" "}
-      <Link to={`/admin/pharmacy/updatePharmacy/${props.pharmacy._id}`}>
+      <Link
+        to={`/admin/pharmacyManagers/updatepharmacyManager/${props.doc._id}`}
+      >
         {" "}
         <i className="fas fa-edit" style={{ fontSize: "1.5rem" }}></i>
       </Link>
@@ -23,50 +30,48 @@ const Pharmacy = (props) => (
       <i
         className="fas fa-trash"
         style={{ fontSize: "1.5rem" }}
-        onClick={() => props.handleDelete(props.pharmacy)}
+        onClick={() => props.handleDelete(props.doc)}
       ></i>
     </td>
   </tr>
 );
 
-class getPharmacy extends Component {
+class GetLabManager extends Component {
   state = {
-    pharmacies: [],
+    managers: [],
   };
+
   handleDelete = async (obj) => {
-    const pharma = this.state.pharmacies;
+    const man = this.state.managers;
+    console.log(obj._id);
 
     try {
-      const refined = pharma.filter((t) => obj._id !== t._id);
-      this.setState({ pharmacies: refined });
-      const response = await Axios.delete(
-        "http://localhost:5000/pharmacy/delete/" + obj._id
-      );
+      const refined = man.filter((t) => obj._id !== t._id);
+      this.setState({ managers: refined });
+      const response = await Axios.delete("/user/delete/" + obj._id);
     } catch (error) {
       console.log(error);
-      this.setState({ pharmacies: pharma });
+      this.setState({ managers: man });
     }
   };
 
   async componentDidMount() {
     try {
-      const response = await Axios.get("http://localhost:5000/pharmacy/get");
-      this.setState({ pharmacies: response.data.pharmacies });
+      const response = await Axios.get("/user/getPharmacyManagers");
+      this.setState({ managers: response.data.managers });
     } catch (error) {
       console.log(error);
     }
   }
-
   routeBack = () => {
     this.props.history.push("/admin");
   };
 
   render() {
-    console.log(this.state.pharmacies);
     return (
       <div className="table-responsive">
         <h3 style={{ marginTop: "30px", marginLeft: "30px" }}>
-          List of Pharmacies...
+          Pharmacy Managers List
         </h3>
         <button
           className="btn btn-dark"
@@ -79,16 +84,19 @@ class getPharmacy extends Component {
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead className="thead-dark">
             <tr>
-              <th>Name</th>
+              <th>firstName</th>
+              <th>lastName</th>
+              <th>Email</th>
               <th>Status</th>
               <th>Action</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody style={{ overflowY: "auto" }}>
-            {this.state.pharmacies.map((currentpharmacy, i) => (
-              <Pharmacy
-                pharmacy={currentpharmacy}
+            {this.state.managers.map((currentdoc, i) => (
+              <Managers
+                history={this.props.history}
+                doc={currentdoc}
                 key={i}
                 handleDelete={this.handleDelete}
               />
@@ -100,4 +108,4 @@ class getPharmacy extends Component {
   }
 }
 
-export default getPharmacy;
+export default GetLabManager;

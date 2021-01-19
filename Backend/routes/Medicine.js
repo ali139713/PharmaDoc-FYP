@@ -125,6 +125,7 @@ medicineRouter.patch(
   "/update/:id",
   upload.single("productImage"),
   (req, res) => {
+    const imagepath = req.file.path.substr(23);
     const id = req.params.id;
 
     const name = req.body.name;
@@ -133,7 +134,7 @@ medicineRouter.patch(
     const quantity = req.body.quantity;
     const prescription = req.body.prescription;
     const pharmacyName = req.body.pharmacyName;
-    const productImage = req.file.path;
+    const productImage = imagepath;
 
     Medicine.findByIdAndUpdate(id, {
       $set: {

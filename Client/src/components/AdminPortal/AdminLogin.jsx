@@ -12,11 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { NavLink } from "react-router-dom";
-import "./LoginDialog.css";
-import AuthService from "../Services/AuthServices";
+import AuthService from "../../Services/AuthServices";
 // ContextAPI
-import { AuthContext } from "../Context/AuthContext";
-import Message from "./Message";
+import { AuthContext } from "../../Context/AuthContext";
+import Message from "../Message";
 
 //Forgotpassword
 import Modal from "react-bootstrap/Modal";
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn(props) {
+export default function AdminLogin(props) {
   // ForgotPassword
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -62,20 +61,11 @@ export default function SignIn(props) {
       .then((data) => {
         const { isAuthenticated, user, message } = data;
 
-        if (isAuthenticated) {
+        if (isAuthenticated && user.role === "Admin") {
           authContext.setUser(user);
           authContext.setIsAuthenticated(isAuthenticated);
-          if (user.role === "Patient") {
-            props.history.push("/profile");
-            window.location.reload(true);
-          } else if (user.role === "Doctor") {
-            props.history.push("/doctor-profile");
-            window.location.reload(true);
-          } else if (user.role === "Pharmacy Manager") {
-            props.history.push("/pharmacymanager");
-            window.location.reload(true);
-          } else if (user.role === "Lab Manager") {
-            props.history.push("/labmanager");
+          if (user.role === "Admin") {
+            props.history.push("/admin");
             window.location.reload(true);
           }
         } else {
@@ -102,7 +92,7 @@ export default function SignIn(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Admin Acount
         </Typography>
         <form onSubmit={onSubmit} className={classes.form} Validate>
           <TextField
@@ -146,15 +136,9 @@ export default function SignIn(props) {
                 {" Forgot password?"}
               </Link>
             </Grid>
-            <Grid item>
-              <NavLink to="/sign-up" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </NavLink>
-            </Grid>
           </Grid>
         </form>
         {message ? <Message message={message} /> : null}
-
         <Modal
           show={show}
           onHide={handleClose}
