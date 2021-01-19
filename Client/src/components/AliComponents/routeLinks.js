@@ -11,12 +11,12 @@ export default [
     label: "My Appointments",
     selected: false,
   },
-  {
-    id: "order",
-    path: "/doctororders",
-    label: "My Orders",
-    selected: false,
-  },
+  // {
+  //   id: "order",
+  //   path: "/doctororders",
+  //   label: "My Orders",
+  //   selected: false,
+  // },
   {
     id: "changePassword",
     path: "/changePassword",

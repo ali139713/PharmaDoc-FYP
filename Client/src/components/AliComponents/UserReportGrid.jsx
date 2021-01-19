@@ -79,7 +79,6 @@ const UserReportGrid = (props) => {
           <AgGridColumn field="userEmail"></AgGridColumn>
           <AgGridColumn field="price"></AgGridColumn>
           <AgGridColumn field="lab"></AgGridColumn>
-          <AgGridColumn field="reportUrl"></AgGridColumn>
           <AgGridColumn
             headerName="Download Report"
             field="downloadReport"

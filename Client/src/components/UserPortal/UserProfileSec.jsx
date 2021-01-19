@@ -3,6 +3,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import Navbar from "../AliComponents/navbar";
+import routeLinksUser from "../AliComponents/routeLinksUser";
+
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -104,6 +107,7 @@ export default function UserProfileSec() {
   return (
     <Container component="main" maxWidth="lg">
       <CssBaseline />
+      <Navbar links={routeLinksUser} />
       <div className={classes.paper}>
         <form onSubmit={onSubmit} className={classes.form} Validate>
           <div className="row text-center">

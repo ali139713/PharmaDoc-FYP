@@ -8,13 +8,26 @@ export default [
   {
     id: "appointment",
     path: "/userappointments",
-    label: "My Appointments",
+    label: "Appointments",
+    selected: false,
+  },
+
+  {
+    id: "userreport",
+    path: "/userreport",
+    label: "Report",
     selected: false,
   },
   {
     id: "order",
     path: "/userorders",
-    label: "My Orders",
+    label: "Orders",
+    selected: false,
+  },
+  {
+    id: "order",
+    path: "/userchangePassword",
+    label: "Change Password",
     selected: false,
   },
 ];

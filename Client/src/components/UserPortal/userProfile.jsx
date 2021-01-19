@@ -6,6 +6,8 @@ import Navbar from "../AliComponents/navbar";
 import Axios from "axios";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 import Error from "../../components/Error";
+import Navbar from "../AliComponents/navbar";
+
 // ContextAPI
 import { AuthContext } from "../../Context/AuthContext";
 import FormFile from "react-bootstrap/FormFile";

@@ -17,6 +17,8 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { AuthContext } from "../../Context/AuthContext";
 import Axios from "axios";
+import routeLinks from "../AliComponents/routeLinks";
+import Navbar from "../AliComponents/navbar";
 import SpinnerComponent from "../../components/Spinner/Spinner";
 
 const useStyles = makeStyles((theme) => ({
@@ -144,6 +146,7 @@ export default function DoctorprofileSec() {
     return (
       <Container component="main" maxWidth="lg">
         <CssBaseline />
+        <Navbar links={routeLinks} />
         <div className={classes.paper}>
           {/* <Typography component="h1" variant="h3">
           Welcome To Your Profile

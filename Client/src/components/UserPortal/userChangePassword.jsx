@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import "../../style.scss";
 import "../AliComponents/form.scss";
-import routeLinks from "../AliComponents/routeLinks";
+import routeLinks from "../AliComponents/routeLinksUser";
 import Navbar from "../AliComponents/navbar";
 import Error from "../Error";
 import Axios from "axios";

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Axios from "axios";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -154,7 +155,21 @@ const socialIcons = [
 ];
 
 function Footer(props) {
+  const [description, setdescription] = useState();
+  const [email, setemail] = useState();
+
   const { classes, theme, width } = props;
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const obj = {
+      description: description,
+      email: email,
+    };
+    Axios.post("/User/contactUs", obj).then((res) => {
+      setdescription("");
+      setemail("");
+    });
+  };
   return (
     <footer
       style={{ width: "100%", backgroundColor: "#14213d", padding: "0" }}
@@ -170,7 +185,7 @@ function Footer(props) {
       <div className={classes.footerInner}>
         <Grid container spacing={isWidthUp("md", width) ? 10 : 5}>
           <Grid item xs={12} md={6} lg={4}>
-            <form>
+            <form onSubmit={onSubmit} Validate>
               <Box display="flex" flexDirection="column">
                 <Box mb={1}>
                   <TextField
@@ -184,8 +199,26 @@ function Footer(props) {
                     rows={4}
                     fullWidth
                     required
+                    value={description}
+                    onChange={(e) => {
+                      setdescription(e.target.value);
+                    }}
                   />
                 </Box>
+                <TextField
+                  type="email"
+                  placeholder="Email"
+                  InputProps={{
+                    className: classes.whiteBg,
+                  }}
+                  rows={2}
+                  fullWidth
+                  required
+                  value={email}
+                  onChange={(e) => {
+                    setemail(e.target.value);
+                  }}
+                />
                 <ColoredButton
                   color={theme.palette.common.white}
                   variant="outlined"

@@ -62,9 +62,7 @@ const DoctorProfileCard = (props) => {
                 {doctor.firstName} {doctor.lastName}
               </h3>
               <p className="mb-0">
-                {doctor.specialization
-                  ? doctor.specialization + " Specialist"
-                  : " "}
+                {doctor.specialization ? doctor.specialization : " "}
               </p>
               <p>{doctor.certificates}</p>
               <h5>{doctor.address}</h5>

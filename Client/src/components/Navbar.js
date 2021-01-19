@@ -91,24 +91,6 @@ function Navbar() {
           </Link>
         </li>
         <li style={{ marginTop: "20px" }}>
-          {/* {button ? (
-            <Button
-              onClick={logoutHandler}
-              className="btn-link"
-              buttonStyle="btn2--outline"
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              className="btn-link"
-              onClick={logoutHandler}
-              buttonStyle="btn2--outline"
-              buttonSize="btn2--mobile"
-            >
-              Logout
-            </Button>
-          )} */}
           <Dropdown>
             <Dropdown.Toggle
               variant="outline-primary"
@@ -138,18 +120,37 @@ function Navbar() {
               )}
               {user.role === "Patient" ? (
                 <Dropdown.Item>
-                  <Link to={"/userappointments"}>My Appointment</Link>
+                  <Link to={"/userappointments"}>Appointment</Link>
+                </Dropdown.Item>
+              ) : (
+                <Dropdown.Item>
+                  <Link to={"/doctorappointments"}>Appointment</Link>
+                </Dropdown.Item>
+              )}
+
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/userreport"}>Report</Link>
                 </Dropdown.Item>
               ) : (
                 ""
               )}
               {user.role === "Patient" ? (
                 <Dropdown.Item>
-                  <Link to={"/userappointments"}>My Profile</Link>
+                  <Link to={"/userchangePassword"}>Change Password</Link>
                 </Dropdown.Item>
               ) : (
                 <Dropdown.Item>
-                  <Link to={"/doctor-profile"}>My Profile</Link>
+                  <Link to={"/changePassword"}>Change Password</Link>
+                </Dropdown.Item>
+              )}
+              {user.role === "Patient" ? (
+                <Dropdown.Item>
+                  <Link to={"/profile"}>Profile</Link>
+                </Dropdown.Item>
+              ) : (
+                <Dropdown.Item>
+                  <Link to={"/doctor-profile"}>Profile</Link>
                 </Dropdown.Item>
               )}
               {/* <Dropdown.Item>

@@ -119,6 +119,15 @@ userRouter.post(
         });
         return;
       }
+      if (role === "Pharmacy Manager" && status === "Not Approved") {
+        res.status(400).json({
+          message: {
+            msgBody: "Your Account is Not Approved By Admin",
+            msgError: true,
+          },
+        });
+        return;
+      }
       const token = signToken(_id);
       res.cookie("access_token", token, { httpOnly: true, sameSite: true });
       res.status(200).json({
@@ -526,4 +535,34 @@ userRouter.get("/getLab", async (req, res) => {
     .catch((err) => res.send(err));
 });
 
+userRouter.post("/contactUs", async (req, res) => {
+  const description = req.body.description;
+  const userEmail = req.body.email;
+  console.log("descriptionnnnnnnnnnnnnnnnnnnnnnnn: ", description);
+  var transpoter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "axianshaikhy@gmail.com",
+      pass: "SP17-BSE-018",
+    },
+  });
+  var mailOptions = {
+    from: "info@PharmaDoc.com",
+    to: userEmail,
+
+    subject: "Contact Us Email",
+    html: `
+    <p>${description}</p>
+    `,
+  };
+  transpoter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      res.json({
+        message: { msgBody: "Email Sent", msgError: false },
+      });
+    }
+  });
+});
 module.exports = userRouter;
