@@ -81,15 +81,15 @@ const Sidebar = () => {
               }
             ></div>
             <div className="profile-left-text">
-              <h2>{/*user.name*/}Add products</h2>
-              {/*user.isAdmin && <h6>Admin</h6>*/}
+              {/* <h2>Add products</h2> */}
+
               <hr style={{ backgroundColor: "white" }} />
             </div>
 
             <br />
 
             <div className="dashboard-left-menu">
-              <Link to="/admin/addPharmacy">
+              {/* <Link to="/admin/addPharmacy">
                 <h5>Add Pharmacy</h5>
               </Link>
               <Link to="/admin/addLab">
@@ -97,7 +97,7 @@ const Sidebar = () => {
               </Link>
               <Link to="/admin/addLabTest">
                 <h5>Add Labtest</h5>
-              </Link>
+              </Link> */}
 
               <div className="profile-left-text">
                 <h2>List</h2>
@@ -124,9 +124,9 @@ const Sidebar = () => {
 
               {
                 /*user.isAdmin && (*/
-                <Link to="/admin/orders">
-                  <h5>Orders</h5>
-                </Link>
+                // <Link to="/admin/orders">
+                //   <h5>Orders</h5>
+                // </Link>
               }
               {
                 /*user.isAdmin && (*/
@@ -146,9 +146,9 @@ const Sidebar = () => {
               }
               <hr style={{ backgroundColor: "white" }} />
 
-              <Link to="/logout/">
+              {/* <Link to="/logout/">
                 <h5>Logout</h5>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

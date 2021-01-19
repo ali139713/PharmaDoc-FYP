@@ -32,10 +32,15 @@ import Doctors from "./components/AdminPortal/GetDoctors";
 import PharmacyManagers from "./components/AdminPortal/GetPharmacyManager";
 import LabManagers from "./components/AdminPortal/GetLabManager";
 import updatePharmacy from "./components/AdminPortal/updatePharmacy";
-
+import UpdateLabs from "./components/AdminPortal/updateLab";
+import UpdateDoctors from "./components/AdminPortal/UpdateDoctors";
+import UpdatePharmacyManager from "./components/AdminPortal/UpdatePharmacyManagers";
 import PharmacyManagerDashboard from "./components/pharmacyManagerPortal/pharmacyManagerDashboard";
+import UpdateLabManager from "./components/AdminPortal/UpdateLabManager";
 import LabManagerDashboard from "./components/LabManagerPortal/LabManagerDashboard";
 import LabTestOrders from "./components/LabManagerPortal/LabTestOrders";
+import GetLabTest from "./components/LabManagerPortal/GetLabTest";
+import UpdateLabTest from "./components/AdminPortal/updateLabTest";
 import PlaceOrder from "./components/MedicinesCart/Placeorder";
 import Payment from "./components/MedicinesCart/Payment";
 import TestPayment from "./components/LabPortal/Testpayment";
@@ -76,11 +81,24 @@ function App() {
           roles={["Lab Manager"]}
           component={LabManagerDashboard}
         />
+
         <PrivateRoute
           exact
           path={"/labtestorders/:labManagerID"}
           roles={["Lab Manager"]}
           component={LabTestOrder}
+        />
+        <PrivateRoute
+          exact
+          path={"/labManager/labtest/:labManagerID"}
+          roles={["Lab Manager"]}
+          component={GetLabTest}
+        />
+        <PrivateRoute
+          exact
+          path={"/labtests/updateLabTests/:id"}
+          roles={["Lab Manager"]}
+          component={UpdateLabTest}
         />
 
         <Route exact path="/medicines" component={ChoosePharmacy} />
@@ -123,10 +141,24 @@ function App() {
         />
         <PrivateRoute
           exact
+          path="/admin/labs/updateLabs/:id"
+          roles={["Admin"]}
+          component={UpdateLabs}
+        />
+
+        <PrivateRoute
+          exact
           path="/admin/doctors"
           roles={["Admin"]}
           component={Doctors}
         />
+        <PrivateRoute
+          exact
+          path="/admin/doctors/updateDoctors/:id"
+          roles={["Admin"]}
+          component={UpdateDoctors}
+        />
+
         <PrivateRoute
           exact
           path="/admin/pharmacyManagers"
@@ -135,9 +167,21 @@ function App() {
         />
         <PrivateRoute
           exact
+          path="/admin/pharmacyManagers/updatepharmacyManager/:id"
+          roles={["Admin"]}
+          component={UpdatePharmacyManager}
+        />
+        <PrivateRoute
+          exact
           path="/admin/labManagers"
           roles={["Admin"]}
           component={LabManagers}
+        />
+        <PrivateRoute
+          exact
+          path="/admin/labManagers/updateLabManager/:id"
+          roles={["Admin"]}
+          component={UpdateLabManager}
         />
         <PrivateRoute
           exact

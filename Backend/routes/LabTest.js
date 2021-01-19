@@ -93,4 +93,15 @@ labtestRouter.delete("/delete/:id", async (req, res) => {
   });
 });
 
+// get Lab Name for Edit in LAB TEST EDIT
+labtestRouter.get("/getLab", async (req, res) => {
+  const labTestID = req.query.id;
+  // console.log("Lab Manager ID : ", labTestID);
+  await LabTest.findById({ _id: labTestID })
+    .then((data) => {
+      res.send(data);
+      console.log("dataaaaaaaaa", data);
+    })
+    .catch((err) => res.send(err));
+});
 module.exports = labtestRouter;

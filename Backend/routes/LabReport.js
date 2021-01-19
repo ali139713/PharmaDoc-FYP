@@ -4,6 +4,7 @@ const LabReportRouter = express.Router();
 const multer = require("multer");
 const path = require("path");
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 LabReportRouter.use(express.static(__dirname + "../../FYP/Client/public/"));
 
@@ -74,5 +75,48 @@ LabReportRouter.post(
       });
   }
 );
+
+LabReportRouter.get("/getreport", (req, res, next) => {
+  const userID = req.query.userID;
+
+  console.log("User ID for Report : ", userID);
+  LabReport.find({ userID: userID })
+    .select("_id reportUrl userEmail price lab description userID")
+    .exec()
+    .then((docs) => {
+      const response = {
+        count: docs.length,
+        labs: docs.map((doc) => {
+          console.log(doc);
+          return {
+            reportID: doc._id,
+            reportUrl: doc.reportUrl,
+            userEmail: doc.userEmail,
+            price: doc.price,
+            lab: doc.lab,
+            description: doc.description,
+            userID: doc.userID,
+          };
+        }),
+      };
+
+      res.status(200).json(response);
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
+
+LabReportRouter.get("/downloadfile", (req, res) => {
+  let path = req.query.path;
+  path = path.replace(/\\/g, "/");
+
+  console.log("Pathhhh : ", path);
+  res.download("../../FYP/Client/public" + path);
+});
 
 module.exports = LabReportRouter;

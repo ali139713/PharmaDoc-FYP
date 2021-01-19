@@ -67,7 +67,7 @@ class UpdateMedicine extends Component {
   };
 
   routeHandler = (event) => {
-    this.props.history.push("/pharmacymanager/medicines");
+    this.props.history.push("/pharmacymanager");
   };
 
   fileUploadHandler = (event) => {

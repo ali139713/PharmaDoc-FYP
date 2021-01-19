@@ -109,6 +109,16 @@ userRouter.post(
   (req, res) => {
     if (req.isAuthenticated()) {
       const { _id, email, role, status } = req.user;
+      console.log("user Detailsssssssssssssssssssssssssssssss : ", req.user);
+      if (role === "Lab Manager" && status === "Not Approved") {
+        res.status(400).json({
+          message: {
+            msgBody: "Your Account is Not Approved By Admin",
+            msgError: true,
+          },
+        });
+        return;
+      }
       const token = signToken(_id);
       res.cookie("access_token", token, { httpOnly: true, sameSite: true });
       res.status(200).json({
@@ -118,7 +128,7 @@ userRouter.post(
       });
     } else {
       res.status(400).json({
-        message: { msgBody: "Email Already Regstered", msgError: true },
+        message: { msgBody: "Invalid Crendentials", msgError: true },
       });
     }
   }
@@ -288,7 +298,7 @@ userRouter.get(
 userRouter.get("/getDoctors", (req, res, next) => {
   User.find({ role: "Doctor" })
     .select(
-      " _id firstName lastName email specialization certificates cellNumber fee address status profilePicture"
+      " _id firstName lastName email specialization certificates cellNumber fee address status profilePicture pmdc startTime endTime city"
     )
     .exec()
     .then((docs) => {
@@ -308,6 +318,10 @@ userRouter.get("/getDoctors", (req, res, next) => {
             address: doc.address,
             status: doc.status,
             profilePicture: doc.profilePicture,
+            pmdc: doc.pmdc,
+            startTime: doc.startTime,
+            endTime: doc.endTime,
+            city: doc.city,
           };
         }),
       };
@@ -325,6 +339,38 @@ userRouter.get("/getDoctors", (req, res, next) => {
 // Get Pharmacy Managers
 userRouter.get("/getPharmacyManagers", (req, res, next) => {
   User.find({ role: "Pharmacy Manager" })
+    .select(" _id firstName lastName email   pharmacyName status")
+    .exec()
+    .then((docs) => {
+      const response = {
+        count: docs.length,
+        managers: docs.map((doc) => {
+          // console.log(doc);
+          return {
+            _id: doc._id,
+            firstName: doc.firstName,
+            lastName: doc.lastName,
+            email: doc.email,
+            pharmacyName: doc.pharmacyName,
+            status: doc.status,
+          };
+        }),
+      };
+      res.status(200).json(response);
+      // console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+});
+
+// Get Lab Managers
+
+userRouter.get("/getLabManagers", (req, res, next) => {
+  User.find({ role: "Lab Manager" })
     .select(" _id firstName lastName email   pharmacyName status")
     .exec()
     .then((docs) => {
@@ -414,29 +460,28 @@ userRouter.patch("/update/doctorProfile/:id", async (req, res, next) => {
   });
 });
 // Update Pharmacy Manager
-userRouter.patch(
-  "/update/pharmacyManagerProfile/:id",
-  async (req, res, next) => {
-    const id = req.params.id;
+// userRouter.patch(
+//   "/update/pharmacyManagerProfile/:id",
+//   async (req, res, next) => {
+//     const id = req.params.id;
 
-    console.log("User Object  : ", req.body);
-    await User.findByIdAndUpdate({ _id: id }, req.body).then(function (data) {
-      if (!User) {
-        console.log("Invalid Id");
-      } else {
-        User.findOne({ _id: id }).then(function (data) {
-          res.send(data);
-        });
-      }
-    });
-  }
-);
+//     console.log("User Object  : ", id);
+//     await User.findOneAndUpdate({ _id: id }, req.body).then(function (data) {
+//       if (!User) {
+//         console.log("Invalid Id");
+//       } else {
+//         User.findOne({ _id: id }).then(function (data) {
+//           res.send(data);
+//         });
+//       }
+//     });
+//   }
+// );
 
 // Update User Profile
 userRouter.patch("/update/userProfile/:id", async (req, res, next) => {
   const id = req.params.id;
 
-  console.log("User Object  : ", req.body);
   await User.findByIdAndUpdate({ _id: id }, req.body).then(function (data) {
     if (!User) {
       console.log("Invalid Id");
@@ -472,10 +517,13 @@ userRouter.get("/getPharmacy", async (req, res) => {
 // get LabName by LabManagerID
 userRouter.get("/getLab", async (req, res) => {
   const labManagerID = req.query.labManagerID;
+  console.log("LabManager :", labManagerID);
   await User.findById({ _id: labManagerID })
     .then((data) => {
+      console.log("dataaa ", data);
       res.send(data);
     })
     .catch((err) => res.send(err));
 });
+
 module.exports = userRouter;

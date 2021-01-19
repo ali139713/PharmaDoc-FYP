@@ -99,9 +99,9 @@ const SidebarPharmacy = () => {
 
               <hr style={{ backgroundColor: "white" }} />
 
-              <Link to="/logout/">
+              {/* <Link to="/logout/">
                 <h5>Logout</h5>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

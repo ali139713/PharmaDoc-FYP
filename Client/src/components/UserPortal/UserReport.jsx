@@ -1,77 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
 import Navbar from "../AliComponents/navbar";
 import AuthService from "../../Services/AuthServices";
 import "../../style.scss";
 import routeLinksUser from "../AliComponents/routeLinksUser";
-import OrderGrid from "../AliComponents/Ordersgrid";
+import UserReportGrid from "../AliComponents/UserReportGrid";
 import SpinnerComponent from "../Spinner/Spinner";
+import { AuthContext } from "../../Context/AuthContext";
+
 const UserReport = () => {
-  const [orders, setOrders] = useState(0);
+  const authContext = useContext(AuthContext);
+  const [userReport, setUserReport] = useState();
   const [Loading, setLoading] = useState(true);
-  const [userID, setUserID] = useState(0);
+  const [userID, setUserID] = useState(authContext.user._id);
 
-  const getOrders = async () => {
-    try {
-      let val = "";
-      AuthService.isAuthenticated().then(async (data) => {
-        val = data.user;
-        console.log(val);
-        setUserID(val._id);
+  const getReport = async () => {
+    console.log("USER ID FOR REport : ", userID);
 
-        const response = await Axios.get(
-          "http://localhost:5000/order/get/" + val._id
-        );
-        const orders = response.data.order;
-        setOrders(response.data.order);
-
-        console.log(response.data.order);
-
-        for (const c of orders) {
-          let name = "";
-
-          for (const v of c.orderItems) {
-            name += v.name + ",";
-          }
-          const i = orders.indexOf(c);
-          orders[i].ItemsName = name;
-        }
-        console.log(orders);
-        setLoading(false);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    await Axios.get("http://localhost:5000/labReport/getreport", {
+      params: { userID },
+    })
+      .then((res) => {
+        setUserReport(res.data.labs);
+      })
+      .catch((err) => console.log("err", err));
   };
 
   useEffect(() => {
-    getOrders();
+    getReport();
   }, []); // component did mount
 
-  if (Loading === true) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "20%" }}>
-        <SpinnerComponent />
-      </div>
-    );
-  } else {
-    return (
-      <div id="maindiv" className="container-fluid">
-        <Navbar links={routeLinksUser} />
-        <div className="separation"></div>
-        <div className="content">
-          <div className="heading">
-            <hr />
-            <h2> My Orders... </h2>
-            <hr />
-          </div>
-        </div>
-        <div style={{ height: "500px" }} className="container">
-          <OrderGrid data={orders} />
+  console.log("report: ", userReport);
+
+  return (
+    <div id="maindiv" className="container-fluid">
+      <Navbar links={routeLinksUser} />
+      <div className="separation"></div>
+      <div className="content">
+        <div className="heading">
+          <hr />
+          <h2> My Lab Test Report</h2>
+          <hr />
         </div>
       </div>
-    );
-  }
+      <div style={{ height: "500px" }} className="container">
+        <UserReportGrid rowData={userReport} />
+      </div>
+    </div>
+  );
 };
 
 export default UserReport;

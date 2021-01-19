@@ -86,7 +86,12 @@ const SidebarLabManager = () => {
               </div>
 
               {
-                <Link to={`/labtestorders/${labManagerID}`}>
+                <Link to={`/labManager/labtest/${labManagerID}`}>
+                  <h5>Lab Tests</h5>
+                </Link>
+              }
+              {
+                <Link to={`/labManager/labtestorders/${labManagerID}`}>
                   <h5>LabTestOrders</h5>
                 </Link>
               }

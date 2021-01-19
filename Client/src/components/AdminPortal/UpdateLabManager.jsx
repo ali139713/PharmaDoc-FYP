@@ -4,11 +4,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../style.scss";
 
-class UpdatePharmacyManagers extends Component {
+class UpdateLabManager extends Component {
   state = {
     firstName: "",
     lastName: "",
-    pharmacyName: "",
+    labName: "",
     status: "",
   };
 
@@ -20,7 +20,7 @@ class UpdatePharmacyManagers extends Component {
     });
   };
   routeHandler = () => {
-    this.props.history.push("/admin/pharmacyManagers");
+    this.props.history.push("/admin/labManagers");
   };
 
   fileUploadHandler = (event) => {
@@ -62,7 +62,7 @@ class UpdatePharmacyManagers extends Component {
   render() {
     return (
       <div className="form-style-8">
-        <h2>Update Pharmacy Manager</h2>
+        <h2>Update Lab Manager</h2>
 
         <form onSubmit={this.fileUploadHandler}>
           <div>
@@ -123,4 +123,4 @@ class UpdatePharmacyManagers extends Component {
   }
 }
 
-export default UpdatePharmacyManagers;
+export default UpdateLabManager;

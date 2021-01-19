@@ -70,6 +70,7 @@ class UpdateOrder extends Component {
               </option>
               <option value="Active">Active</option>
               <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
             </select>
           </div>
           <ToastContainer />

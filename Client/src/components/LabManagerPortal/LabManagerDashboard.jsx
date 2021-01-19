@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import SidebarLabManager from "../AliComponents/sidebarLabManager";
 import LabTestOrders from "./LabTestOrders";
 import AddLabTest from "./AddLabTest";
+import GetLabTest from "./GetLabTest";
 
 class LabManagerDashboard extends Component {
   render() {
@@ -18,7 +19,7 @@ class LabManagerDashboard extends Component {
           />
           <Route
             exact
-            path="/labtestorders/:labManagerID"
+            path="/labManager/labtestorders/:labManagerID"
             render={(props) => {
               return <LabTestOrders {...props} />;
             }}
@@ -28,6 +29,13 @@ class LabManagerDashboard extends Component {
             path="/labManager/addLabTest/:labManagerID"
             render={(props) => {
               return <AddLabTest {...props} />;
+            }}
+          />
+          <Route
+            exact
+            path="/labManager/labtest/:labManagerID"
+            render={(props) => {
+              return <GetLabTest {...props} />;
             }}
           />
         </Switch>

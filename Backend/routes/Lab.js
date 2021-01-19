@@ -121,26 +121,51 @@ labRouter.post("/postLab", async (req, res) => {
     });
 });
 /// Update with image(Lab) ///
-labRouter.patch("/update/:id", upload.single("labImage"), async (req, res) => {
+// labRouter.put("/update/:id", upload.single("labImage"), async (req, res) => {
+//   const id = req.params.id;
+//   const name = req.body.name;
+//   const image = req.file.path.substr(23);
+//   const status = req.body.status;
+//   await Lab.findOneAndUpdate(id, {
+//     $set: {
+//       name,
+//       image,
+//       status,
+//     },
+//     new: true,
+//   })
+//     .then((doc) => {
+//       console.log("success", "Edits submitted successfully");
+//     })
+//     .catch((err) => {
+//       console.log("error", "Unable to edit article");
+//       console.log(err);
+//     });
+// });
+
+labRouter.patch("/update/:id", upload.single("labImage"), (req, res) => {
   const id = req.params.id;
   const name = req.body.name;
-  const image = req.file.path;
-  await Lab.findOneAndUpdate(id, {
+  const status = req.body.status;
+  const imagepath = req.file.path.substr(23);
+  const labImage = imagepath;
+
+  Lab.findByIdAndUpdate(id, {
     $set: {
       name,
-      image,
+      status,
+      labImage,
     },
     new: true,
   })
     .then((doc) => {
-      console.log("success", "Edits submitted successfully");
+      console.log("success", "Edited Successfully");
     })
     .catch((err) => {
       console.log("error", "Unable to edit article");
       console.log(err);
     });
 });
-
 //// Delete Lab ////////
 
 labRouter.delete("/delete/:id", async (req, res) => {

@@ -19,9 +19,7 @@ const Managers = (props) => (
     </td>
 
     <td>
-      <Link
-        to={`/admin/pharmacyManagers/updatepharmacyManager/${props.doc._id}`}
-      >
+      <Link to={`/admin/labManagers/updateLabManager/${props.doc._id}`}>
         {" "}
         <i className="fas fa-edit" style={{ fontSize: "1.5rem" }}></i>
       </Link>
@@ -57,7 +55,7 @@ class GetLabManager extends Component {
 
   async componentDidMount() {
     try {
-      const response = await Axios.get("/user/getPharmacyManagers");
+      const response = await Axios.get("/user/getLabManagers");
       this.setState({ managers: response.data.managers });
     } catch (error) {
       console.log(error);
