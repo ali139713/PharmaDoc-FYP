@@ -16,10 +16,13 @@ const LabTestOrders = (props) => {
     props.match.params.labManagerID
   );
   const [labName, setLabName] = useState();
+  const [managerName, setManagerName] = useState();
 
   const getLab = async () => {
     await Axios.get("/User/getLab", { params }).then((res) => {
       setLabName(res.data.labName);
+      setManagerName(res.data.firstName);
+
       Axios.get("http://localhost:5000/labtestorder/get").then((res2) => {
         const response1 = res2.data.labtestorders.filter(
           (t) => t.lab === res.data.labName
@@ -33,7 +36,7 @@ const LabTestOrders = (props) => {
       });
     });
   };
-  console.log("LabNameeeeeeeeeeee: ", labName);
+  console.log("Name: ", managerName);
   const getTestOrders = async () => {
     // try {
     const response = await Axios.get(
@@ -62,7 +65,6 @@ const LabTestOrders = (props) => {
   } else {
     return (
       <div id="maindiv" className="container-fluid">
-        <Navbar links={routeLinksLabManager} />
         <div className="separation"></div>
         <div className="content">
           <div className="heading">

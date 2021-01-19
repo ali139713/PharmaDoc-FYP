@@ -3,6 +3,7 @@ const labtestOrderRouter = express.Router();
 const LabTestOrder = require("../models/LabTestOrder");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
+const User = require("../models/User");
 
 /// Get LabTest Order ///
 

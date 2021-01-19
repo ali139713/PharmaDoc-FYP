@@ -22,6 +22,7 @@ import UserChangePassword from "./components/UserPortal/userChangePassword";
 import UserAppointments from "./components/UserPortal/userAppointments";
 import UserProfile from "./components/UserPortal/UserProfileSec";
 import UserOrders from "./components/UserPortal/userOrders";
+import UserReport from "./components/UserPortal//UserReport";
 import userPrescriptions from "./components/UserPortal/userPrescriptions";
 import userDiagnosis from "./components/UserPortal/userDiagnosis";
 import AdminDashboard from "./components/AdminPortal/adminDashboard";
@@ -30,6 +31,7 @@ import Labs from "./components/AdminPortal/getLabs";
 import Doctors from "./components/AdminPortal/GetDoctors";
 import PharmacyManagers from "./components/AdminPortal/GetPharmacyManager";
 import LabManagers from "./components/AdminPortal/GetLabManager";
+import updatePharmacy from "./components/AdminPortal/updatePharmacy";
 
 import PharmacyManagerDashboard from "./components/pharmacyManagerPortal/pharmacyManagerDashboard";
 import LabManagerDashboard from "./components/LabManagerPortal/LabManagerDashboard";
@@ -109,6 +111,12 @@ function App() {
         />
         <PrivateRoute
           exact
+          path="/admin/pharmacy/updatePharmacy/:id"
+          roles={["Admin"]}
+          component={updatePharmacy}
+        />
+        <PrivateRoute
+          exact
           path="/admin/labs"
           roles={["Admin"]}
           component={Labs}
@@ -185,6 +193,11 @@ function App() {
           path={"/userorders"}
           roles={["Patient"]}
           component={UserOrders}
+        />
+        <PrivateRoute
+          path={"/userreport"}
+          roles={["Patient"]}
+          component={UserReport}
         />
         <PrivateRoute
           path={"/userPrescriptions"}

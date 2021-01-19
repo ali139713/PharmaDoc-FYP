@@ -4,7 +4,7 @@ import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import BtnCellRenderer from "./BtnCellRenderer";
+// import BtnCellRenderer from './BtnCellRenderer';
 
 // import jsonData from '../../Backend/orders.json';
 
@@ -49,25 +49,26 @@ const Ordersgrid = (props) => {
         className="ag-theme-alpine"
       >
         <AgGridReact
-          autoGroupColumnDef={{
-            headerName: "Group",
-            minWidth: 170,
-            field: "videocall",
-            valueGetter: function (params) {
-              if (params.node.group) {
-                return params.node.key;
-              } else {
-                return params.data[params.colDef.field];
-              }
-            },
-            cellRenderer: "btnCellRenderer",
-            cellRendererParams: {
-              clicked: function (field) {
-                alert(`${field} was clicked`);
-              },
-            },
-            minWidth: 150,
-          }}
+          // autoGroupColumnDef={{
+          //   headerName: 'Group',
+          //   minWidth: 170,
+          //   field: 'videocall',
+          //   valueGetter: function (params) {
+          //     if (params.node.group) {
+          //       return params.node.key;
+          //     } else {
+          //       return params.data[params.colDef.field];
+          //     }
+          //   },
+          //   cellRenderer: 'btnCellRenderer',
+          //   cellRendererParams: {
+          //     clicked: function(field) {
+          //       alert(`${field} was clicked`);
+          //     }
+          //   },
+          //   minWidth: 150
+          //    }
+          // }
           defaultColDef={{
             editable: true,
             enableRowGroup: true,
@@ -104,12 +105,12 @@ const Ordersgrid = (props) => {
           <AgGridColumn field="paymentMethod"></AgGridColumn>
           <AgGridColumn field="totalAmount"></AgGridColumn>
           {/* <AgGridColumn field ="videocall"></AgGridColumn>  */}
-          <AgGridColumn
-            headerName="VideoCall"
-            field="videocall"
-            minWidth={170}
-            cellRendererFramework={BtnCellRenderer}
-          />
+          {/* <AgGridColumn
+              headerName="VideoCall"
+              field="videocall"
+              minWidth={170}
+              cellRendererFramework={BtnCellRenderer}
+            /> */}
         </AgGridReact>
       </div>
     </div>

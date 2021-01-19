@@ -13,28 +13,6 @@ const TestOrdersGrid = (props) => {
   // const [rowData, setRowData] = useState(jsonData.data);
   const [rowData, setRowData] = useState(props.data);
 
-  /*
- 
-  function onGridReady(params) {
-    setGridApi(params.api);
-    setGridColumnApi(params.columnApi);
-  }
- 
-  
-    const httpRequest = new XMLHttpRequest();
-    
-/*
-    httpRequest.open(
-      'GET',
-      'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinnersSmall.json'
-    );
-    httpRequest.send();
-    httpRequest.onreadystatechange = () => {
-      if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        updateData(JSON.parse(httpRequest.responseText));
-      }
-    };
-    */
   const DoctorName = "";
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -67,7 +45,6 @@ const TestOrdersGrid = (props) => {
           enableRangeSelection={true}
           paginationAutoPageSize={true}
           pagination={true}
-          //onGridReady={onGridReady}//
           rowData={rowData}
         >
           <AgGridColumn field="userEmail"></AgGridColumn>
